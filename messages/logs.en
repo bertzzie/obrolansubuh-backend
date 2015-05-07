@@ -1,0 +1,10 @@
+# Login Messages
+logs.login.error.password=[LGINFO] Login as %s failed. Wrong password.
+logs.login.error.username=[LGINFO] Login as %s failed. No email in database.
+logs.login.success=[LGINFO] Contributor %s logged in at %s.
+
+# Database Messages
+logs.db.error.connect=[DBFatalError] Failed to open database (driver: %s, spec: %s). Error Message: %s
+logs.db.error.txbegin=[DBTransactionError] Begin transaction error: %s
+logs.db.error.txcommit=[DBTransactionError] Transaction commit error: %s
+logs.db.error.txrollback=[DBTransactionError] Rollback failed error: %s

@@ -1,0 +1,10 @@
+# Login Messages
+logs.login.error.password=[LGINFO] Login sebagai %s gagal. Password salah.
+logs.login.error.username=[LGINFO] Login sebagai %s gagal. Email tidak ditemukan dalam database.
+logs.login.success=[LGINFO] Contributor %s melakukan login pada %s.
+
+# Database Messages
+logs.db.error.connect=[DBFatalError] Gagal membuka koneksi database (driver: %s, spec: %s). Pesan error: %s
+logs.db.error.txbegin=[DBTransactionError] Begin transaction error: %s
+logs.db.error.txcommit=[DBTransactionError] Transaction commit error: %s
+logs.db.error.txrollback=[DBTransactionError] Rollback failed error: %s

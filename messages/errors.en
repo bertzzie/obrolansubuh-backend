@@ -1,0 +1,6 @@
+# Login Messages
+errors.login=Login failed. Please try again.
+
+# Database Messages
+errors.db.connect=[DBFE] Database Connection Error. Please contact web administrator.
+errors.db.generic=[DTFE] Database Error. Please contact web administrator.

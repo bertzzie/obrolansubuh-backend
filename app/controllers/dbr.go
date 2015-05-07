@@ -29,8 +29,8 @@ func InitDB() {
 
 	db, err := sql.Open(driver, conn)
 	if err != nil {
-		errMessage := fmt.Sprintf("[DBFatalError] Failed to open database.\nError Message: %s\n(driver: %s, spec: %s)",
-			err.Error(), driver, conn)
+		errMessage := fmt.Sprintf("[DBFatalError] Failed to open database (driver: %s, spec: %s).\nError Message: %s\n",
+			driver, conn, err.Error())
 		revel.ERROR.Panicln(errMessage)
 		panic("[DBFE] Database Connection Error. Please contact web administrator.")
 	}
@@ -42,38 +42,38 @@ func (dc *DBRController) Begin() revel.Result {
 	var err error
 	dc.Trx, err = connection.NewSession(nil).Begin()
 	if err != nil {
-		errMessage := fmt.Sprintf("[DBTransactionError] Begin transaction error: %s", err.Error())
+		errMessage := fmt.Sprintf(dc.Message("logs.db.error.txbegin"), err.Error())
 		revel.ERROR.Panicln(errMessage)
-		panic("[DTFE] Database Error. Please contact web administrator.")
+		panic(dc.Message("errors.db.generic"))
 	}
 
 	return nil
 }
 
-func (db *DBRController) Commit() revel.Result {
-	if db.Trx == nil {
+func (dc *DBRController) Commit() revel.Result {
+	if dc.Trx == nil {
 		return nil
 	}
-	if err := db.Trx.Commit(); err != nil {
-		errMessage := fmt.Sprintf("[DBTransactionError] Transaction commit. Error: %s", err.Error())
+	if err := dc.Trx.Commit(); err != nil {
+		errMessage := fmt.Sprintf(dc.Message("logs.db.error.txcommit"), err.Error())
 		revel.ERROR.Panicln(errMessage)
-		panic("[DTFE] Database Error. Please contact web administrator.")
+		panic(dc.Message("errors.db.generic"))
 	}
 
-	db.Trx = nil
+	dc.Trx = nil
 	return nil
 }
 
-func (db *DBRController) RollBack() revel.Result {
-	if db.Trx == nil {
+func (dc *DBRController) RollBack() revel.Result {
+	if dc.Trx == nil {
 		return nil
 	}
-	if err := db.Trx.Rollback(); err != nil && err != sql.ErrTxDone {
-		errMessage := fmt.Sprintf("[DBTransactionError] Rollback failed. Error: %s", err.Error())
+	if err := dc.Trx.Rollback(); err != nil && err != sql.ErrTxDone {
+		errMessage := fmt.Sprintf(dc.Message("logs.db.error.txrollback"), err.Error())
 		revel.ERROR.Panicln(errMessage)
-		panic("[DTFE] Database Error. Please contact web administrator.")
+		panic(dc.Message("errors.db.generic"))
 	}
 
-	db.Trx = nil
+	dc.Trx = nil
 	return nil
 }

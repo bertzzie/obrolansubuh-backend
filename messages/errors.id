@@ -1,0 +1,6 @@
+# Login Messages
+errors.login=Login gagal. Mohon coba lagi.
+
+# Database Messages
+errors.db.connect=[DBFE] Kesalahan koneksi database. Mohon hubungi admin web.
+errors.db.generic=[DTFE] Kesalahan database. Mohon hubungi admin.
