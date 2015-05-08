@@ -1,8 +1,12 @@
 {{ template "header.html" . }}
 
+
 <div class="row">
     <div class="col s4 offset-s4">
     	<h4 class="center">Login Backend</h4>
+
+		{{ template "flash.html" . }}
+
     	<form action="{{ url "App.ProcessLogin" }}" method="POST" class="row">
     	<div class="row">
 	    	<div class="input-field">

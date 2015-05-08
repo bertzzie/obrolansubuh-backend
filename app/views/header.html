@@ -20,12 +20,9 @@
   </head>
   <body>
 
-    <nav class="light-blue darken-4" role="navigation">
-      <div class="nav-wrapper container">
-        <a href="#" id="logo-container" class="brand-logo center">Obrolan Subuh</a>
-      </div>
-    </nav>
+  <header>
+    {{ template "sidenav.html" . }}
+  </header>
 
-    {{ template "flash.html" . }}
-
+  <main>
     <div class="container">

@@ -2,10 +2,12 @@
     {{template "debug.html" .}}
   {{end}}
 
-  </div> <!-- div.container -->
+    </div> <!-- div.container -->
+  </main>
 
   <script type="text/javascript" src="{{ .static }}js/jquery-2.1.4.min.js"></script>
   <script src="{{ .static }}js/bin/materialize.min.js" type="text/javascript"></script>
+  <script src="{{ .static }}js/obrolansubuh.js" type="text/javascript"></script>
   {{range .moreScripts}}
     <script src="/public/{{.}}" type="text/javascript" charset="utf-8"></script>
   {{end}}

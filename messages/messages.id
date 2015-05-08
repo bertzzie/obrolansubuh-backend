@@ -1,1 +1,5 @@
 login.message.success=Selamat datang, %s. Senang bertemu denganmu!
+login.message.notloggedin=Anda harus login untuk mengakses halaman tersebut. Silahkan login terlebih dahulu.
+login.message.alreadyli=Tidak dapat mengakses halaman login karena anda telah login.
+
+logout.message.success=Logout berhasil. Sampai nanti!

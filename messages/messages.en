@@ -1,1 +1,5 @@
 login.message.success=Welcome, %s. It's great to see you!
+login.message.notloggedin=You have to login to access that page. Please login first.
+login.message.alreadyli=Can't access login page. You have logged in previously.
+
+logout.message.success=Logout successful. See you later!

@@ -12,11 +12,25 @@ type App struct {
 	DBRController
 }
 
+func (c App) checkUser() revel.Result {
+	if _, ok := c.Session["user"]; ok {
+		return nil
+	}
+
+	c.Flash.Error(c.Message("login.message.notloggedin"))
+	return c.Redirect(routes.App.Login())
+}
+
 func (c App) Index() revel.Result {
 	return c.Render()
 }
 
 func (c App) Login() revel.Result {
+	if c.checkUser() == nil {
+		c.Flash.Error(c.Message("login.message.alreadyli"))
+		return c.Redirect(routes.App.Index())
+	}
+
 	return c.Render()
 }
 
@@ -49,5 +63,19 @@ func (c App) ProcessLogin(email, password string, remember bool) revel.Result {
 	}
 
 	c.Flash.Out["username"] = email
+	return c.Redirect(routes.App.Login())
+}
+
+func (c App) Logout() revel.Result {
+	email, _ := c.Session["user"]
+
+	for k := range c.Session {
+		delete(c.Session, k)
+	}
+
+	logoutTime := time.Now().Local().Format(revel.Config.StringDefault("format.datetime", "02 Jan 2006 15:04"))
+	revel.INFO.Printf("[LGINFO] Contributor %s logged out at %s.", email, logoutTime)
+	c.Flash.Success(c.Message("logout.message.success"))
+
 	return c.Redirect(routes.App.Login())
 }
