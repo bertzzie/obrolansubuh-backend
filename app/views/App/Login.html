@@ -5,11 +5,21 @@
 <form action="{{ url "App.ProcessLogin" }}" method="POST">
 	<div class="form-group">
 		<label for="email">Alamat Email</label>
-		<input type="email" name="email" class="form-control" id="email" placeholder="Email untuk Login" value="{{ .flash.username }}">
+		<input type="email" name="email" 
+		       class="form-control" 
+		       id="email" 
+		       placeholder="Email untuk Login" 
+		       required
+		       pattern="[a-zA-Z0-9.!#$%&â€™*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*"
+		       value="{{ .flash.username }}">
 	</div>
 	<div class="form-group">
 		<label for="password">Password</label>
-		<input type="password" name="password" class="form-control" id="password" placeholder="Password anda">
+		<input type="password" name="password" class="form-control" id="password" placeholder="Password anda" required>
+	</div>
+	<div class="form-group">
+		<input type="checkbox" name="remember" class="form-control" id="checkbox">
+		<label for="remember">Ingat Saya?</label>
 	</div>
 	<button type="submit" class="btn btn-primary">Login</button>
 	<button type="reset" class="btn btn-default">Bersihkan</button>
