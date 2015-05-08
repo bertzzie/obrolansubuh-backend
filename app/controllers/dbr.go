@@ -42,7 +42,7 @@ func (dc *DBRController) Begin() revel.Result {
 	var err error
 	dc.Trx, err = connection.NewSession(nil).Begin()
 	if err != nil {
-		errMessage := fmt.Sprintf(dc.Message("logs.db.error.txbegin"), err.Error())
+		errMessage := fmt.Sprintf("[DBTransactionError] Begin transaction error: %s", err.Error())
 		revel.ERROR.Panicln(errMessage)
 		panic(dc.Message("errors.db.generic"))
 	}
@@ -55,7 +55,7 @@ func (dc *DBRController) Commit() revel.Result {
 		return nil
 	}
 	if err := dc.Trx.Commit(); err != nil {
-		errMessage := fmt.Sprintf(dc.Message("logs.db.error.txcommit"), err.Error())
+		errMessage := fmt.Sprintf("[DBTransactionError] Transaction commit error: %s", err.Error())
 		revel.ERROR.Panicln(errMessage)
 		panic(dc.Message("errors.db.generic"))
 	}
@@ -69,7 +69,7 @@ func (dc *DBRController) RollBack() revel.Result {
 		return nil
 	}
 	if err := dc.Trx.Rollback(); err != nil && err != sql.ErrTxDone {
-		errMessage := fmt.Sprintf(dc.Message("logs.db.error.txrollback"), err.Error())
+		errMessage := fmt.Sprintf("[DBTransactionError] Rollback failed error: %s", err.Error())
 		revel.ERROR.Panicln(errMessage)
 		panic(dc.Message("errors.db.generic"))
 	}

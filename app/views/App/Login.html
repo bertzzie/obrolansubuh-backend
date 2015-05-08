@@ -1,5 +1,7 @@
 {{ template "header.html" . }}
 
+{{ template "flash.html" . }}
+
 <form action="{{ url "App.ProcessLogin" }}" method="POST">
 	<div class="form-group">
 		<label for="email">Alamat Email</label>

@@ -1,5 +1,6 @@
 # Login Messages
-errors.login=Login gagal. Mohon coba lagi.
+errors.login.email=Login gagal. Email tidak ditemukan. Mohon periksa kembali email yang anda masukkan.
+errors.login.passw=Login gagal. Password salah. Mohon periksa kembali password yang anda masukkan.
 
 # Database Messages
 errors.db.connect=[DBFE] Kesalahan koneksi database. Mohon hubungi admin web.

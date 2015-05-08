@@ -1,5 +1,6 @@
 # Login Messages
-errors.login=Login failed. Please try again.
+errors.login.email=Login failed. Email not found on database. Please recheck your email.
+errors.login.passw=Login failed. Wrong password entered. Please recheck your password.
 
 # Database Messages
 errors.db.connect=[DBFE] Database Connection Error. Please contact web administrator.
