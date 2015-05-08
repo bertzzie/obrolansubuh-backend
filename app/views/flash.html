@@ -1,18 +1,28 @@
 {{if .flash.success}}
-<div class="alert alert-success">
-	{{.flash.success}}
+<div class="row">
+    <div class="col s12">
+    	<div class="card-panel teal">
+    		<span class="white-text">{{ .flash.success }}</span>
+    	</div>
+    </div>
 </div>
 {{end}}
 
 {{if or .errors .flash.error}}
-<div class="alert alert-error">
-	{{if .flash.error}}
-		{{.flash.error}}
-	{{end}}
-	<ul style="margin-top:10px;">
-		{{range .errors}}
-			<li>{{.}}</li>
-		{{end}}
-	</ul>
+<div class="row">
+    <div class="col s12">
+    	<div class="ard-panel red darken2 center">
+    		<span class="white-text">
+    			{{ if .flash.error }}
+    			    {{ .flash.error }}
+    			{{ end }}
+    		</span>
+			<ul style="margin-top:10px;">
+				{{range .errors}}
+					<li>{{.}}</li>
+				{{end}}
+			</ul>
+    	</div>
+    </div>
 </div>
 {{end}}

@@ -1,17 +1,31 @@
+{{ set . "static" (config "static.path") }}
+
 <!DOCTYPE html>
 
 <html>
   <head>
     <title>{{.title}}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link rel="stylesheet" type="text/css" href="/public/css/bootstrap.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+
     <link rel="shortcut icon" type="image/png" href="/public/img/favicon.png">
+    <link rel="stylesheet" type="text/css" href="{{ .static }}css/materialize.css" media="screen,projection">
+
     <script src="/public/js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+
     {{range .moreStyles}}
       <link rel="stylesheet" type="text/css" href="/public/{{.}}">
     {{end}}
-    {{range .moreScripts}}
-      <script src="/public/{{.}}" type="text/javascript" charset="utf-8"></script>
-    {{end}}
+
   </head>
   <body>
+
+    <nav class="light-blue darken-4" role="navigation">
+      <div class="nav-wrapper container">
+        <a href="#" id="logo-container" class="brand-logo center">Obrolan Subuh</a>
+      </div>
+    </nav>
+
+    {{ template "flash.html" . }}
+
+    <div class="container">
