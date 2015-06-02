@@ -1,0 +1,40 @@
+body {
+	font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+	font-size: 16px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	margin: 0;
+}
+
+paper-button[raised].process {
+  background: #4285f4;
+  color: #fff;
+}
+
+form#login-form {
+	margin: 2em auto;
+	max-width: 480px;
+}
+
+.form-elems {
+	margin: 16px auto;
+	padding: 16px auto;
+}
+
+.form-actions {
+	text-align: right;
+}
+
+#logo {
+	color: #FFF;
+	display: inline-block;
+	text-align: center;
+	text-decoration: none;
+	width: 100%;
+}
+
+#sidebar {
+	background: rgba(192, 192, 192, 0.1);
+	border-right: 1px solid rgba(64, 64, 64, 0.2);
+}

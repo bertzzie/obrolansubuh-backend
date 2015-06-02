@@ -1,15 +1,13 @@
-<nav class="light-blue darken-4" role="navigation">
-	<div class="nav-wrapper container">
-		<a href="" data-activates="slide-out" class="button-collapse top-nav full"><i class="mdi-navigation-menu"></i></a>
-		<a href="#" id="logo-container" class="brand-logo center">Obrolan Subuh</a>
-	</div>
-</nav>
+<paper-toolbar id="logo-container">
+    <a href="{{ url "App.Index" }}" id="logo">ObrolanSubuh.com</a>
+</paper-toolbar>
 
-<ul id="slide-out" class="side-nav fixed" style="left: 0px;">
-	<li class="logo">
-		<a href="" id="logo-container" class="brand-logo">OborolanSubuh</a>
-	</li>
-	<li><a href="">Dashboard</a></li>
-	<li><a href="">New Post</a></li>
-	<li><a href="{{ url "App.Logout" }}">Logout</a></li>
-</ul>
+<div>{{ .session.user }}</div>
+
+{{ if .session.user }}
+    <paper-menu>
+	    <paper-item>Dashboard</paper-item>
+	    <paper-item>New Post</paper-item>
+	    <paper-item>Logout</paper-item>
+    </paper-menu>
+{{ end }}

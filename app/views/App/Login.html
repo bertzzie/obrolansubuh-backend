@@ -1,42 +1,37 @@
 {{ template "header.html" . }}
 
+    <link rel="import" href="/public/bower_components/iron-form/iron-form.html">
+    <link rel="import" href="/public/bower_components/iron-input/iron-input.html">
 
-<div class="row">
-    <div class="col s4 offset-s4">
-    	<h4 class="center">Login Backend</h4>
+    <link rel="import" href="/public/bower_components/paper-input/paper-input.html">
+    <link rel="import" href="/public/bower_components/paper-button/paper-button.html">
 
-		{{ template "flash.html" . }}
+    <link rel="import" href="/public/bower_components/gold-email-input/gold-email-input.html">
 
-    	<form action="{{ url "App.ProcessLogin" }}" method="POST" class="row">
-    	<div class="row">
-	    	<div class="input-field">
-    			<label for="email">Alamat Email</label>
-    			<input type="email" name="email" 
-    			class="validate" 
-    			id="email" 
-    			required
-    			pattern="[a-zA-Z0-9.!#$%&â€™*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*"
-    			value="{{ .flash.username }}">
-    		</div>
-    	</div>
-    	<div class="row">
-    		<div class="input-field">
-    			<label for="password">Password</label>
-    			<input type="password" name="password" class="validate" id="password" required>
-    		</div>
-    	</div>
-    	<div class="row">
-    		<div class="input-field">
-    			<input type="checkbox" name="remember" class="filled-in" id="filled-in-box">
-    			<label for="filled-in-box">Ingat Saya?</label>
-    		</div>
-    	</div>
-    	<div class="row">
-    		<button type="reset" class="waves-effect waves-teal btn-flat">Bersihkan</button>
-    		<button type="submit" class="btn waves-effect waves-light">Login</button>
-    	</div>
-    	</form>
-    </div>
-</div>
+    <form is="iron-form" action="{{ url "App.ProcessLogin" }}" method="POST" id="login-form">
+        <h2>Selamat Datang di Obrolan Subuh!</h2>
+
+        <gold-email-input required 
+                          auto-validate 
+                          error-message="Masukkan alamat email yang valid"
+                          value="{{ .flash.username }}"
+                          label="Alamat Email"></gold-email-input>
+
+        <paper-input-container auto-validate>
+            <label>Password</label>
+            <input is="iron-input" type="password" auto-validate required>
+            <paper-input-error>Password harus diisi</paper-input-error>
+        </paper-input-container>
+
+        <div class="form-elems">
+            <input is="iron-input" type="checkbox" id="remember-me">
+            <label for="remember-me">Ingat Saya?</label>
+        </div>
+
+        <div class="form-actions">
+            <paper-button raised>Bersihkan</paper-button>
+            <paper-button raised class="process" type="submit">Login</paper-button>
+        </div>
+    </form>
 
 {{ template "footer.html" . }}
