@@ -17,7 +17,7 @@ type DBRController struct {
 
 func (dc *DBRController) GetContributor(email string) (*models.Contributor, error) {
 	contributor := &models.Contributor{}
-	err := dc.Trx.Select("name, email, password").From("contributors").
+	err := dc.Trx.Select("name, email, password, photo").From("contributors").
 		Where("email = ?", email).LoadStruct(contributor)
 
 	return contributor, err

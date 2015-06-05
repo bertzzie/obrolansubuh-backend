@@ -48,6 +48,9 @@ func (c App) ProcessLogin(email, password string, remember bool) revel.Result {
 		err := bcrypt.CompareHashAndPassword([]byte(contributor.Password), []byte(password))
 		if err == nil {
 			c.Session["user"] = contributor.Email
+			c.Session["username"] = contributor.Name
+			c.Session["userphoto"] = contributor.Photo
+			revel.INFO.Println(contributor.Photo)
 
 			if remember {
 				c.Session.SetDefaultExpiration()
