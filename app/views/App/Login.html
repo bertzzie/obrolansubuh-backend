@@ -9,28 +9,35 @@
     <link rel="import" href="/public/bower_components/gold-email-input/gold-email-input.html">
 
     <form is="iron-form" action="{{ url "App.ProcessLogin" }}" method="POST" id="login-form">
-        <h2>Selamat Datang di Obrolan Subuh!</h2>
+        <h2>{{ msg . "login.title" }}</h2>
 
         <gold-email-input required 
                           auto-validate 
-                          error-message="Masukkan alamat email yang valid"
+                          error-message="{{ msg . "login.form.email.error" }}"
                           value="{{ .flash.username }}"
-                          label="Alamat Email"></gold-email-input>
+                          name="email"
+                          label="{{ msg . "login.form.email" }}"></gold-email-input>
 
         <paper-input-container auto-validate>
-            <label>Password</label>
-            <input is="iron-input" type="password" auto-validate required>
-            <paper-input-error>Password harus diisi</paper-input-error>
+            <label>{{ msg . "login.form.passw" }}</label>
+            <input is="iron-input" type="password" auto-validate required name="password">
+            <paper-input-error>{{ msg . "login.form.passw.error" }}</paper-input-error>
         </paper-input-container>
 
         <div class="form-elems">
             <input is="iron-input" type="checkbox" id="remember-me">
-            <label for="remember-me">Ingat Saya?</label>
+            <label for="remember-me">{{ msg . "login.form.remember" }}</label>
         </div>
 
         <div class="form-actions">
-            <paper-button raised>Bersihkan</paper-button>
-            <paper-button raised class="process" type="submit">Login</paper-button>
+            <input type="submit" class="hidden"> <!-- So that user can press Enter and submit form -->
+            <paper-button raised>{{ msg . "login.action.clear" }}</paper-button>
+            <paper-button raised class="process" onclick="clickHandler(event)">{{ msg . "login.action.submit" }}</paper-button>
+            <script type="text/javascript">
+                function clickHandler(event) {
+                    document.getElementById("login-form").submit();
+                }
+            </script>
         </div>
     </form>
 

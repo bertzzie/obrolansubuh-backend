@@ -1,0 +1,12 @@
+# Login page
+login.title=Selamat datang di ObrolanSubuh.com!
+login.subtitle=Silahkan login untuk mengakses area backend.
+
+login.form.email=Alamat Email
+login.form.email.error=Masukkan alamat email yang valid
+login.form.passw=Password
+login.form.passw.error=Password tidak boleh kosong
+login.form.remember=Ingat Saya?
+
+login.action.clear=Bersihkan
+login.action.submit=Login

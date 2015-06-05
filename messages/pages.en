@@ -1,0 +1,12 @@
+# Login page
+login.title=Welcome to ObrolanSubuh.com!
+login.subtitle=Please login to proceed to the backend area.
+
+login.form.email=Email Address
+login.form.email.error=Please enter a valid email address
+login.form.passw=Password
+login.form.passw.error=Password must not be empty
+login.form.remember=Remember me?
+
+login.action.clear=Clear Values
+login.action.submit=Login

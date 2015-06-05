@@ -1,28 +1,31 @@
 {{if .flash.success}}
-<div class="row">
-    <div class="col s12">
-    	<div class="card-panel teal">
-    		<span class="white-text">{{ .flash.success }}</span>
-    	</div>
-    </div>
-</div>
+    <paper-toast duration="10000" 
+                 text="{{ .flash.success }}"
+                 visible="true">
+        <span id="label" class="style-scope paper-toast">
+            {{ .flash.success }}
+        </span>
+    </paper-toast>
 {{end}}
 
 {{if or .errors .flash.error}}
-<div class="row">
-    <div class="col s12">
-    	<div class="ard-panel red darken2 center">
-    		<span class="white-text">
-    			{{ if .flash.error }}
-    			    {{ .flash.error }}
-    			{{ end }}
-    		</span>
-			<ul style="margin-top:10px;">
-				{{range .errors}}
-					<li>{{.}}</li>
-				{{end}}
-			</ul>
-    	</div>
-    </div>
-</div>
+    <paper-toast duration="10000" 
+                 text="{{ .flash.error }}"
+                 visible="true"
+                 class="error">
+        <span id="label" class="style-scope paper-toast">
+            {{ .flash.error }}
+        </span>
+    </paper-toast>
+
+    {{ range .errors }}
+        <paper-toast duration="3000" 
+                     text="{{ . }}"
+                     visible="true"
+                     class="error">
+            <span id="label" class="style-scope paper-toast">
+                {{ . }}
+            </span>
+        </paper-toast>
+    {{ end }}
 {{end}}

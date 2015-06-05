@@ -22,8 +22,8 @@ func (c App) checkUser() revel.Result {
 }
 
 func (c App) Index() revel.Result {
-	if c.checkUser() == nil {
-		return c.Redirect(routes.App.Index())
+	if c.checkUser() != nil {
+		return c.Redirect(routes.App.Login())
 	}
 
 	return c.Render()
