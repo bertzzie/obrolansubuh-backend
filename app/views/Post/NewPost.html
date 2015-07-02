@@ -1,0 +1,12 @@
+{{set . "title" "Home"}}
+
+{{template "header.html" .}}
+
+{{ template "flash.html" . }}
+
+    <link rel="import" href="/public/bower_components/medium-editor-polymer/medium-editor-polymer.html">
+
+    <medium-editor-polymer upload-url="/post/image/upload" upload-method="PUT" upload-field-name="image">
+    </medium-editor-polymer>
+
+{{template "footer.html" .}}

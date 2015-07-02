@@ -9,6 +9,11 @@ GET     /login                                  App.Login
 POST    /login                                  App.ProcessLogin
 GET     /logout                                 App.Logout
 
+# Post CRUD
+GET     /post/new                               Post.NewPost
+
+PUT     /post/image/upload                      Post.ImageUpload
+
 # Ignore favicon requests
 GET     /favicon.ico                            404
 
