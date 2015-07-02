@@ -51,9 +51,10 @@ func (c Post) ImageUpload(image []byte) revel.Result {
 	fullName := uploadDr + hashName
 
 	if err := saveFile(image, revel.BasePath+fullName); err != nil {
-		revel.ERROR.Printf("[LGFATAL] Failed to write uploaded file %s by %s.",
+		revel.ERROR.Printf("[LGFATAL] Failed to write uploaded file %s by %s. Error: %s",
 			revel.BasePath+fullName,
-			c.Session["user"])
+			c.Session["user"],
+			err)
 
 		failedUpload := FailedUpload{
 			Name:  fullName,
@@ -65,6 +66,7 @@ func (c Post) ImageUpload(image []byte) revel.Result {
 			Files: []FailedUpload{failedUpload},
 		}
 
+		c.Response.Status = 500
 		return c.RenderJson(FUR)
 	} else {
 		fileInfo := UploadedFile{
