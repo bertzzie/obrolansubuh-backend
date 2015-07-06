@@ -35,8 +35,18 @@ type FileUploadError struct {
 	Files []FailedUpload `json:"files"`
 }
 
+type ToolbarItem struct {
+	Text string
+	Icon string
+	Url  string
+}
+
 func (c Post) NewPost() revel.Result {
-	return c.Render()
+	ToolbarItems := []ToolbarItem{
+		ToolbarItem{Text: "Publish", Icon: "editor:publish", Url: "post.NewPost"},
+	}
+
+	return c.Render(ToolbarItems)
 }
 
 func (c Post) ImageUpload(image []byte) revel.Result {

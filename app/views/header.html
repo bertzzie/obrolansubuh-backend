@@ -25,6 +25,7 @@
     <link rel="import" href="/public/bower_components/paper-menu/paper-menu.html">
 
     <link rel="import" href="/public/bower_components/iron-icons/iron-icons.html">
+    <link rel="import" href="/public/bower_components/iron-icons/editor-icons.html">
     <link rel="import" href="/public/bower_components/iron-iconset/iron-iconset.html">
     <link rel="import" href="/public/bower_components/paper-icon-button/paper-icon-button.html">
 
@@ -41,6 +42,18 @@
             <paper-toolbar>
                 <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
                 <div id="main-panel-title">{{ raw .panelTitle }}</div>
+                {{ if .ToolbarItems }}
+                    <link rel="import" href="/public/bower_components/paper-button/paper-button.html">
+
+                    {{ range .ToolbarItems }}
+                        <paper-button class="toolbar-item">
+                            <a href="{{ url .Url }}">
+                                <iron-icon icon="{{ polymer_icon .Icon }}"></iron-icon>
+                                {{ .Text }}
+                            </a>
+                        </paper-button>
+                    {{ end }}
+                {{ end }}
             </paper-toolbar>
 
 {{ template "flash.html" . }}

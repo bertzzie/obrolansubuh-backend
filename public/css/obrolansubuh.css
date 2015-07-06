@@ -128,7 +128,15 @@ form#login-form {
 	width: 32px;
 }
 
+.toolbar-item {
+	min-width: 150px;
+}
 
+.toolbar-item a {
+	color: #FFF;
+	text-decoration: none;
+	vertical-align: middle;
+}
 
 
 

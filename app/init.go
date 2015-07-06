@@ -1,6 +1,7 @@
 package app
 
 import "github.com/revel/revel"
+import "html/template"
 
 func init() {
 	// Filters is the default set of global filters.
@@ -17,6 +18,17 @@ func init() {
 		revel.InterceptorFilter,       // Run interceptors around the action.
 		revel.CompressFilter,          // Compress the result.
 		revel.ActionInvoker,           // Invoke the action.
+	}
+
+	// A template function we built because Polymer's iron-icon uses ":"
+	// in its icon attribute value. ":" will be parsed as escaped content
+	// by go's html/template.
+	//
+	// We choose template.URL because:
+	// 1. You can insert a link in the property, and
+	// 2. a ":" for defaults like "editor:publish" will work.
+	revel.TemplateFuncs["polymer_icon"] = func(attr string) template.URL {
+		return template.URL(attr)
 	}
 
 	// register startup functions with OnAppStart
