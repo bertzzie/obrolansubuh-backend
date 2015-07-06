@@ -4,4 +4,7 @@ errors.login.passw=Login gagal. Password salah. Mohon periksa kembali password y
 
 # Database Messages
 errors.db.connect=[DBFE] Kesalahan koneksi database. Mohon hubungi admin web.
-errors.db.generic=[DTFE] Kesalahan database. Mohon hubungi admin.
+errors.db.generic=[DTFE] Kesalahan database. Mohon hubungi admin web.
+
+# Post Messages
+errors.upload.image=Upload gambar gagal. Mohon hubungi admin web.
