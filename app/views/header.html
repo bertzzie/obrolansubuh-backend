@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 
 <html>
-  <head>
+<head>
     <title>{{.title}}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
@@ -13,7 +13,7 @@
     <script type="text/javascript" src="/public/bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
 
     {{range .moreStyles}}
-      <link rel="stylesheet" type="text/css" href="/public/{{.}}">
+    <link rel="stylesheet" type="text/css" href="/public/{{.}}">
     {{end}}
 
     <link rel="import" href="/public/bower_components/font-roboto/roboto.html">
@@ -29,19 +29,19 @@
     <link rel="import" href="/public/bower_components/paper-icon-button/paper-icon-button.html">
 
     <link rel="stylesheet" href="/public/css/obrolansubuh.css">
-  </head>
+</head>
 
-  <body class="fulbleed layout vertical">
-      <paper-drawer-panel>
-        <paper-header-panel drawer id="sidebar">
-          {{ template "sidenav.html" . }}
+<body class="fulbleed layout vertical">
+    <paper-drawer-panel id="main-drawer-panel">
+        <paper-header-panel drawer id="sidebar" mode="waterfall">
+            {{ template "sidenav.html" . }}
         </paper-header-panel>
 
-        <paper-header-panel main id="main-container">
-          <paper-toolbar>
-            <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
-            <div id="main-panel-title">{{ .title }}</div>
-          </paper-toolbar>
+        <paper-header-panel main id="main-container" mode="waterfall">
+            <paper-toolbar>
+                <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
+                <div id="main-panel-title">{{ raw .panelTitle }}</div>
+            </paper-toolbar>
 
-          {{ template "flash.html" . }}
+{{ template "flash.html" . }}
 

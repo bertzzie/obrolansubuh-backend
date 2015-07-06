@@ -1,0 +1,16 @@
+input#post-title {
+	border: 0;
+	font-size: 2em;
+	height: 1.5em;
+	padding: 5px;
+	width: 100%;
+}
+
+input#post-title:focus {
+	outline: none;
+}
+
+#post-creator {
+	height: 100%;
+	padding: 0 4em;
+}
