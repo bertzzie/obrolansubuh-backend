@@ -1,5 +1,8 @@
+@import url(http://fonts.googleapis.com/css?family=EB+Garamond|PT+Sans+Caption:700);
+
 input#post-title {
 	border: 0;
+	font-family: 'PT Sans Caption', sans-serif;
 	font-size: 2em;
 	height: 1.5em;
 	padding: 5px;
@@ -12,5 +15,12 @@ input#post-title:focus {
 
 #post-creator {
 	height: 100%;
-	padding: 0 4em;
+	max-width: 70%;
+	margin: 0 auto;
+}
+
+medium-editor-polymer {
+	font-family: 'EB Garamond', serif;
+	font-size: 1.25em;
+	line-height: 1.5em;
 }
