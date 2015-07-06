@@ -22,4 +22,13 @@
 			document.title = title;
 		})
 	});
+
+	var postEditor = document.querySelector("#post-editor");
+	postEditor.addEventListener("image-upload-failed", function (evt) {
+		// This comes from the plugin we use. Event data is exposed 
+		// naked to the user (us) so we can have better control.
+		// See https://github.com/blueimp/jQuery-File-Upload/wiki/Options
+		var error = evt.detail.jqXHR.responseJSON["files"][0];
+		alert(error["error"]);
+	});
 })();
