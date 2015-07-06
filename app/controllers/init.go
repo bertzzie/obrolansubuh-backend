@@ -2,6 +2,12 @@ package controllers
 
 import "github.com/revel/revel"
 
+type ToolbarItem struct {
+	Text string
+	Icon string
+	Url  string
+}
+
 func init() {
 	revel.OnAppStart(InitDB)
 	revel.InterceptMethod((*DBRController).Begin, revel.BEFORE)

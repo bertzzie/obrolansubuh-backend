@@ -35,12 +35,6 @@ type FileUploadError struct {
 	Files []FailedUpload `json:"files"`
 }
 
-type ToolbarItem struct {
-	Text string
-	Icon string
-	Url  string
-}
-
 func (c Post) NewPost() revel.Result {
 	ToolbarItems := []ToolbarItem{
 		ToolbarItem{Text: "Publish", Icon: "editor:publish", Url: "post.NewPost"},
