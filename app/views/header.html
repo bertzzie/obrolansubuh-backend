@@ -46,7 +46,7 @@
                     <link rel="import" href="/public/bower_components/paper-button/paper-button.html">
 
                     {{ range .ToolbarItems }}
-                        <paper-button class="toolbar-item">
+                        <paper-button class="toolbar-item" id="{{ .Id }}">
                             <a href="{{ url .Url }}">
                                 <iron-icon icon="{{ polymer_icon .Icon }}"></iron-icon>
                                 {{ .Text }}

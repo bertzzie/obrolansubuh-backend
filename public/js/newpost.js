@@ -31,4 +31,21 @@
 		var error = evt.detail.jqXHR.responseJSON["files"][0];
 		alert(error["error"]);
 	});
+
+	var publishButton = document.querySelector("#publish-post");
+	publishButton.addEventListener("click", function (evt) {
+		var postTitle  = document.querySelector("input#post-title"),
+			postEditor = document.querySelector("#post-editor"),
+			postData   = {
+				title   : postTitle.value,
+				content : postEditor.getEditorContent()
+			};
+
+		$.post("/post/new", postData, function (data, textStatus, jqXHR) {
+			console.log(data);
+			console.log(textStatus);
+		});
+
+		evt.preventDefault();
+	});
 })();

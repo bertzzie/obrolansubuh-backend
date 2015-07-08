@@ -12,6 +12,13 @@ type App struct {
 	DBRController
 }
 
+type ToolbarItem struct {
+	Id   string
+	Text string
+	Icon string
+	Url  string
+}
+
 func (c App) checkUser() revel.Result {
 	if _, ok := c.Session["user"]; ok {
 		return nil
@@ -51,7 +58,6 @@ func (c App) ProcessLogin(email, password string, remember bool) revel.Result {
 			c.Session["user"] = contributor.Email
 			c.Session["username"] = contributor.Name
 			c.Session["userphoto"] = contributor.Photo
-			revel.INFO.Println(contributor.Photo)
 
 			if remember {
 				c.Session.SetDefaultExpiration()
