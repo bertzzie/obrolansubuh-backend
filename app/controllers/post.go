@@ -5,14 +5,14 @@ import (
 	"encoding/hex"
 	"github.com/revel/revel"
 	"io/ioutil"
-	"obrolansubuh.com/backend/app/routes"
-	"obrolansubuh.com/models"
+	//"obrolansubuh.com/backend/app/routes"
+	//"obrolansubuh.com/models"
 	"path/filepath"
 	"time"
 )
 
 type Post struct {
-	DBRController
+	GormController
 }
 
 type UploadedFile struct {
@@ -45,6 +45,7 @@ func (c Post) NewPost() revel.Result {
 	return c.Render(ToolbarItems)
 }
 
+/*
 func (c Post) SavePost(title string, content string) revel.Result {
 	c.Validation.Required(title)
 	c.Validation.Required(content)
@@ -53,19 +54,16 @@ func (c Post) SavePost(title string, content string) revel.Result {
 	//contributor, gcErr := c.GetContributor(c.Session["user"])
 	created := time.Now()
 
-	/*
 		if gcErr != nil {
 			revel.ERROR.Fatalf("ERROR GET CONTRIBUTOR")
 			return c.Redirect(Post.NewPost)
 		}
-	*/
 
 	newPost := &models.Post{
 		Title:   title,
 		Content: content,
-		/*Author:    contributor,*/
+		/*Author:    contributor,
 		Published: true,
-		Created:   created,
 	}
 
 	if c.Validation.HasErrors() {
@@ -86,6 +84,7 @@ func (c Post) SavePost(title string, content string) revel.Result {
 	c.Flash.Error(c.Message("errors.post.create"))
 	return c.Redirect(routes.Post.NewPost())
 }
+*/
 
 func (c Post) ImageUpload(image []byte) revel.Result {
 	fileType := c.Params.Files["image"][0].Header["Content-Type"]

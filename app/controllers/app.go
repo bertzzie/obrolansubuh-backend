@@ -9,7 +9,7 @@ import (
 )
 
 type App struct {
-	DBRController
+	GormController
 }
 
 type ToolbarItem struct {
@@ -54,7 +54,7 @@ func (c App) ProcessLogin(email, password string, remember bool) revel.Result {
 	} else {
 		err := bcrypt.CompareHashAndPassword([]byte(contributor.Password), []byte(password))
 		if err == nil {
-			c.Session["userid"] = string(contributor.Id)
+			c.Session["userid"] = string(contributor.ID)
 			c.Session["user"] = contributor.Email
 			c.Session["username"] = contributor.Name
 			c.Session["userphoto"] = contributor.Photo
