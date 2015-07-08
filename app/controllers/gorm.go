@@ -31,6 +31,19 @@ func InitDB() {
 	ORM = &dbm
 
 	dbm.AutoMigrate(&models.Contributor{}, &models.Post{})
+
+	// If there's no user, create default admin user
+	count := 0
+	if dbm.Model(&models.Contributor{}).Count(&count); count < 1 {
+		admin := models.Contributor{
+			Name:     "Default Admin",
+			Email:    "admin@obrolansubuh.com",
+			Password: "$2a$10$ayR58wiVv51Jn0tqHql6H.qscJZK6j8IHBmryIOUPmouveO/aSIhS", // password: admin@obrolansubuh.com
+			About:    "Default Admin ObrolanSubuh.com",
+			Photo:    "/public/img/default-user.png",
+		}
+		dbm.Create(&admin)
+	}
 }
 
 func (gc *GormController) GetContributor(email string) (*models.Contributor, error) {
