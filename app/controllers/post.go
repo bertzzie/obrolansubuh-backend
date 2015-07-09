@@ -5,8 +5,8 @@ import (
 	"encoding/hex"
 	"github.com/revel/revel"
 	"io/ioutil"
-	//"obrolansubuh.com/backend/app/routes"
-	//"obrolansubuh.com/models"
+	"obrolansubuh.com/backend/app/routes"
+	"obrolansubuh.com/models"
 	"path/filepath"
 	"time"
 )
@@ -45,26 +45,10 @@ func (c Post) NewPost() revel.Result {
 	return c.Render(ToolbarItems)
 }
 
-/*
 func (c Post) SavePost(title string, content string) revel.Result {
 	c.Validation.Required(title)
 	c.Validation.Required(content)
 	c.Validation.MaxSize(title, 1024)
-
-	//contributor, gcErr := c.GetContributor(c.Session["user"])
-	created := time.Now()
-
-		if gcErr != nil {
-			revel.ERROR.Fatalf("ERROR GET CONTRIBUTOR")
-			return c.Redirect(Post.NewPost)
-		}
-
-	newPost := &models.Post{
-		Title:   title,
-		Content: content,
-		/*Author:    contributor,
-		Published: true,
-	}
 
 	if c.Validation.HasErrors() {
 		c.Validation.Keep()
@@ -72,19 +56,29 @@ func (c Post) SavePost(title string, content string) revel.Result {
 		return c.Redirect(routes.Post.NewPost())
 	}
 
-	_, err := c.Trx.InsertInto("posts").
-		Columns("title", "content", "author", "published", "created").
-		Record(newPost).Exec()
+	contributor, gcErr := c.GetContributor(c.Session["user"])
 
-	if err != nil {
-		revel.ERROR.Fatalf("ERROR INSERT POSTS: %s", err)
+	if gcErr != nil {
+		revel.ERROR.Fatalf("ERROR GET CONTRIBUTOR")
 		return c.Redirect(routes.Post.NewPost())
 	}
 
-	c.Flash.Error(c.Message("errors.post.create"))
+	newPost := models.Post{
+		Title:     title,
+		Content:   content,
+		Author:    contributor,
+		Published: true,
+	}
+
+	c.Trx.Create(&newPost)
+	if err := c.Trx.Error; err != nil {
+		revel.ERROR.Fatalf("INSERT ERROR: %s", err)
+		return c.Redirect(routes.Post.NewPost())
+	}
+
+	c.Flash.Success("Post BARU BERHASIL. WOOO~")
 	return c.Redirect(routes.Post.NewPost())
 }
-*/
 
 func (c Post) ImageUpload(image []byte) revel.Result {
 	fileType := c.Params.Files["image"][0].Header["Content-Type"]
