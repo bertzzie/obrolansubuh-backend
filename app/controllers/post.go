@@ -53,6 +53,7 @@ func (c Post) SavePost(title string, content string) revel.Result {
 	if c.Validation.HasErrors() {
 		c.Validation.Keep()
 		c.FlashParams()
+
 		return c.Redirect(routes.Post.NewPost())
 	}
 
@@ -78,6 +79,13 @@ func (c Post) SavePost(title string, content string) revel.Result {
 
 	c.Flash.Success("Post BARU BERHASIL. WOOO~")
 	return c.Redirect(routes.Post.NewPost())
+}
+
+func (c Post) EditPost(id int64) revel.Result {
+	post := models.Post{}
+	c.Trx.Where("id = ?", id).First(&post)
+
+	return c.Render(post)
 }
 
 func (c Post) ImageUpload(image []byte) revel.Result {

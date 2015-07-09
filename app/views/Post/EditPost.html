@@ -1,0 +1,24 @@
+{{ set . "title" "Editing" }}
+{{ set . "panelTitle" "Editing <span id='PostTitlePanel'>Untitled</span>" }}
+
+{{ append . "moreStyles" "css/newpost.css" }}
+{{ append . "moreScripts" "js/newpost.js" }}
+
+{{template "header.html" .}}
+
+{{ template "flash.html" . }}
+
+    <link rel="import" href="/public/bower_components/medium-editor-polymer/medium-editor-polymer.html">
+
+    <section id="post-creator">
+        <input type="text" id="post-title" name="post-title" placeholder="Title" value="{{ .post.Title }}">
+
+        <medium-editor-polymer id="post-editor"
+            upload-url="/post/image/upload" 
+            upload-method="PUT" 
+            upload-field-name="image">
+            {{ raw .post.Content }}
+        </medium-editor-polymer>
+    </section>
+
+{{template "footer.html" .}}

@@ -11,7 +11,8 @@ GET     /logout                                 App.Logout
 
 # Post CRUD
 GET     /post/new                               Post.NewPost
-POST    /post/new                               Post.SavePost
+PUT     /post/new                               Post.SavePost
+GET     /post/:id/edit                          Post.EditPost
 
 PUT     /post/image/upload                      Post.ImageUpload
 
