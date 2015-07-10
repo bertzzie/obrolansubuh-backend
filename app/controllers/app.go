@@ -19,6 +19,15 @@ type ToolbarItem struct {
 	Url  string
 }
 
+type Action struct {
+	Rel string
+	Uri string
+}
+
+type JsonResponse struct {
+	Actions []string
+}
+
 func (c App) checkUser() revel.Result {
 	if _, ok := c.Session["user"]; ok {
 		return nil
