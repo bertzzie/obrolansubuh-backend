@@ -3,8 +3,10 @@ package controllers
 import (
 	"crypto/md5"
 	"encoding/hex"
+	"fmt"
 	"github.com/revel/revel"
 	"io/ioutil"
+	"net/http"
 	"obrolansubuh.com/backend/app/routes"
 	"obrolansubuh.com/models"
 	"path/filepath"
@@ -37,6 +39,17 @@ type FileUploadError struct {
 	Files []FailedUpload `json:"files"`
 }
 
+type Link struct {
+	Rel string `json:"rel"`
+	Uri string `json:"uri"`
+}
+
+type PostCreated struct {
+	ID    int64  `json:"id"`
+	Title string `json:"title"`
+	Links []Link `json:"links"`
+}
+
 func (c Post) NewPost() revel.Result {
 	ToolbarItems := []ToolbarItem{
 		ToolbarItem{Id: "publish-post", Text: "Publish", Icon: "editor:publish", Url: "post.NewPost"},
@@ -60,8 +73,10 @@ func (c Post) SavePost(title string, content string) revel.Result {
 	contributor, gcErr := c.GetContributor(c.Session["user"])
 
 	if gcErr != nil {
-		revel.ERROR.Fatalf("ERROR GET CONTRIBUTOR")
-		return c.Redirect(routes.Post.NewPost())
+		revel.ERROR.Printf("[LGFATAL] Failed to get author info when creating new post. Likely a database problem.")
+
+		c.Response.Status = http.StatusInternalServerError
+		return c.RenderText(c.Message("errors.post.database"))
 	}
 
 	newPost := models.Post{
@@ -73,12 +88,23 @@ func (c Post) SavePost(title string, content string) revel.Result {
 
 	c.Trx.Create(&newPost)
 	if err := c.Trx.Error; err != nil {
-		revel.ERROR.Fatalf("INSERT ERROR: %s", err)
-		return c.Redirect(routes.Post.NewPost())
+		revel.ERROR.Printf("[LGFATAL] Failed to save post in database.")
+
+		c.Response.Status = http.StatusInternalServerError
+		return c.RenderText(c.Message("errors.post.database"))
 	}
 
-	c.Flash.Success("Post BARU BERHASIL. WOOO~")
-	return c.Redirect(routes.Post.NewPost())
+	revel.INFO.Printf("[LGINFO] Contributor %s created a post with id %d at %s.",
+		c.Session["username"],
+		newPost.ID,
+		newPost.CreatedAt,
+	)
+
+	link := Link{Rel: "post/edit", Uri: fmt.Sprintf("/post/%d/edit", newPost.ID)}
+	PC := PostCreated{ID: newPost.ID, Title: newPost.Title, Links: []Link{link}}
+
+	c.Response.Status = http.StatusCreated
+	return c.RenderJson(PC)
 }
 
 func (c Post) EditPost(id int64) revel.Result {
@@ -115,7 +141,7 @@ func (c Post) ImageUpload(image []byte) revel.Result {
 			Files: []FailedUpload{failedUpload},
 		}
 
-		c.Response.Status = 500
+		c.Response.Status = http.StatusInternalServerError
 		return c.RenderJson(FUR)
 	} else {
 		fileInfo := UploadedFile{

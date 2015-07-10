@@ -8,3 +8,4 @@ errors.db.generic=[DTFE] Database Error. Please contact web administrator.
 
 # Post Messages
 errors.upload.image=Image Upload Failed. Please contact web administrator.
+errors.post.database=Post creation failed. Database error. Please contact web administrator.

@@ -23,6 +23,7 @@
     <link rel="import" href="/public/bower_components/paper-header-panel/paper-header-panel.html">
     <link rel="import" href="/public/bower_components/paper-toolbar/paper-toolbar.html">
     <link rel="import" href="/public/bower_components/paper-menu/paper-menu.html">
+    <link rel="import" href="/public/bower_components/paper-toast/paper-toast.html">
 
     <link rel="import" href="/public/bower_components/iron-icons/iron-icons.html">
     <link rel="import" href="/public/bower_components/iron-icons/editor-icons.html">
@@ -56,5 +57,6 @@
                 {{ end }}
             </paper-toolbar>
 
-{{ template "flash.html" . }}
-
+        <section id="flash-container">
+            {{ template "flash.html" . }}
+        </section>

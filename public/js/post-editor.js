@@ -42,8 +42,31 @@
 			};
 
 		$.post("/post/new", postData, function (data, textStatus, jqXHR) {
-			console.log(data);
-			console.log(textStatus);
+			window.location.replace(data["links"][0]["uri"]);
+		})
+		.fail(function (jqXHR, textStatus, errorThrown) {
+			var parent = document.querySelector("#flash-container");
+
+			var notif = document.createElement("paper-toast"),
+			    label = document.createElement("span");
+
+			notif.setAttribute("duration", "5000");
+			notif.classList.add("error");
+
+			label.setAttribute("id", "label");
+			label.classList.add("style-scope");
+			label.classList.add("paper-toast");
+
+			label.textContent = jqXHR.responseText;
+
+			notif.appendChild(label);
+			parent.appendChild(notif);
+		})
+		.always(function () {
+			// timeout so the notification can appear more smoothly
+			setTimeout(function () {
+				document.querySelector("paper-toast").show();
+			}, 1000);
 		});
 
 		evt.preventDefault();
