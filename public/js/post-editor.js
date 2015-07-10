@@ -28,8 +28,13 @@
 		// This comes from the plugin we use. Event data is exposed 
 		// naked to the user (us) so we can have better control.
 		// See https://github.com/blueimp/jQuery-File-Upload/wiki/Options
-		var error = evt.detail.jqXHR.responseJSON["files"][0];
+		var error = evt.detail.jqXHR.responseJSON["files"][0],
+			// current uploading image
+		    elem  = document.querySelector(".medium-insert-active");
+
 		alert(error["error"]);
+
+		elem.parentElement.removeChild(elem);
 	});
 
 	var publishButton = document.querySelector("#publish-post");
