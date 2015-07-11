@@ -32,7 +32,13 @@
 			// current uploading image
 		    elem  = document.querySelector(".medium-insert-active");
 
-		alert(error["error"]);
+		var ToastNotif = CreateToastNotification(
+			document.querySelector("#flash-container"),
+			error["error"],
+			5000
+		);
+
+		ShowNotification(ToastNotif);
 
 		elem.parentElement.removeChild(elem);
 	});
@@ -43,37 +49,49 @@
 			postEditor = document.querySelector("#post-editor"),
 			postData   = {
 				title   : postTitle.value,
-				content : postEditor.getEditorContent()
+				content : postEditor.getEditorContent(),
+				publish : true
 			};
 
+		var ToastNotif; // for Toast Notification in case something goes wrong.
 		$.post("/post/new", postData, function (data, textStatus, jqXHR) {
 			window.location.replace(data["links"][0]["uri"]);
 		})
 		.fail(function (jqXHR, textStatus, errorThrown) {
 			var parent = document.querySelector("#flash-container");
 
-			var notif = document.createElement("paper-toast"),
-			    label = document.createElement("span");
-
-			notif.setAttribute("duration", "5000");
-			notif.classList.add("error");
-
-			label.setAttribute("id", "label");
-			label.classList.add("style-scope");
-			label.classList.add("paper-toast");
-
-			label.textContent = jqXHR.responseText;
-
-			notif.appendChild(label);
-			parent.appendChild(notif);
+			ToastNotif = CreateToastNotification(parent, jqXHR.responseText, 5000);
 		})
 		.always(function () {
-			// timeout so the notification can appear more smoothly
-			setTimeout(function () {
-				document.querySelector("paper-toast").show();
-			}, 1000);
+			ShowNotification(ToastNotif);
 		});
 
 		evt.preventDefault();
 	});
+
+    function CreateToastNotification(parentElement, content, duration) {
+    	var notif = document.createElement("paper-toast"),
+    	label = document.createElement("span");
+
+    	notif.setAttribute("duration", 5000);
+    	notif.classList.add("error");
+
+    	label.setAttribute("id", "label");
+    	label.classList.add("style-scope");
+    	label.classList.add("paper-toast");
+
+    	label.textContent = content;
+
+    	notif.appendChild(label);
+    	parentElement.appendChild(notif);
+
+    	return notif;
+    }
+
+    function ShowNotification(element) {
+		// timeout so the notification can appear more smoothly
+    	setTimeout(function () {
+    		element.show();
+    	}, 500);
+    }
 })();

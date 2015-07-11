@@ -58,7 +58,7 @@ func (c Post) NewPost() revel.Result {
 	return c.Render(ToolbarItems)
 }
 
-func (c Post) SavePost(title string, content string) revel.Result {
+func (c Post) SavePost(title string, content string, publish bool) revel.Result {
 	c.Validation.Required(title)
 	c.Validation.Required(content)
 	c.Validation.MaxSize(title, 1024)
@@ -83,7 +83,7 @@ func (c Post) SavePost(title string, content string) revel.Result {
 		Title:     title,
 		Content:   content,
 		Author:    contributor,
-		Published: true,
+		Published: publish,
 	}
 
 	c.Trx.Create(&newPost)
