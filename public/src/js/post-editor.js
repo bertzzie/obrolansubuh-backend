@@ -1,4 +1,8 @@
+import * as OS from "./obrolansubuh"
+
 (function () {
+	"use strict";
+
 	window.addEventListener("WebComponentsReady", function (evt) {
 		var mainDrawerPanel = document.querySelector("#main-drawer-panel"),
 			postTitle = document.querySelector("input#post-title"),
@@ -32,13 +36,13 @@
 			// current uploading image
 		    elem  = document.querySelector(".medium-insert-active");
 
-		var ToastNotif = CreateToastNotification(
+		var ToastNotif = new OS.ToastNotification(
 			document.querySelector("#flash-container"),
 			error["error"],
 			5000
 		);
 
-		ShowNotification(ToastNotif);
+		ToastNotif.Show();
 
 		elem.parentElement.removeChild(elem);
 	});
@@ -60,38 +64,12 @@
 		.fail(function (jqXHR, textStatus, errorThrown) {
 			var parent = document.querySelector("#flash-container");
 
-			ToastNotif = CreateToastNotification(parent, jqXHR.responseText, 5000);
+			ToastNotif = new OS.ToastNotification(parent, jqXHR.responseText, 5000);
 		})
 		.always(function () {
-			ShowNotification(ToastNotif);
+			ToastNotif.Show();
 		});
 
 		evt.preventDefault();
 	});
-
-    function CreateToastNotification(parentElement, content, duration) {
-    	var notif = document.createElement("paper-toast"),
-    	label = document.createElement("span");
-
-    	notif.setAttribute("duration", 5000);
-    	notif.classList.add("error");
-
-    	label.setAttribute("id", "label");
-    	label.classList.add("style-scope");
-    	label.classList.add("paper-toast");
-
-    	label.textContent = content;
-
-    	notif.appendChild(label);
-    	parentElement.appendChild(notif);
-
-    	return notif;
-    }
-
-    function ShowNotification(element) {
-		// timeout so the notification can appear more smoothly
-    	setTimeout(function () {
-    		element.show();
-    	}, 500);
-    }
 })();
