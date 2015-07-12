@@ -48,28 +48,38 @@ import * as OS from "./obrolansubuh"
 	});
 
 	var publishButton = document.querySelector("#publish-post");
-	publishButton.addEventListener("click", function (evt) {
-		var postTitle  = document.querySelector("input#post-title"),
-			postEditor = document.querySelector("#post-editor"),
-			postData   = {
-				title   : postTitle.value,
-				content : postEditor.getEditorContent(),
-				publish : true
-			};
+	publishButton.addEventListener("click", CreatePostSubmitListener(
+		document.querySelector("input#post-title"),
+		document.querySelector("#post-editor"),
+		true
+	));
 
-		var ToastNotif; // for Toast Notification in case something goes wrong.
-		$.post("/post/new", postData, function (data, textStatus, jqXHR) {
-			window.location.replace(data["links"][0]["uri"]);
-		})
-		.fail(function (jqXHR, textStatus, errorThrown) {
-			var parent = document.querySelector("#flash-container");
+	var draftButton = document.querySelector("#save-draft");
+	draftButton.addEventListener("click", CreatePostSubmitListener(
+		document.querySelector("input#post-title"),
+		document.querySelector("#post-editor"),
+		false
+	));
 
-			ToastNotif = new OS.ToastNotification(parent, jqXHR.responseText, 5000);
-		})
-		.always(function () {
-			ToastNotif.Show();
-		});
+	function CreatePostSubmitListener(titleElem, editorElem, publish) {
+		return (evt) => {
+			var postData = {
+				title   : titleElem.value,
+				content : editorElem.getEditorContent(),
+				publish : publish
+			}, ToastNotif;
 
-		evt.preventDefault();
-	});
+			$.post("/post/new", postData, (data, textStatus, jqXHR) => {
+				window.location.replace(data["links"][0]["uri"]);
+			})
+			.fail((jqXHR, textStatus, errorThrown) => {
+				var parent = document.querySelector("#flash-container");
+
+				ToastNotif = new OS.ToastNotification(parent, jqXHR.responseText, 5000);
+			})
+			.always(() => { ToastNotif.Show(); });
+
+			evt.preventDefault();
+		}
+	}
 })();

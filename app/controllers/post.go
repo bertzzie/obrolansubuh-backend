@@ -53,6 +53,7 @@ type PostCreated struct {
 func (c Post) NewPost() revel.Result {
 	ToolbarItems := []ToolbarItem{
 		ToolbarItem{Id: "publish-post", Text: "Publish", Icon: "editor:publish", Url: "post.NewPost"},
+		ToolbarItem{Id: "save-draft", Text: "Save Draft", Icon: "save", Url: "post.NewPost"},
 	}
 
 	return c.Render(ToolbarItems)
