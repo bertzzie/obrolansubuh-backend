@@ -13,10 +13,11 @@ type App struct {
 }
 
 type ToolbarItem struct {
-	Id   string
-	Text string
-	Icon string
-	Url  string
+	Id       string
+	Text     string
+	Icon     string
+	Url      string
+	UrlParam string
 }
 
 type Action struct {

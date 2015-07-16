@@ -3,6 +3,7 @@ package controllers
 import (
 	"crypto/md5"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"github.com/revel/revel"
 	"io/ioutil"
@@ -10,6 +11,7 @@ import (
 	"obrolansubuh.com/backend/app/routes"
 	"obrolansubuh.com/models"
 	"path/filepath"
+	"strconv"
 	"time"
 )
 
@@ -52,8 +54,8 @@ type PostCreated struct {
 
 func (c Post) NewPost() revel.Result {
 	ToolbarItems := []ToolbarItem{
-		ToolbarItem{Id: "publish-post", Text: "Publish", Icon: "editor:publish", Url: "post.NewPost"},
-		ToolbarItem{Id: "save-draft", Text: "Save Draft", Icon: "save", Url: "post.NewPost"},
+		ToolbarItem{Id: "publish-post", Text: "Publish", Icon: "editor:publish", Url: "Post.NewPost"},
+		ToolbarItem{Id: "save-draft", Text: "Save Draft", Icon: "save", Url: "Post.NewPost"},
 	}
 
 	return c.Render(ToolbarItems)
@@ -109,10 +111,51 @@ func (c Post) SavePost(title string, content string, publish bool) revel.Result 
 }
 
 func (c Post) EditPost(id int64) revel.Result {
+	ToolbarItems := []ToolbarItem{
+		ToolbarItem{Id: "update-post", Text: "Update", Icon: "editor:publish", Url: "Post.UpdatePost", UrlParam: strconv.FormatInt(id, 10)},
+	}
+
 	post := models.Post{}
 	c.Trx.Where("id = ?", id).First(&post)
 
-	return c.Render(post)
+	return c.Render(post, ToolbarItems)
+}
+
+func (c Post) UpdatePost(id int64, title string, content string, publish bool) revel.Result {
+	var p models.Post
+	data, ioerr := ioutil.ReadAll(c.Request.Body)
+	if ioerr != nil {
+		revel.ERROR.Printf("[LGFATAL] Failed to read request body on %s. Error: %s",
+			"Post.UpdatePost",
+			ioerr)
+
+		c.Response.Status = http.StatusInternalServerError
+		c.RenderText("YOUR MOM DID IT")
+	}
+
+	jserr := json.Unmarshal(data, &p)
+	if jserr != nil {
+		revel.ERROR.Printf("[LGFATAL] Failed to decode JSON from client.")
+
+		c.Response.Status = http.StatusBadRequest
+		c.RenderText("JSON OI")
+	}
+
+	c.Trx.Table("posts").Where("id = ?", p.ID).Updates(p)
+	if err := c.Trx.Error; err != nil {
+		revel.ERROR.Printf("[LGFATAL] Failed to save post in database.")
+
+		c.Response.Status = http.StatusInternalServerError
+		return c.RenderText(c.Message("errors.post.database"))
+	}
+
+	revel.INFO.Printf("[LGINFO] Contributor %s updated a post with id %d at %s.",
+		c.Session["username"],
+		p.ID,
+		p.CreatedAt,
+	)
+
+	return c.RenderText("A")
 }
 
 func (c Post) ImageUpload(image []byte) revel.Result {

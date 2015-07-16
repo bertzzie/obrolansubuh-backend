@@ -13,6 +13,7 @@ GET     /logout                                 App.Logout
 GET     /post/new                               Post.NewPost
 POST    /post/new                               Post.SavePost
 GET     /post/:id/edit                          Post.EditPost
+PUT     /post/:id/edit                          Post.UpdatePost
 
 PUT     /post/image/upload                      Post.ImageUpload
 

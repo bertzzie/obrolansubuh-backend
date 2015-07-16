@@ -12,6 +12,8 @@
 
     <section id="post-creator">
         <input type="text" id="post-title" name="post-title" placeholder="Title" value="{{ .post.Title }}">
+        <input type="hidden" id="post-id" name="post-id" value="{{ .post.ID }}">
+        <input type="hidden" id="post-publish" name="post-publish" value="{{ .post.Published }}">
 
         <medium-editor-polymer id="post-editor"
             upload-url="/post/image/upload" 

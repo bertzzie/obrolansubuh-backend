@@ -48,7 +48,11 @@
 
                     {{ range .ToolbarItems }}
                         <paper-button class="toolbar-item" id="{{ .Id }}">
+                            {{ if .UrlParam }}
+                            <a href="{{ url .Url .UrlParam }}">
+                            {{ else }}
                             <a href="{{ url .Url }}">
+                            {{ end }}
                                 <iron-icon icon="{{ polymer_icon .Icon }}"></iron-icon>
                                 {{ .Text }}
                             </a>

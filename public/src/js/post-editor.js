@@ -48,18 +48,55 @@ import * as OS from "./obrolansubuh"
 	});
 
 	var publishButton = document.querySelector("#publish-post");
-	publishButton.addEventListener("click", CreatePostSubmitListener(
-		document.querySelector("input#post-title"),
-		document.querySelector("#post-editor"),
-		true
-	));
+	if (publishButton) {
+		publishButton.addEventListener("click", CreatePostSubmitListener(
+			document.querySelector("input#post-title"),
+			document.querySelector("#post-editor"),
+			true
+		));
+	}
 
 	var draftButton = document.querySelector("#save-draft");
-	draftButton.addEventListener("click", CreatePostSubmitListener(
-		document.querySelector("input#post-title"),
-		document.querySelector("#post-editor"),
-		false
-	));
+	if (draftButton) {
+		draftButton.addEventListener("click", CreatePostSubmitListener(
+			document.querySelector("input#post-title"),
+			document.querySelector("#post-editor"),
+			false
+		));
+	}
+
+	var updateButton = document.querySelector("#update-post");
+	if (updateButton) {
+		updateButton.addEventListener("click", CreatePutSubmitListener(
+			document.querySelector("input#post-title"),
+			document.querySelector("#post-editor"),
+			document.querySelector("input#post-id"),
+			document.querySelector("input#post-publish").value
+		));
+	}
+
+	function CreatePutSubmitListener(titleElem, editorElem, idElem, publish) {
+		return (evt) => {
+			var id = idElem.value,
+				data = {
+					id        : parseInt(id),
+					title     : titleElem.value,
+					content   : editorElem.getEditorContent(),
+					published : publish === "true"
+				}, ToastNotif;
+
+			console.log(JSON.stringify(data));
+
+			$.ajax({
+				url         : "/post/" + id + "/edit",
+				type        : "PUT",
+				data        : JSON.stringify(data),
+				contentType : "application/json"
+			});
+
+			evt.preventDefault();
+		}
+	}
 
 	function CreatePostSubmitListener(titleElem, editorElem, publish) {
 		return (evt) => {
