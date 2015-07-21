@@ -89,8 +89,10 @@ func (c Post) SavePost(title string, content string, publish bool) revel.Result 
 	if gcErr != nil {
 		revel.ERROR.Printf("[LGFATAL] Failed to get author info when creating new post. Likely a database problem.")
 
+		FR := FailRequest{Messages: []string{c.Message("errors.post.database")}}
+
 		c.Response.Status = http.StatusInternalServerError
-		return c.RenderText(c.Message("errors.post.database"))
+		return c.RenderJson(FR)
 	}
 
 	newPost := models.Post{
@@ -104,8 +106,10 @@ func (c Post) SavePost(title string, content string, publish bool) revel.Result 
 	if err := c.Trx.Error; err != nil {
 		revel.ERROR.Printf("[LGFATAL] Failed to save post in database.")
 
+		FR := FailRequest{Messages: []string{c.Message("errors.post.database")}}
+
 		c.Response.Status = http.StatusInternalServerError
-		return c.RenderText(c.Message("errors.post.database"))
+		return c.RenderJson(FR)
 	}
 
 	revel.INFO.Printf("[LGINFO] Contributor %s created a post with id %d at %s.",
@@ -149,8 +153,10 @@ func (c Post) UpdatePost(id int64) revel.Result {
 			"Post.UpdatePost",
 			ioerr)
 
+		FR := FailRequest{Messages: []string{c.Message("errors.post.request")}}
+
 		c.Response.Status = http.StatusInternalServerError
-		c.RenderText(c.Message("errors.post.request"))
+		c.RenderJson(FR)
 	}
 
 	jserr := json.Unmarshal(data, &p)
@@ -159,16 +165,20 @@ func (c Post) UpdatePost(id int64) revel.Result {
 			"Post.UpdatePost",
 			jserr)
 
+		FR := FailRequest{Messages: []string{c.Message("errors.post.json")}}
+
 		c.Response.Status = http.StatusBadRequest
-		c.RenderText(c.Message("errors.post.json"))
+		c.RenderJson(FR)
 	}
 
 	c.Trx.Table("posts").Where("id = ?", p.ID).Updates(p)
 	if err := c.Trx.Error; err != nil {
 		revel.ERROR.Printf("[LGFATAL] Failed to save post in database.")
 
+		FR := FailRequest{Messages: []string{c.Message("errors.post.database")}}
+
 		c.Response.Status = http.StatusInternalServerError
-		return c.RenderText(c.Message("errors.post.database"))
+		return c.RenderJson(FR)
 	}
 
 	revel.INFO.Printf("[LGINFO] Contributor %s updated a post with id %d at %s.",
