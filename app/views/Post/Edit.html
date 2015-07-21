@@ -1,5 +1,5 @@
-{{ set . "title" "Editing" }}
-{{ set . "panelTitle" "Editing <span id='PostTitlePanel'>Untitled</span>" }}
+{{ set . "title" .post.Title }}
+{{ set . "panelTitle" .post.Title }}
 
 {{ append . "moreStyles" "css/post-editor.css" }}
 {{ append . "moreScripts" "dist/js/post-editor.js" }}

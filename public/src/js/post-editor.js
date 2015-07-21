@@ -6,7 +6,7 @@ import * as OS from "./obrolansubuh"
 	window.addEventListener("WebComponentsReady", function (evt) {
 		var mainDrawerPanel = document.querySelector("#main-drawer-panel"),
 			postTitle = document.querySelector("input#post-title"),
-		    mainTitle = document.querySelector("#PostTitlePanel");
+		    mainTitle = document.querySelector("#main-panel-title");
 
 		mainDrawerPanel.forceNarrow = true;
 		mainDrawerPanel.closeDrawer();
