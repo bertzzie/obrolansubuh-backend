@@ -52,6 +52,11 @@ type PostCreated struct {
 	Links []Link `json:"links"`
 }
 
+type PostUpdated struct {
+	ID    int64  `json:"id"`
+	Title string `json:"title"`
+}
+
 func (c Post) NewPost() revel.Result {
 	ToolbarItems := []ToolbarItem{
 		ToolbarItem{Id: "publish-post", Text: "Publish", Icon: "editor:publish", Url: "Post.NewPost"},
@@ -130,15 +135,17 @@ func (c Post) UpdatePost(id int64, title string, content string, publish bool) r
 			ioerr)
 
 		c.Response.Status = http.StatusInternalServerError
-		c.RenderText("YOUR MOM DID IT")
+		c.RenderText(c.Message("errors.post.request"))
 	}
 
 	jserr := json.Unmarshal(data, &p)
 	if jserr != nil {
-		revel.ERROR.Printf("[LGFATAL] Failed to decode JSON from client.")
+		revel.ERROR.Printf("[LGFATAL] Failed to decode JSON from client on %s. Error: %s.",
+			"Post.UpdatePost",
+			jserr)
 
 		c.Response.Status = http.StatusBadRequest
-		c.RenderText("JSON OI")
+		c.RenderText(c.Message("errors.post.json"))
 	}
 
 	c.Trx.Table("posts").Where("id = ?", p.ID).Updates(p)
@@ -155,7 +162,9 @@ func (c Post) UpdatePost(id int64, title string, content string, publish bool) r
 		p.CreatedAt,
 	)
 
-	return c.RenderText("A")
+	PU := PostUpdated{ID: p.ID, Title: p.Title}
+	c.Response.Status = http.StatusOK // should we use Created for update too?
+	return c.RenderJson(PU)
 }
 
 func (c Post) ImageUpload(image []byte) revel.Result {
