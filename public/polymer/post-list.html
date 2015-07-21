@@ -1,0 +1,45 @@
+<link rel="import" href="/public/bower_components/polymer/polymer.html">
+<link rel="import" href="/public/bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="/public/bower_components/iron-list/iron-list.html">
+<link rel="import" href="/public/bower_components/paper-material/paper-material.html">
+
+<dom-module id="post-list">
+
+    <style>
+        paper-material {
+        	margin: 16px 16px 0 16px;
+        	padding: 20px;
+        }
+    </style>
+
+	<template>
+		<iron-ajax url="/post/list.json" last-response={{data}} auto></iron-ajax>
+		<iron-list items="[[data]]" as="item">
+			<template>
+			    <div class="item">
+					<paper-material elevation="1">
+						<aside>
+							<p>[[item.]]</p>
+						</aside>
+						<article class="post-content">
+						    <h3>[[item.Title]]</h3>
+						    <p>[[getFirstParagraph(item.Content)]]</p>
+						</article>
+					</paper-material>
+				</div>
+			</template>
+		</iron-list>
+	</template>
+
+	<script>
+	Polymer({
+		is: "post-list",
+		getFirstParagraph: function (content) {
+			var div = document.createElement("div");
+			div.innerHTML = content;
+
+			return div.firstChild.textContent;
+		}
+	});
+	</script>
+</dom-module>

@@ -42,7 +42,7 @@
         <paper-header-panel main id="main-container" mode="waterfall">
             <paper-toolbar>
                 <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
-                <div id="main-panel-title">{{ raw .panelTitle }}</div>
+                <div id="main-panel-title">{{ .panelTitle }}</div>
                 {{ if .ToolbarItems }}
                     <link rel="import" href="/public/bower_components/paper-button/paper-button.html">
 

@@ -5,6 +5,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
+	"github.com/jinzhu/gorm"
 	"github.com/revel/revel"
 	"io/ioutil"
 	"net/http"
@@ -58,13 +59,39 @@ type PostUpdated struct {
 	Message string `json:"message"`
 }
 
+func getUsersPost(uid string, db *gorm.DB) (posts []models.Post, err error) {
+	db.Where("author_id = ?", uid).Find(&posts)
+	if err = db.Error; err != nil {
+		return nil, err
+	}
+
+	return posts, nil
+}
+
+func (c Post) JsonList() revel.Result {
+	// enforce using cookies here
+	// so people can't just API call this easily
+	uid := c.Session["userid"]
+	posts, err := getUsersPost(uid, c.Trx)
+
+	if err != nil {
+		revel.ERROR.Printf("[LGFATAL] Failed to get post list from database.")
+
+		FR := FailRequest{Messages: []string{c.Message("errors.post.database")}}
+
+		c.Response.Status = http.StatusInternalServerError
+		return c.RenderJson(FR)
+	}
+
+	return c.RenderJson(posts)
+}
+
 func (c Post) List() revel.Result {
 	uid := c.Session["userid"]
-	var posts []*models.Post
+	posts, err := getUsersPost(uid, c.Trx)
 
-	c.Trx.Where("author_id = ?", uid).Find(&posts)
-	if err := c.Trx.Error; err != nil {
-		revel.ERROR.Printf("[LGFATAL] Failed to save post in database.")
+	if err != nil {
+		revel.ERROR.Printf("[LGFATAL] Failed to get post list from database.")
 
 		c.Flash.Error(c.Message("errors.post.database"))
 		return c.Redirect(routes.App.Index())

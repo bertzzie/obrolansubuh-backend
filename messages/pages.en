@@ -10,3 +10,6 @@ login.form.remember=Remember me?
 
 login.action.clear=Clear Values
 login.action.submit=Login
+
+# Posts page
+post.list.title=Your Posts

@@ -74,7 +74,8 @@
     "paper-toast": "PolymerElements/paper-toast#^1.0.0",
     "paper-toggle-button": "PolymerElements/paper-toggle-button#^1.0.0",
     "paper-toolbar": "PolymerElements/paper-toolbar#^1.0.0",
-    "medium-editor-polymer": "bertzzie/medium-editor-polymer"
+    "medium-editor-polymer": "bertzzie/medium-editor-polymer",
+    "iron-list": "PolymerElements/iron-list#~1.0.0"
   },
   "resolutions": {
     "medium-editor": "~5.1.0"

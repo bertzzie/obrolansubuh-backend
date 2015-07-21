@@ -11,6 +11,7 @@ GET     /logout                                 App.Logout
 
 # Post CRUD
 GET     /post/list                              Post.List
+GET     /post/list.json                         Post.JsonList
 GET     /post/new                               Post.New
 POST    /post/new                               Post.Save
 GET     /post/:id/edit                          Post.Edit

@@ -10,3 +10,6 @@ login.form.remember=Ingat Saya?
 
 login.action.clear=Bersihkan
 login.action.submit=Login
+
+# Posts page
+post.list.title=Tulisan Anda

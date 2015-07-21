@@ -1,16 +1,12 @@
-{{ set . "title" "Post List" }}
-{{ set . "panelTitle" "Editing <span id='PostTitlePanel'>Untitled</span>" }}
+{{ msg . "post.list.title" | set . "title" }}
+{{ msg . "post.list.title" | set . "panelTitle" }}
 
 {{template "header.html" .}}
 
 {{ template "flash.html" . }}
 
-<h1>Post List</h1>
+<link rel="import" href="/public/polymer/post-list.html">
 
-<ul>
-{{ range .posts }}
-    <li>{{ .Title }}</li>
-{{ end }}
-</ul>
+<post-list></post-list>
 
 {{template "footer.html" .}}
