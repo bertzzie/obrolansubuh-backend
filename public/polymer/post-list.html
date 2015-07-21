@@ -10,6 +10,11 @@
         	margin: 16px 16px 0 16px;
         	padding: 20px;
         }
+
+        .actions a {
+        	color: black;
+        	text-decoration: none;
+        }
     </style>
 
 	<template>
@@ -19,7 +24,21 @@
 			    <div class="item">
 					<paper-material elevation="1">
 						<aside>
-							<p>[[item.]]</p>
+							<p>[[getDateDOM(item.CreatedAt)]]</p>
+							<paper-button raised class="actions">
+							    <a href="">
+							    	<iron-icon icon="editor:mode-edit"></iron-icon>
+							    	Edit
+							    </a>
+							</paper-button>
+
+							<template is="dom-if" if="{{ checkPublished(item) }}">
+							Published!
+							</template>
+
+							<template is="dom-if" if="{{ !checkPublished(item) }}">
+							Unpublished!
+							</template>
 						</aside>
 						<article class="post-content">
 						    <h3>[[item.Title]]</h3>
@@ -32,6 +51,11 @@
 	</template>
 
 	<script>
+	var MonthNames = [
+	    "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+	    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+	];
+
 	Polymer({
 		is: "post-list",
 		getFirstParagraph: function (content) {
@@ -39,6 +63,24 @@
 			div.innerHTML = content;
 
 			return div.firstChild.textContent;
+		},
+		checkPublished: function (item) {
+			return item.Published === true;
+		},
+		getDateDOM: function (date) {
+			var jsDate = this.RFC3339ToDate(date),
+			    result = jsDate.getDate()  + " " +
+			             MonthNames[jsDate.getMonth()] + " " + 
+			             jsDate.getFullYear();
+
+			return result;
+		},
+		// because golang's default time.Time format
+		// is on RFC3339
+		RFC3339ToDate: function (date) {
+			var epoch = Date.parse(date);
+
+			return new Date(epoch);
 		}
 	});
 	</script>

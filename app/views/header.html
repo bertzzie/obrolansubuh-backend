@@ -28,6 +28,7 @@
     <link rel="import" href="/public/bower_components/iron-icons/iron-icons.html">
     <link rel="import" href="/public/bower_components/iron-icons/editor-icons.html">
     <link rel="import" href="/public/bower_components/iron-iconset/iron-iconset.html">
+    <link rel="import" href="/public/bower_components/paper-button/paper-button.html">
     <link rel="import" href="/public/bower_components/paper-icon-button/paper-icon-button.html">
 
     <link rel="stylesheet" href="/public/css/obrolansubuh.css">
@@ -44,8 +45,6 @@
                 <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
                 <div id="main-panel-title">{{ .panelTitle }}</div>
                 {{ if .ToolbarItems }}
-                    <link rel="import" href="/public/bower_components/paper-button/paper-button.html">
-
                     {{ range .ToolbarItems }}
                         <paper-button class="toolbar-item" id="{{ .Id }}">
                             {{ if .UrlParam }}
