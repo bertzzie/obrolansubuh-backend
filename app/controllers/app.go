@@ -5,6 +5,7 @@ import (
 	"github.com/revel/revel"
 	"golang.org/x/crypto/bcrypt"
 	"obrolansubuh.com/backend/app/routes"
+	"strconv"
 	"time"
 )
 
@@ -71,7 +72,7 @@ func (c App) ProcessLogin(email, password string, remember bool) revel.Result {
 	} else {
 		err := bcrypt.CompareHashAndPassword([]byte(contributor.Password), []byte(password))
 		if err == nil {
-			c.Session["userid"] = string(contributor.ID)
+			c.Session["userid"] = strconv.FormatInt(contributor.ID, 10)
 			c.Session["user"] = contributor.Email
 			c.Session["username"] = contributor.Name
 			c.Session["userphoto"] = contributor.Photo
