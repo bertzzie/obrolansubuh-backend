@@ -11,10 +11,10 @@ GET     /logout                                 App.Logout
 
 # Post CRUD
 GET     /post/list                              Post.List
-GET     /post/new                               Post.NewPost
-POST    /post/new                               Post.SavePost
-GET     /post/:id/edit                          Post.EditPost
-PUT     /post/:id/edit                          Post.UpdatePost
+GET     /post/new                               Post.New
+POST    /post/new                               Post.Save
+GET     /post/:id/edit                          Post.Edit
+PUT     /post/:id/edit                          Post.Update
 
 PUT     /post/image/upload                      Post.ImageUpload
 

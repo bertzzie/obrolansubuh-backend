@@ -73,16 +73,16 @@ func (c Post) List() revel.Result {
 	return c.Render(posts)
 }
 
-func (c Post) NewPost() revel.Result {
+func (c Post) New() revel.Result {
 	ToolbarItems := []ToolbarItem{
-		ToolbarItem{Id: "publish-post", Text: "Publish", Icon: "editor:publish", Url: "Post.NewPost"},
-		ToolbarItem{Id: "save-draft", Text: "Save Draft", Icon: "save", Url: "Post.NewPost"},
+		ToolbarItem{Id: "publish-post", Text: "Publish", Icon: "editor:publish", Url: "Post.New"},
+		ToolbarItem{Id: "save-draft", Text: "Save Draft", Icon: "save", Url: "Post.New"},
 	}
 
 	return c.Render(ToolbarItems)
 }
 
-func (c Post) SavePost(title string, content string, publish bool) revel.Result {
+func (c Post) Save(title string, content string, publish bool) revel.Result {
 	c.Validation.Required(title).Message(c.Message("post.validation.title"))
 	c.Validation.Required(content).Message(c.Message("post.validation.content"))
 	c.Validation.MaxSize(title, 1024).Message(c.Message("post.validation.title_length"))
@@ -133,16 +133,17 @@ func (c Post) SavePost(title string, content string, publish bool) revel.Result 
 		newPost.CreatedAt,
 	)
 
-	link := Link{Rel: "post/edit", Uri: fmt.Sprintf("/post/%d/edit", newPost.ID)}
+	//link := Link{Rel: "post/edit", Uri: fmt.Sprintf("/post/%d/edit", newPost.ID)}
+	link := Link{Rel: "post/edit", Uri: routes.Post.Edit(newPost.ID)}
 	PC := PostCreated{ID: newPost.ID, Title: newPost.Title, Links: []Link{link}}
 
 	c.Response.Status = http.StatusCreated
 	return c.RenderJson(PC)
 }
 
-func (c Post) EditPost(id int64) revel.Result {
+func (c Post) Edit(id int64) revel.Result {
 	ToolbarItems := []ToolbarItem{
-		ToolbarItem{Id: "update-post", Text: "Update", Icon: "editor:publish", Url: "Post.UpdatePost", UrlParam: strconv.FormatInt(id, 10)},
+		ToolbarItem{Id: "update-post", Text: "Update", Icon: "editor:publish", Url: "Post.Update", UrlParam: strconv.FormatInt(id, 10)},
 	}
 
 	post := models.Post{}
@@ -151,7 +152,7 @@ func (c Post) EditPost(id int64) revel.Result {
 	return c.Render(post, ToolbarItems)
 }
 
-func (c Post) UpdatePost(id int64) revel.Result {
+func (c Post) Update(id int64) revel.Result {
 	c.Validation.Required(id)
 
 	if c.Validation.HasErrors() {
@@ -165,7 +166,7 @@ func (c Post) UpdatePost(id int64) revel.Result {
 	data, ioerr := ioutil.ReadAll(c.Request.Body)
 	if ioerr != nil {
 		revel.ERROR.Printf("[LGFATAL] Failed to read request body on %s. Error: %s",
-			"Post.UpdatePost",
+			"Post.Update",
 			ioerr)
 
 		FR := FailRequest{Messages: []string{c.Message("errors.post.request")}}
@@ -177,7 +178,7 @@ func (c Post) UpdatePost(id int64) revel.Result {
 	jserr := json.Unmarshal(data, &p)
 	if jserr != nil {
 		revel.ERROR.Printf("[LGFATAL] Failed to decode JSON from client on %s. Error: %s.",
-			"Post.UpdatePost",
+			"Post.Update",
 			jserr)
 
 		FR := FailRequest{Messages: []string{c.Message("errors.post.json")}}
