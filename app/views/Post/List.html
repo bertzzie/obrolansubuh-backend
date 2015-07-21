@@ -1,0 +1,16 @@
+{{ set . "title" "Post List" }}
+{{ set . "panelTitle" "Editing <span id='PostTitlePanel'>Untitled</span>" }}
+
+{{template "header.html" .}}
+
+{{ template "flash.html" . }}
+
+<h1>Post List</h1>
+
+<ul>
+{{ range .posts }}
+    <li>{{ .Title }}</li>
+{{ end }}
+</ul>
+
+{{template "footer.html" .}}

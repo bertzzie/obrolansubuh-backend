@@ -8,7 +8,7 @@ import (
 	"github.com/revel/revel"
 	"io/ioutil"
 	"net/http"
-	//"obrolansubuh.com/backend/app/routes"
+	"obrolansubuh.com/backend/app/routes"
 	"obrolansubuh.com/models"
 	"path/filepath"
 	"strconv"
@@ -56,6 +56,21 @@ type PostUpdated struct {
 	ID      int64  `json:"id"`
 	Title   string `json:"title"`
 	Message string `json:"message"`
+}
+
+func (c Post) List() revel.Result {
+	uid := c.Session["userid"]
+	var posts []*models.Post
+
+	c.Trx.Where("author_id = ?", uid).Find(&posts)
+	if err := c.Trx.Error; err != nil {
+		revel.ERROR.Printf("[LGFATAL] Failed to save post in database.")
+
+		c.Flash.Error(c.Message("errors.post.database"))
+		return c.Redirect(routes.App.Index())
+	}
+
+	return c.Render(posts)
 }
 
 func (c Post) NewPost() revel.Result {

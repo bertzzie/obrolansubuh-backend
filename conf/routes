@@ -10,6 +10,7 @@ POST    /login                                  App.ProcessLogin
 GET     /logout                                 App.Logout
 
 # Post CRUD
+GET     /post/list                              Post.List
 GET     /post/new                               Post.NewPost
 POST    /post/new                               Post.SavePost
 GET     /post/:id/edit                          Post.EditPost
