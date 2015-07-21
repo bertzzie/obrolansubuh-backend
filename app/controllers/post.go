@@ -8,7 +8,7 @@ import (
 	"github.com/revel/revel"
 	"io/ioutil"
 	"net/http"
-	"obrolansubuh.com/backend/app/routes"
+	//"obrolansubuh.com/backend/app/routes"
 	"obrolansubuh.com/models"
 	"path/filepath"
 	"strconv"
@@ -68,15 +68,20 @@ func (c Post) NewPost() revel.Result {
 }
 
 func (c Post) SavePost(title string, content string, publish bool) revel.Result {
-	c.Validation.Required(title)
-	c.Validation.Required(content)
-	c.Validation.MaxSize(title, 1024)
+	c.Validation.Required(title).Message(c.Message("post.validation.title"))
+	c.Validation.Required(content).Message(c.Message("post.validation.content"))
+	c.Validation.MaxSize(title, 1024).Message(c.Message("post.validation.title_length"))
 
 	if c.Validation.HasErrors() {
-		c.Validation.Keep()
-		c.FlashParams()
+		messages := make([]string, 0, len(c.Validation.Errors))
+		for _, v := range c.Validation.ErrorMap() {
+			messages = append(messages, v.String())
+		}
 
-		return c.Redirect(routes.Post.NewPost())
+		FR := FailRequest{Messages: messages}
+
+		c.Response.Status = http.StatusBadRequest
+		return c.RenderJson(FR)
 	}
 
 	contributor, gcErr := c.GetContributor(c.Session["user"])
@@ -127,7 +132,16 @@ func (c Post) EditPost(id int64) revel.Result {
 	return c.Render(post, ToolbarItems)
 }
 
-func (c Post) UpdatePost(id int64, title string, content string, publish bool) revel.Result {
+func (c Post) UpdatePost(id int64) revel.Result {
+	c.Validation.Required(id)
+
+	if c.Validation.HasErrors() {
+		FR := FailRequest{Messages: []string{c.Message("post.validation.id")}}
+
+		c.Response.Status = http.StatusBadRequest
+		return c.RenderJson(FR)
+	}
+
 	var p models.Post
 	data, ioerr := ioutil.ReadAll(c.Request.Body)
 	if ioerr != nil {

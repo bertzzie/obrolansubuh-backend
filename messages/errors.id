@@ -11,3 +11,8 @@ errors.upload.image=Upload gambar gagal. Mohon hubungi admin web.
 errors.post.database=Pembuatan post gagal karena kesalahan basis data. Mohon hubungi admin web.
 errors.post.request=Sistem gagal membaca data. Mohon lakukan refresh browser dan coba lagi.
 errors.post.json=Sistem gagal membaca data. Mohon lakukan refresh browser dan coba lagi.
+
+post.validation.id=Validasi gagal. Mohon lakukan refresh browser dan coba lagi.
+post.validation.title=Validasi gagal. Judul tulisan harus diisikan.
+post.validation.content=Validasi gagal. Anda harus mengisikan konten tulisan.
+post.validation.title_length=Validasi gagal. Judul tidak boleh melebihi 1024 karakter.

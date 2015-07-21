@@ -29,6 +29,13 @@ type JsonResponse struct {
 	Actions []string
 }
 
+// JSON request type for 400
+type FailRequest struct {
+	// we want to support sending many errors in 1 response
+	// for i.e. form validation
+	Messages []string `json:"messages"`
+}
+
 func (c App) checkUser() revel.Result {
 	if _, ok := c.Session["user"]; ok {
 		return nil

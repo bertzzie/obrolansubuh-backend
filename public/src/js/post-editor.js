@@ -116,9 +116,10 @@ import * as OS from "./obrolansubuh"
 				window.location.replace(data["links"][0]["uri"]);
 			})
 			.fail((jqXHR, textStatus, errorThrown) => {
-				var parent = document.querySelector("#flash-container");
+				var parent  = document.querySelector("#flash-container"),
+				    message = jqXHR.responseJSON["messages"][0];
 
-				ToastNotif = new OS.ToastNotification(parent, jqXHR.responseText, 5000, true);
+				ToastNotif = new OS.ToastNotification(parent, message, 5000, true);
 			})
 			.always(() => { ToastNotif.Show(); });
 
