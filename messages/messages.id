@@ -3,3 +3,5 @@ login.message.notloggedin=Anda harus login untuk mengakses halaman tersebut. Sil
 login.message.alreadyli=Tidak dapat mengakses halaman login karena anda telah login.
 
 logout.message.success=Logout berhasil. Sampai nanti!
+
+post.update.success=Post %s berhasil diperbaharui!

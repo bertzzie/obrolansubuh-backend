@@ -1,10 +1,13 @@
 export class ToastNotification {
-	constructor(parentElement, content, duration) {
+	constructor(parentElement, content, duration, isError) {
     	this.notif = document.createElement("paper-toast"),
     	this.label = document.createElement("span");
 
     	this.notif.setAttribute("duration", duration);
-    	this.notif.classList.add("error");
+
+        if (isError) {
+        	this.notif.classList.add("error");
+        }
 
     	this.label.setAttribute("id", "label");
     	this.label.classList.add("style-scope");

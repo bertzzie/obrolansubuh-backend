@@ -53,8 +53,9 @@ type PostCreated struct {
 }
 
 type PostUpdated struct {
-	ID    int64  `json:"id"`
-	Title string `json:"title"`
+	ID      int64  `json:"id"`
+	Title   string `json:"title"`
+	Message string `json:"message"`
 }
 
 func (c Post) NewPost() revel.Result {
@@ -162,7 +163,12 @@ func (c Post) UpdatePost(id int64, title string, content string, publish bool) r
 		p.CreatedAt,
 	)
 
-	PU := PostUpdated{ID: p.ID, Title: p.Title}
+	message := fmt.Sprintf(c.Message("post.update.success"), p.Title)
+
+	PU := PostUpdated{
+		ID:      p.ID,
+		Title:   p.Title,
+		Message: message}
 	c.Response.Status = http.StatusOK // should we use Created for update too?
 	return c.RenderJson(PU)
 }

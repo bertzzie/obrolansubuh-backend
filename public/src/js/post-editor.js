@@ -39,7 +39,8 @@ import * as OS from "./obrolansubuh"
 		var ToastNotif = new OS.ToastNotification(
 			document.querySelector("#flash-container"),
 			error["error"],
-			5000
+			5000,
+			true
 		);
 
 		ToastNotif.Show();
@@ -83,16 +84,21 @@ import * as OS from "./obrolansubuh"
 					title     : titleElem.value,
 					content   : editorElem.getEditorContent(),
 					published : publish === "true"
-				}, ToastNotif;
-
-			console.log(JSON.stringify(data));
+				}, 
+				parent = document.querySelector("#flash-container"),
+				ToastNotif;
 
 			$.ajax({
 				url         : "/post/" + id + "/edit",
 				type        : "PUT",
 				data        : JSON.stringify(data),
-				contentType : "application/json"
-			});
+				contentType : "application/json",
+				success     : (data, textStatus, jqXHR) => {
+					var text  = jqXHR.responseJSON["message"];
+
+					ToastNotif = new OS.ToastNotification(parent, text, 5000, false);
+				}
+			}).always(() => { ToastNotif.Show(); });
 
 			evt.preventDefault();
 		}
@@ -112,7 +118,7 @@ import * as OS from "./obrolansubuh"
 			.fail((jqXHR, textStatus, errorThrown) => {
 				var parent = document.querySelector("#flash-container");
 
-				ToastNotif = new OS.ToastNotification(parent, jqXHR.responseText, 5000);
+				ToastNotif = new OS.ToastNotification(parent, jqXHR.responseText, 5000, true);
 			})
 			.always(() => { ToastNotif.Show(); });
 
