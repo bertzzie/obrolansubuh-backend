@@ -133,7 +133,6 @@ func (c Post) Save(title string, content string, publish bool) revel.Result {
 		newPost.CreatedAt,
 	)
 
-	//link := Link{Rel: "post/edit", Uri: fmt.Sprintf("/post/%d/edit", newPost.ID)}
 	link := Link{Rel: "post/edit", Uri: routes.Post.Edit(newPost.ID)}
 	PC := PostCreated{ID: newPost.ID, Title: newPost.Title, Links: []Link{link}}
 

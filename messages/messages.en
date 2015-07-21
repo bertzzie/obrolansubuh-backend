@@ -4,4 +4,4 @@ login.message.alreadyli=Can't access login page. You have logged in previously.
 
 logout.message.success=Logout successful. See you later!
 
-post.update.success=Post %s updated successfully!
+post.update.success=Post "%s" updated successfully!
