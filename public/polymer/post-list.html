@@ -54,13 +54,6 @@
         	height: 20px;
         }
 
-/*
-        .action-icon iron-icon {
-        	height: 19px;
-        	width: 19px;
-        }
-        */
-
         .post-card {
         	display: flex;
         	display: -webkit-flex;
@@ -128,27 +121,6 @@
 							<ul class="actions">
 							    <li class="title">Post Actions</li>
 								<li>
-								<!--
-							    	<a href="">
-							    	<template is="dom-if" if="{{ checkPublished(item) }}">
-							    		<span class="action-icon" style="color:rgba(0,0,0,0.4)">
-									    	<iron-icon icon="cloud-download"></iron-icon>
-								    	</span>
-								    	<span class="action-text" style="color:rgba(0,0,0,0.4)">
-								    	    Unpublish
-								    	</span>
-							    	</template>
-
-							    	<template is="dom-if" if="{{ !checkPublished(item) }}">
-							    		<span class="action-icon" style="color:#3F51B5">
-									    	<iron-icon icon="cloud-upload"></iron-icon>
-								    	</span>
-								    	<span class="action-text" style="color:#3F51B5">
-								    	    Publish
-								    	</span>
-							    	</template>
-							    	</a>
-								    -->
 									<span class="action-icon">
 									    <paper-toggle-button class="publish" checked="{{ checkPublished(item) }}"></paper-toggle-button>
 								    </span>
@@ -176,15 +148,6 @@
 							    	</a>
 							    </li>
 						    </ul>
-
-						    <!--
-							<paper-button raised class="actions">
-							    <a href="">
-							    	<iron-icon icon="editor:mode-edit"></iron-icon>
-							    	Edit
-							    </a>
-							</paper-button>
-							-->
 						</aside>
 
 						<article class="post-content">
