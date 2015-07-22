@@ -1,7 +1,10 @@
 <link rel="import" href="/public/bower_components/polymer/polymer.html">
+
 <link rel="import" href="/public/bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="/public/bower_components/iron-list/iron-list.html">
+
 <link rel="import" href="/public/bower_components/paper-material/paper-material.html">
+<link rel="import" href="/public/bower_components/paper-toggle-button/paper-toggle-button.html">
 
 <dom-module id="post-list">
 
@@ -11,9 +14,105 @@
         	padding: 20px;
         }
 
+        paper-toggle-button.publish {
+        	--paper-toggle-button-checked-bar-color: rgba(63, 81, 181, 0.9);
+        	--paper-toggle-button-checked-button-color: #3F51B5;
+        	--paper-toggle-button-checked-ink-color: --dark-primary-color;
+        	--paper-toggle-button-unchecked-ink-color: rgba(63, 81, 181, 0.7);
+        }
+
+        .actions {
+        	font-size: 1.2em;
+        	list-style: none;
+        	margin: 0;
+        	padding: 0;
+        }
+
+        .actions .title {
+        	font-weight: bold;
+        	padding-left: 50px;
+        }
+
+        .actions li {
+        	margin: 15px 0;
+        	text-align: left;
+        	width: 160px;
+        }
+
         .actions a {
         	color: black;
         	text-decoration: none;
+        }
+
+        .action-icon, .action-text {
+        	display: inline-block;
+        }
+
+        .action-icon {
+        	text-align: center;
+        	width: 48px;
+        	height: 20px;
+        }
+
+/*
+        .action-icon iron-icon {
+        	height: 19px;
+        	width: 19px;
+        }
+        */
+
+        .post-card {
+        	display: flex;
+        	display: -webkit-flex;
+        	justify-content: space-around;
+        	-webkit-justify-content: space-around;
+        	align-content: center;
+        	-webkit-align-content: center;
+        	align-items: flex-start;
+        	-webkit-align-items: flex-start;
+        	height: 192px;
+        }
+
+        .post-info {
+        	display: flex;
+        	display: -webkit-flex;
+
+        	flex-direction: column;
+        	-webkit-flex-direction: column;
+
+        	justify-content: space-between;
+        	-webkit-justify-content: space-between;
+
+        	height: 100%;
+        	text-align: center;
+        }
+
+        .post-time {
+        	font-size: 1.5em;
+        	font-weight: bold;
+        }
+
+        .post-content {
+        	width: 75%;
+        	height: 100%;
+        	display: flex;
+        	display: -webkit-flex;
+        	flex-direction: column;
+        	-webkit-flex-direction: column;
+        	align-items: center;
+        	-webkit-align-items: center;
+        	justify-content: space-between;
+        	-webkit-justify-content: space-between;
+        }
+
+        .post-content h3 {
+        	font-size: 1.5em;
+        }
+
+        .post-content p {
+        	color: rgba(128, 128, 128, 0.85);
+        	line-height: 1.75em;
+        	min-height: 95px;
         }
     </style>
 
@@ -22,24 +121,72 @@
 		<iron-list items="[[data]]" as="item">
 			<template>
 			    <div class="item">
-					<paper-material elevation="1">
-						<aside>
-							<p>[[getDateDOM(item.CreatedAt)]]</p>
+					<paper-material elevation="1" class="post-card">
+						<aside class="post-info">
+							<span class="post-time">[[getDateDOM(item.CreatedAt)]]</span>
+
+							<ul class="actions">
+							    <li class="title">Post Actions</li>
+								<li>
+								<!--
+							    	<a href="">
+							    	<template is="dom-if" if="{{ checkPublished(item) }}">
+							    		<span class="action-icon" style="color:rgba(0,0,0,0.4)">
+									    	<iron-icon icon="cloud-download"></iron-icon>
+								    	</span>
+								    	<span class="action-text" style="color:rgba(0,0,0,0.4)">
+								    	    Unpublish
+								    	</span>
+							    	</template>
+
+							    	<template is="dom-if" if="{{ !checkPublished(item) }}">
+							    		<span class="action-icon" style="color:#3F51B5">
+									    	<iron-icon icon="cloud-upload"></iron-icon>
+								    	</span>
+								    	<span class="action-text" style="color:#3F51B5">
+								    	    Publish
+								    	</span>
+							    	</template>
+							    	</a>
+								    -->
+									<span class="action-icon">
+									    <paper-toggle-button class="publish" checked="{{ checkPublished(item) }}"></paper-toggle-button>
+								    </span>
+
+								    <span class="action-text">
+								    	<template is="dom-if" if="{{ checkPublished(item) }}">
+								    	Unpublish
+								    	</template>
+
+								    	<template is="dom-if" if="{{ !checkPublished(item) }}">
+								    	Publish
+								    	</template>
+								    </span>
+							    </li>
+
+							    <li>
+							    	<a href="">
+							    		<span class="action-icon">
+									    	<iron-icon icon="editor:mode-edit"></iron-icon>
+								    	</span>
+
+								    	<span class="action-text">
+									    	Edit
+								    	</span>
+							    	</a>
+							    </li>
+						    </ul>
+
+						    <!--
 							<paper-button raised class="actions">
 							    <a href="">
 							    	<iron-icon icon="editor:mode-edit"></iron-icon>
 							    	Edit
 							    </a>
 							</paper-button>
-
-							<template is="dom-if" if="{{ checkPublished(item) }}">
-							Published!
-							</template>
-
-							<template is="dom-if" if="{{ !checkPublished(item) }}">
-							Unpublished!
-							</template>
+							-->
 						</aside>
+
 						<article class="post-content">
 						    <h3>[[item.Title]]</h3>
 						    <p>[[getFirstParagraph(item.Content)]]</p>

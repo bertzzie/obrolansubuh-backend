@@ -111,6 +111,7 @@ form#login-form {
 .menu-item {
 	background: rgba(192, 192, 192, 0.2);
 	border-bottom: 1px solid rgba(175, 175, 175, 0.3);
+	text-align: center;
 }
 
 .menu-item a {
@@ -118,7 +119,7 @@ form#login-form {
 	display: inline-block;
 	height: 100%;
 	text-decoration: none;
-	padding: 12px;
+	padding: 12px 0;
 	width: 100%;
 }
 
