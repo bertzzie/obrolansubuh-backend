@@ -44,6 +44,10 @@
         	text-decoration: none;
         }
 
+        .action-publish:hover {
+        	cursor: pointer;
+        }
+
         .action-icon, .action-text {
         	display: inline-block;
         }
@@ -120,7 +124,7 @@
 
 							<ul class="actions">
 							    <li class="title">Post Actions</li>
-								<li>
+								<li class="action-publish">
 									<span class="action-icon">
 									    <paper-toggle-button class="publish" checked="{{ checkPublished(item) }}"></paper-toggle-button>
 								    </span>
