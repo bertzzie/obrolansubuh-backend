@@ -87,17 +87,7 @@ func (c Post) JsonList() revel.Result {
 }
 
 func (c Post) List() revel.Result {
-	uid := c.Session["userid"]
-	posts, err := getUsersPost(uid, c.Trx)
-
-	if err != nil {
-		revel.ERROR.Printf("[LGFATAL] Failed to get post list from database.")
-
-		c.Flash.Error(c.Message("errors.post.database"))
-		return c.Redirect(routes.App.Index())
-	}
-
-	return c.Render(posts)
+	return c.Render()
 }
 
 func (c Post) New() revel.Result {
