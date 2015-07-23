@@ -127,10 +127,10 @@
 								<li class="action-publish">
 									<a href="[[item.ToggleLink]]" on-click="publishClicked">
 										<span class="action-icon">
-										    <paper-toggle-button class="publish" checked="{{ checkPublished(item) }}" on-change="toggleClicked"></paper-toggle-button>
+										    <paper-toggle-button id="{{ getToggleButtonID(item) }}" class="publish" checked="{{ checkPublished(item) }}" on-change="toggleClicked"></paper-toggle-button>
 									    </span>
 
-									    <span class="action-text">
+									    <span class="action-text" id="{{ getPublishTextID(item) }}">
 									    	<template is="dom-if" if="{{ checkPublished(item) }}">
 									    	Unpublish
 									    	</template>
@@ -175,10 +175,33 @@
 	Polymer({
 		is: "post-list",
 		publishClicked: function (e) {
+			$.ajax({
+				url         : e.target.closest('a').getAttribute('href'),
+				type        : "GET",
+				success     : (data, textStatus, jqXHR) => {
+					var id = jqXHR.responseJSON["id"];
+
+					var toggle = this.$$("#" + this.getToggleButtonID({'ID':id}));
+					toggle.checked = !toggle.checked;
+
+					var publishText = this.$$("#" + this.getPublishTextID({'ID':id}));
+					publishText.textContent = this.getPublishText(toggle.checked);
+				}
+			});
+
 			e.preventDefault();
 		},
 		toggleClicked: function (e) {
 			e.target.checked = !e.target.checked;
+		},
+		getToggleButtonID: function (item) {
+			return "toggle-button-" + item.ID;
+		},
+		getPublishTextID: function (item) {
+			return "publish-text-" + item.ID;
+		},
+		getPublishText: function (status) {
+			return (status)? "Unpublish": "Publish";
 		},
 		getFirstParagraph: function (content) {
 			var div = document.createElement("div");

@@ -60,11 +60,13 @@ type PostUpdated struct {
 }
 
 type PostPublishToogled struct {
+	ID      int64  `json:"id"`
 	Success bool   `json:"success"`
 	Message string `json:"message"`
 }
 
 type PostList struct {
+	ID         int64
 	Title      string
 	Content    string
 	CreatedAt  time.Time
@@ -100,6 +102,7 @@ func (c Post) JsonList() revel.Result {
 	postList := make([]PostList, 0, len(posts))
 	for _, post := range posts {
 		tmp := PostList{
+			ID:         post.ID,
 			Title:      post.Title,
 			Content:    post.Content,
 			CreatedAt:  post.CreatedAt,
@@ -128,13 +131,13 @@ func (c Post) TogglePublished(id int64) revel.Result {
 	if err := c.Trx.Error; err != nil {
 		revel.ERROR.Printf("[LGFATAL] Failed to toogle post's update status. Check controllers/post.go:118.")
 
-		PPT := PostPublishToogled{Success: false, Message: c.Message("post.publishtoggle.fail")}
+		PPT := PostPublishToogled{ID: id, Success: false, Message: c.Message("post.publishtoggle.fail")}
 
 		c.Response.Status = http.StatusInternalServerError
 		return c.RenderJson(PPT)
 	}
 
-	PPT := PostPublishToogled{Success: true, Message: c.Message("post.publishtoggle.success")}
+	PPT := PostPublishToogled{ID: id, Success: true, Message: c.Message("post.publishtoggle.success")}
 	return c.RenderJson(PPT)
 }
 
