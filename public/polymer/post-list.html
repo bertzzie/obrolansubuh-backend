@@ -125,19 +125,21 @@
 							<ul class="actions">
 							    <li class="title">Post Actions</li>
 								<li class="action-publish">
-									<span class="action-icon">
-									    <paper-toggle-button class="publish" checked="{{ checkPublished(item) }}"></paper-toggle-button>
-								    </span>
+									<a href="[[item.ToggleLink]]" on-click="publishClicked">
+										<span class="action-icon">
+										    <paper-toggle-button class="publish" checked="{{ checkPublished(item) }}" on-change="toggleClicked"></paper-toggle-button>
+									    </span>
 
-								    <span class="action-text">
-								    	<template is="dom-if" if="{{ checkPublished(item) }}">
-								    	Unpublish
-								    	</template>
+									    <span class="action-text">
+									    	<template is="dom-if" if="{{ checkPublished(item) }}">
+									    	Unpublish
+									    	</template>
 
-								    	<template is="dom-if" if="{{ !checkPublished(item) }}">
-								    	Publish
-								    	</template>
-								    </span>
+									    	<template is="dom-if" if="{{ !checkPublished(item) }}">
+									    	Publish
+									    	</template>
+									    </span>
+								    </a>
 							    </li>
 
 							    <li>
@@ -172,6 +174,12 @@
 
 	Polymer({
 		is: "post-list",
+		publishClicked: function (e) {
+			e.preventDefault();
+		},
+		toggleClicked: function (e) {
+			e.target.checked = !e.target.checked;
+		},
 		getFirstParagraph: function (content) {
 			var div = document.createElement("div");
 			div.innerHTML = content;

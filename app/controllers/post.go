@@ -59,13 +59,9 @@ type PostUpdated struct {
 	Message string `json:"message"`
 }
 
-func getUsersPost(uid string, db *gorm.DB) (posts []models.Post, err error) {
-	db.Where("author_id = ?", uid).Find(&posts)
-	if err = db.Error; err != nil {
-		return nil, err
-	}
-
-	return posts, nil
+type PostPublishToogled struct {
+	Success bool   `json:"success"`
+	Message string `json:"message"`
 }
 
 type PostList struct {
@@ -75,6 +71,15 @@ type PostList struct {
 	Published  bool
 	EditLink   string
 	ToggleLink string
+}
+
+func getUsersPost(uid string, db *gorm.DB) (posts []models.Post, err error) {
+	db.Where("author_id = ?", uid).Find(&posts)
+	if err = db.Error; err != nil {
+		return nil, err
+	}
+
+	return posts, nil
 }
 
 func (c Post) JsonList() revel.Result {
@@ -100,7 +105,7 @@ func (c Post) JsonList() revel.Result {
 			CreatedAt:  post.CreatedAt,
 			Published:  post.Published,
 			EditLink:   routes.Post.Edit(post.ID),
-			ToggleLink: "/toggle",
+			ToggleLink: routes.Post.TogglePublished(post.ID),
 		}
 		postList = append(postList, tmp)
 	}
@@ -110,6 +115,27 @@ func (c Post) JsonList() revel.Result {
 
 func (c Post) List() revel.Result {
 	return c.Render()
+}
+
+func (c Post) TogglePublished(id int64) revel.Result {
+	// Gorm can't set boolean field to false via methods.
+	//
+	// see:
+	// https://github.com/jinzhu/gorm/issues/398
+	// https://github.com/jinzhu/gorm/issues/469
+	c.Trx.Exec("UPDATE posts SET published = NOT published WHERE posts.id = ?", id)
+
+	if err := c.Trx.Error; err != nil {
+		revel.ERROR.Printf("[LGFATAL] Failed to toogle post's update status. Check controllers/post.go:118.")
+
+		PPT := PostPublishToogled{Success: false, Message: c.Message("post.publishtoggle.fail")}
+
+		c.Response.Status = http.StatusInternalServerError
+		return c.RenderJson(PPT)
+	}
+
+	PPT := PostPublishToogled{Success: true, Message: c.Message("post.publishtoggle.success")}
+	return c.RenderJson(PPT)
 }
 
 func (c Post) New() revel.Result {

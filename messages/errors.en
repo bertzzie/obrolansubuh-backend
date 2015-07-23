@@ -16,3 +16,5 @@ post.validation.id=Post validation failed. Please refresh your browser and try a
 post.validation.title=Post validation failed. You must insert post title.
 post.validation.content=Post validation failed. You must write some content.
 post.validation.title_length=Post validation failed. Post title must not exceed 1024 characters.
+
+post.publishtoggle.fail=Post status update failed!

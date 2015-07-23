@@ -5,3 +5,4 @@ login.message.alreadyli=Tidak dapat mengakses halaman login karena anda telah lo
 logout.message.success=Logout berhasil. Sampai nanti!
 
 post.update.success=Post "%s" berhasil diperbaharui!
+post.publishtoggle.success=Status publikasi berhasil diperbaharui!
