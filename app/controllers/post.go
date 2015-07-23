@@ -68,6 +68,15 @@ func getUsersPost(uid string, db *gorm.DB) (posts []models.Post, err error) {
 	return posts, nil
 }
 
+type PostList struct {
+	Title      string
+	Content    string
+	CreatedAt  time.Time
+	Published  bool
+	EditLink   string
+	ToggleLink string
+}
+
 func (c Post) JsonList() revel.Result {
 	// enforce using cookies here
 	// so people can't just API call this easily
@@ -83,7 +92,20 @@ func (c Post) JsonList() revel.Result {
 		return c.RenderJson(FR)
 	}
 
-	return c.RenderJson(posts)
+	postList := make([]PostList, 0, len(posts))
+	for _, post := range posts {
+		tmp := PostList{
+			Title:      post.Title,
+			Content:    post.Content,
+			CreatedAt:  post.CreatedAt,
+			Published:  post.Published,
+			EditLink:   routes.Post.Edit(post.ID),
+			ToggleLink: "/toggle",
+		}
+		postList = append(postList, tmp)
+	}
+
+	return c.RenderJson(postList)
 }
 
 func (c Post) List() revel.Result {
