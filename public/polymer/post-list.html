@@ -114,7 +114,12 @@
     </style>
 
 	<template>
-		<iron-ajax url="/post/list.json" last-response={{data}} auto></iron-ajax>
+		<iron-ajax url="{{dataLink}}" last-response={{data}} auto on-response="handleAJAX"></iron-ajax>
+
+		<template is="dom-if" if="{{ noPost }}">
+		    <p>{{emptyMessage}}</p>
+		</template>
+
 		<iron-list items="[[data]]" as="item">
 			<template>
 			    <div class="item">
@@ -174,6 +179,15 @@
 
 	Polymer({
 		is: "post-list",
+		properties: {
+			dataLink: String,
+			emptyMessage: String
+		},
+		handleAJAX: function (request) {
+			var postCount = request.detail.parseResponse().length;
+
+			this.noPost = postCount === 0;
+		},
 		publishClicked: function (e) {
 			$.ajax({
 				url         : e.target.closest('a').getAttribute('href'),

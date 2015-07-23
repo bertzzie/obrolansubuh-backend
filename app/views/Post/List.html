@@ -7,6 +7,8 @@
 
 <link rel="import" href="/public/polymer/post-list.html">
 
-<post-list></post-list>
+<post-list data-link="{{ url "Post.JsonList" }}"
+           empty-message="{{ msg . "post.list.empty" }}">
+</post-list>
 
 {{template "footer.html" .}}
