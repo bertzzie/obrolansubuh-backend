@@ -36,12 +36,13 @@ func InitDB() {
 	count := 0
 	if dbm.Model(&models.Contributor{}).Count(&count); count < 1 {
 		admin := models.Contributor{
-			Name:     "Default Admin",
-			Email:    "admin@obrolansubuh.com",
-			Password: "$2a$10$ayR58wiVv51Jn0tqHql6H.qscJZK6j8IHBmryIOUPmouveO/aSIhS", // password: admin@obrolansubuh.com
-			About:    "Default Admin ObrolanSubuh.com",
-			Photo:    "/public/img/default-user.png",
+			Name:  "Default Admin",
+			Email: "admin@obrolansubuh.com",
+			About: "Default Admin ObrolanSubuh.com",
+			Photo: "/public/img/default-user.png",
 		}
+		admin.SetPassword("admin@obrolansubuh.com")
+
 		dbm.Create(&admin)
 	}
 }

@@ -3,7 +3,6 @@ package controllers
 import (
 	"fmt"
 	"github.com/revel/revel"
-	"golang.org/x/crypto/bcrypt"
 	"obrolansubuh.com/backend/app/routes"
 	"strconv"
 	"time"
@@ -70,8 +69,7 @@ func (c App) ProcessLogin(email, password string, remember bool) revel.Result {
 		revel.INFO.Printf("[LGINFO] Login as %s failed. No email in database.", email)
 		c.Flash.Error(c.Message("errors.login.email"))
 	} else {
-		err := bcrypt.CompareHashAndPassword([]byte(contributor.Password), []byte(password))
-		if err == nil {
+		if contributor.CheckPassword(password) {
 			c.Session["userid"] = strconv.FormatInt(contributor.ID, 10)
 			c.Session["user"] = contributor.Email
 			c.Session["username"] = contributor.Name
