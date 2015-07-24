@@ -20,9 +20,11 @@ GET     /post/:id/toggle-published              Post.TogglePublished
 
 PUT     /post/image/upload                      Post.ImageUpload
 
-# Contributor CRUD
+# Profile CRUD
 GET     /profile/edit                           Profile.Edit
 POST    /profile/edit                           Profile.Update
+GET     /profile/password                       Profile.ChangePassword
+POST    /profile/password                       Profile.UpdatePassword
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

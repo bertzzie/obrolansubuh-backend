@@ -77,3 +77,29 @@ func (c Profile) Update(
 	c.Flash.Success(c.Message("profile.update.success"))
 	return c.Redirect(routes.Profile.Edit())
 }
+
+func (c Profile) ChangePassword() revel.Result {
+	return c.Render()
+}
+
+func (c Profile) UpdatePassword(currentPassword, newPassword, retypePassword string) revel.Result {
+	id := c.Session["userid"]
+	contributor := &models.Contributor{}
+	c.Trx.Where("id = ?", id).First(&contributor)
+
+	if contributor.CheckPassword(currentPassword) {
+		if newPassword == retypePassword {
+			contributor.SetPassword(newPassword)
+			c.Trx.Save(&contributor)
+
+			c.Flash.Success("BERHASIL!")
+			return c.Redirect(routes.Profile.ChangePassword())
+		}
+
+		c.Flash.Error("Retype ga sama!")
+		return c.Redirect(routes.Profile.ChangePassword())
+	}
+
+	c.Flash.Error("Password salah!")
+	return c.Redirect(routes.Profile.ChangePassword())
+}
