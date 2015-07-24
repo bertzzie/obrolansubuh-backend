@@ -7,3 +7,5 @@ logout.message.success=Logout berhasil. Sampai nanti!
 post.list.empty=Belum ada tulisan. Buat tulisan baru sekarang!
 post.update.success=Post "%s" berhasil diperbaharui!
 post.publishtoggle.success=Status publikasi berhasil diperbaharui!
+
+contributor.edit.title=Ganti Data Profil

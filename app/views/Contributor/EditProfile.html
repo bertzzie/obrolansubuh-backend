@@ -1,0 +1,10 @@
+{{ msg . "contributor.edit.title" | set . "title" }}
+{{ msg . "contributor.edit.title" | set . "panelTitle" }}
+
+{{template "header.html" .}}
+
+{{ template "flash.html" . }}
+
+<h1>Testing</h1>
+
+{{template "footer.html" .}}
