@@ -1,10 +1,76 @@
 {{ msg . "contributor.edit.title" | set . "title" }}
 {{ msg . "contributor.edit.title" | set . "panelTitle" }}
 
+{{ append . "moreStyles" "css/edit-profile.css" }}
+
 {{template "header.html" .}}
 
 {{ template "flash.html" . }}
 
-<h1>Testing</h1>
+<link rel="import" href="/public/bower_components/iron-form/iron-form.html">
+<link rel="import" href="/public/bower_components/iron-input/iron-input.html">
+
+<link rel="import" href="/public/bower_components/paper-input/paper-input.html">
+<link rel="import" href="/public/bower_components/paper-input/paper-charcounter.html">
+<link rel="import" href="/public/bower_components/paper-input/paper-textarea.html">
+
+<link rel="import" href="/public/bower_components/gold-email-input/gold-email-input.html">
+
+<form is="iron-form" action="" method="POST" id="profile-form">
+    <section class="form-inputs">
+		<section id="profile-data">
+	        <paper-input-container auto-validate>
+	            <label>Nama</label>
+	            <input is="iron-input" 
+	                   type="text" 
+	                   auto-validate 
+	                   required 
+	                   name="name" 
+	                   value="{{ .contributor.Name }}">
+	            <paper-input-error>ERROR</paper-input-error>
+	        </paper-input-container>
+
+	        <gold-email-input required 
+	                          auto-validate 
+	                          error-message="{{ msg . "login.form.email.error" }}"
+	                          value="{{ .contributor.Email }}"
+	                          name="email"
+	                          label="{{ msg . "login.form.email" }}"></gold-email-input>
+
+	        <paper-textarea label="About Yourself" 
+	                         name="about"
+	                         char-counter 
+	                         maxlength="500"
+	                         value="{{ .contributor.About }}">
+	        </paper-textarea>
+	    </section>
+	    <aside id="profile-picture">
+	        <figure id="current-profile-picture">
+				<iron-image class="round-imgs" 
+				            sizing="cover"
+				            fade
+				            src="{{ .contributor.Photo }}"></iron-image>
+	             <figcaption>Current Profile Picture</figcaption>
+	        </figure>
+	        <paper-input-container>
+	            <label>Foto Profil</label>
+	            <input is="iron-input" type="file" name="photo">
+	            <paper-input-error>DAYUM</paper-input-error>
+	        </paper-input-container>
+	    </aside>
+    </section>
+
+    <div class="form-actions">
+        <input type="submit" class="hidden"> <!-- So that user can press Enter and submit form -->
+        <paper-button raised class="process" onclick="clickHandler(event)">
+             Update Profile
+        </paper-button>
+        <script type="text/javascript">
+            function clickHandler(event) {
+                document.getElementById("profile-form").submit();
+            }
+        </script>
+    </div>
+</form>
 
 {{template "footer.html" .}}

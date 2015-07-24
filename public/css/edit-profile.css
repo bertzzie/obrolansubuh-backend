@@ -1,0 +1,37 @@
+#profile-form {
+	display: flex;
+	display: -webkit-flex;
+
+	flex-direction: column;
+	-webkit-flex-direction: column;
+}
+
+#profile-form .form-inputs {
+	display: flex;
+	display: -webkit-flex;
+}
+
+#profile-form .form-actions {
+	margin: 2em;
+	text-align: center;
+}
+
+#profile-data {
+	margin: 0 auto;
+	width: 45%;
+}
+
+#profile-picture {
+	margin: 0 auto;
+	width: 30%;
+}
+
+#current-profile-picture {
+	margin: 0;
+	text-align: center;
+}
+
+#current-profile-picture iron-image {
+	height: 96px;
+	width: 96px;
+}
