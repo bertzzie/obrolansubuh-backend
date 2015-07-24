@@ -6,11 +6,11 @@ import (
 	"obrolansubuh.com/models"
 )
 
-type Contributor struct {
+type Profile struct {
 	GormController
 }
 
-func (c Contributor) EditProfile() revel.Result {
+func (c Profile) Edit() revel.Result {
 	contributor := &models.Contributor{}
 	c.Trx.Where("id = ?", c.Session["userid"]).First(&contributor)
 
@@ -24,7 +24,7 @@ func (c Contributor) EditProfile() revel.Result {
 	return c.Render(contributor)
 }
 
-func (c Contributor) UpdateProfile(
+func (c Profile) Update(
 	name string,
 	email string,
 	about string,
@@ -56,7 +56,7 @@ func (c Contributor) UpdateProfile(
 			)
 
 			c.Flash.Error(c.Message("errors.upload.image"))
-			return c.Redirect(routes.Contributor.EditProfile())
+			return c.Redirect(routes.Profile.Edit())
 		}
 
 		contributor.Photo = fullName
@@ -69,11 +69,11 @@ func (c Contributor) UpdateProfile(
 		revel.ERROR.Printf("[LGFATAL] Failed to get user in edit profile. Error: %s", err)
 
 		c.Flash.Error(c.Message("errors.db.generic"))
-		return c.Redirect(routes.Contributor.EditProfile())
+		return c.Redirect(routes.Profile.Edit())
 	}
 
-	revel.INFO.Printf("[LGINFO] Successfully updated %s's (id: %d) profile.", email, id)
+	revel.INFO.Printf("[LGINFO] Successfully updated %s's profile.", email)
 
 	c.Flash.Success(c.Message("profile.update.success"))
-	return c.Redirect(routes.Contributor.EditProfile())
+	return c.Redirect(routes.Profile.Edit())
 }

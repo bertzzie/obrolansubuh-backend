@@ -1,5 +1,5 @@
-{{ msg . "contributor.edit.title" | set . "title" }}
-{{ msg . "contributor.edit.title" | set . "panelTitle" }}
+{{ msg . "profile.edit.title" | set . "title" }}
+{{ msg . "profile.edit.title" | set . "panelTitle" }}
 
 {{ append . "moreStyles" "css/edit-profile.css" }}
 
@@ -16,7 +16,7 @@
 
 <link rel="import" href="/public/bower_components/gold-email-input/gold-email-input.html">
 
-<form is="iron-form" action="{{ url "Contributor.UpdateProfile" }}" method="POST" id="profile-form" enctype="multipart/form-data">
+<form is="iron-form" action="{{ url "Profile.Update" }}" method="POST" id="profile-form" enctype="multipart/form-data">
     <section class="form-inputs">
 		<section id="profile-data">
 	        <paper-input-container auto-validate>
