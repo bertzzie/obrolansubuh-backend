@@ -36,17 +36,8 @@ type FailRequest struct {
 	Messages []string `json:"messages"`
 }
 
-func (c App) checkUser() revel.Result {
-	if _, ok := c.Session["user"]; ok {
-		return nil
-	}
-
-	c.Flash.Error(c.Message("login.message.notloggedin"))
-	return c.Redirect(routes.App.Login())
-}
-
 func (c App) Index() revel.Result {
-	if c.checkUser() != nil {
+	if checkUser(c.GormController.Controller) != nil {
 		return c.Redirect(routes.App.Login())
 	}
 
@@ -54,7 +45,7 @@ func (c App) Index() revel.Result {
 }
 
 func (c App) Login() revel.Result {
-	if c.checkUser() == nil {
+	if checkUser(c.GormController.Controller) == nil {
 		c.Flash.Error(c.Message("login.message.alreadyli"))
 		return c.Redirect(routes.App.Index())
 	}
