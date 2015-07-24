@@ -11,12 +11,12 @@
 <link rel="import" href="/public/bower_components/iron-input/iron-input.html">
 
 <link rel="import" href="/public/bower_components/paper-input/paper-input.html">
-<link rel="import" href="/public/bower_components/paper-input/paper-charcounter.html">
+<link rel="import" href="/public/bower_components/paper-input/paper-input-char-counter.html">
 <link rel="import" href="/public/bower_components/paper-input/paper-textarea.html">
 
 <link rel="import" href="/public/bower_components/gold-email-input/gold-email-input.html">
 
-<form is="iron-form" action="" method="POST" id="profile-form">
+<form is="iron-form" action="{{ url "Contributor.UpdateProfile" .contributor.ID }}" method="POST" id="profile-form" enctype="multipart/form-data">
     <section class="form-inputs">
 		<section id="profile-data">
 	        <paper-input-container auto-validate>

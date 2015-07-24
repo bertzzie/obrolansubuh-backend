@@ -22,6 +22,7 @@ PUT     /post/image/upload                      Post.ImageUpload
 
 # Contributor CRUD
 GET     /profile/:id/edit                       Contributor.EditProfile
+POST    /profile/:id/edit                       Contributor.UpdateProfile
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
