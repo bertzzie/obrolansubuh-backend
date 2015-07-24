@@ -13,3 +13,14 @@ login.action.submit=Login
 
 # Posts page
 post.list.title=Your Posts
+
+# Profile page
+profile.form.name=Your Name
+profile.form.name.error=Name must not be empty
+profile.form.email=Your Email Address
+profile.form.email.error=Please enter a valid email address
+profile.form.about=About You (in 500 characters)
+profile.form.photo=Profile Picture
+profile.form.photo.current=Your Current Profile Picture
+
+profile.form.submit=Update Profile

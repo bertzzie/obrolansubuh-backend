@@ -13,3 +13,14 @@ login.action.submit=Login
 
 # Posts page
 post.list.title=Tulisan Anda
+
+# Profile page
+profile.form.name=Nama Anda
+profile.form.name.error=Nama tidak boleh kosong
+profile.form.email=Alamat Email Anda
+profile.form.email.error=Masukkan alamat email yang valid
+profile.form.about=Tentang Anda (dalam 500 karakter)
+profile.form.photo=Foto Profil
+profile.form.photo.current=Foto Profil Sekarang
+
+profile.form.submit=Perbaharui Profil

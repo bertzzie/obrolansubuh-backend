@@ -20,24 +20,24 @@
     <section class="form-inputs">
 		<section id="profile-data">
 	        <paper-input-container auto-validate>
-	            <label>Nama</label>
+	            <label>{{ msg . "profile.form.name" }}</label>
 	            <input is="iron-input" 
 	                   type="text" 
 	                   auto-validate 
 	                   required 
 	                   name="name" 
 	                   value="{{ .contributor.Name }}">
-	            <paper-input-error>ERROR</paper-input-error>
+	            <paper-input-error>{{ msg . "profile.form.name.error" }}</paper-input-error>
 	        </paper-input-container>
 
 	        <gold-email-input required 
 	                          auto-validate 
-	                          error-message="{{ msg . "login.form.email.error" }}"
+	                          error-message="{{ msg . "profile.form.email.error" }}"
 	                          value="{{ .contributor.Email }}"
 	                          name="email"
-	                          label="{{ msg . "login.form.email" }}"></gold-email-input>
+	                          label="{{ msg . "profile.form.email" }}"></gold-email-input>
 
-	        <paper-textarea label="About Yourself" 
+	        <paper-textarea label="{{ msg . "profile.form.about" }}" 
 	                         name="about"
 	                         char-counter 
 	                         maxlength="500"
@@ -50,10 +50,10 @@
 				            sizing="cover"
 				            fade
 				            src="{{ .contributor.Photo }}"></iron-image>
-	             <figcaption>Current Profile Picture</figcaption>
+	             <figcaption>{{ msg . "profile.form.photo.current" }}</figcaption>
 	        </figure>
 	        <paper-input-container>
-	            <label>Foto Profil</label>
+	            <label>{{ msg . "profile.form.photo" }}</label>
 	            <input is="iron-input" type="file" name="photo">
 	            <paper-input-error>DAYUM</paper-input-error>
 	        </paper-input-container>
@@ -63,7 +63,7 @@
     <div class="form-actions">
         <input type="submit" class="hidden"> <!-- So that user can press Enter and submit form -->
         <paper-button raised class="process" onclick="clickHandler(event)">
-             Update Profile
+             {{ msg . "profile.form.submit" }}
         </paper-button>
         <script type="text/javascript">
             function clickHandler(event) {
