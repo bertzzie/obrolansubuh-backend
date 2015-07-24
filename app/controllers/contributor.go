@@ -49,7 +49,13 @@ func (c Contributor) UpdateProfile(
 		fullName := uploadDr + hashName
 
 		if err := saveFile(photo, revel.BasePath+fullName); err != nil {
-			c.Flash.Error("GAGAL")
+			revel.ERROR.Printf("[LGFATAL] Failed to upload user %d profile picture to %s. Error: %s",
+				id,
+				fullName,
+				err,
+			)
+
+			c.Flash.Error(c.Message("errors.upload.image"))
 			return c.Redirect(routes.Contributor.EditProfile())
 		}
 
@@ -59,6 +65,15 @@ func (c Contributor) UpdateProfile(
 
 	c.Trx.Save(&contributor)
 
-	c.Flash.Success("Berhasil!")
+	if err := c.Trx.Error; err != nil {
+		revel.ERROR.Printf("[LGFATAL] Failed to get user in edit profile. Error: %s", err)
+
+		c.Flash.Error(c.Message("errors.db.generic"))
+		return c.Redirect(routes.Contributor.EditProfile())
+	}
+
+	revel.INFO.Printf("[LGINFO] Successfully updated %s's (id: %d) profile.", email, id)
+
+	c.Flash.Success(c.Message("profile.update.success"))
 	return c.Redirect(routes.Contributor.EditProfile())
 }

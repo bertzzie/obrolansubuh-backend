@@ -6,8 +6,10 @@ errors.login.passw=Login gagal. Password salah. Mohon periksa kembali password y
 errors.db.connect=[DBFE] Kesalahan koneksi database. Mohon hubungi admin web.
 errors.db.generic=[DTFE] Kesalahan database. Mohon hubungi admin web.
 
-# Post Messages
+# Other Generic Errors
 errors.upload.image=Upload gambar gagal. Mohon hubungi admin web.
+
+# Post Messages
 errors.post.database=Kesalahan basis data dalam pemrosesan. Mohon hubungi admin web.
 errors.post.request=Sistem gagal membaca data. Mohon lakukan refresh browser dan coba lagi.
 errors.post.json=Sistem gagal membaca data. Mohon lakukan refresh browser dan coba lagi.

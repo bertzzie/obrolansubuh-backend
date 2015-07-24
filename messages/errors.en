@@ -6,8 +6,10 @@ errors.login.passw=Login failed. Wrong password entered. Please recheck your pas
 errors.db.connect=[DBFE] Database Connection Error. Please contact web administrator.
 errors.db.generic=[DTFE] Database Error. Please contact web administrator.
 
-# Post Messages
+# Other Generic Errors
 errors.upload.image=Image Upload Failed. Please contact web administrator.
+
+# Post Messages
 errors.post.database=Query Failed. Database error. Please contact web administrator.
 errors.post.request=Post Data Read Failed. Please refresh your browser and try again.
 errors.post.json=Post Data Read Failed. Please refresh your browser and try again.
