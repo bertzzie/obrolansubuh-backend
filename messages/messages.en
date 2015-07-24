@@ -10,3 +10,7 @@ post.publishtoggle.success=Post status updated!
 
 profile.edit.title=Edit Profile Data
 profile.update.success=Succesfully updated profile data!
+
+profile.password.success=Successfully changed password!
+profile.password.retypefailed=New password and retype does not match!
+profile.password.wrong=Wrong password.

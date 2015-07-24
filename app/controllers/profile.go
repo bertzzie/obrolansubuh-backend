@@ -92,14 +92,16 @@ func (c Profile) UpdatePassword(currentPassword, newPassword, retypePassword str
 			contributor.SetPassword(newPassword)
 			c.Trx.Save(&contributor)
 
-			c.Flash.Success("BERHASIL!")
+			revel.INFO.Printf("[LGINFO] User %s changed their password.", contributor.Email)
+
+			c.Flash.Success(c.Message("profile.password.success"))
 			return c.Redirect(routes.Profile.ChangePassword())
 		}
 
-		c.Flash.Error("Retype ga sama!")
+		c.Flash.Error(c.Message("profile.password.retypefailed"))
 		return c.Redirect(routes.Profile.ChangePassword())
 	}
 
-	c.Flash.Error("Password salah!")
+	c.Flash.Error(c.Message("profile.password.wrong"))
 	return c.Redirect(routes.Profile.ChangePassword())
 }

@@ -10,3 +10,7 @@ post.publishtoggle.success=Status publikasi berhasil diperbaharui!
 
 profile.edit.title=Ganti Data Profil
 profile.update.success=Perubahan data profil berhasil!
+
+profile.password.success=Password berhasil diubah!
+profile.password.retypefailed=Password baru dan ketik ulang tidak sama.
+profile.password.wrong=Password salah.
