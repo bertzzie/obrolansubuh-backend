@@ -21,8 +21,8 @@ GET     /post/:id/toggle-published              Post.TogglePublished
 PUT     /post/image/upload                      Post.ImageUpload
 
 # Contributor CRUD
-GET     /profile/:id/edit                       Contributor.EditProfile
-POST    /profile/:id/edit                       Contributor.UpdateProfile
+GET     /profile/edit                           Contributor.EditProfile
+POST    /profile/edit                           Contributor.UpdateProfile
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

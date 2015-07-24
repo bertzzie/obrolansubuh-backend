@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"github.com/revel/revel"
 	"obrolansubuh.com/backend/app/routes"
 	"obrolansubuh.com/models"
@@ -11,24 +10,27 @@ type Contributor struct {
 	GormController
 }
 
-func (c Contributor) EditProfile(id int64) revel.Result {
+func (c Contributor) EditProfile() revel.Result {
 	contributor := &models.Contributor{}
-	c.Trx.Where("id = ?", id).First(&contributor)
+	c.Trx.Where("id = ?", c.Session["userid"]).First(&contributor)
 
 	if err := c.Trx.Error; err != nil {
-		fmt.Println("ERROR")
-		return c.RenderText("ERROR")
+		revel.ERROR.Printf("[LGFATAL] Failed to get user in edit profile. Error: %s", err)
+
+		c.Flash.Error(c.Message("errors.db.generic"))
+		return c.Redirect(routes.App.Index())
 	}
 
 	return c.Render(contributor)
 }
 
 func (c Contributor) UpdateProfile(
-	id int64,
 	name string,
 	email string,
 	about string,
 	photo []byte) revel.Result {
+
+	id := c.Session["userid"]
 
 	contributor := &models.Contributor{}
 	c.Trx.Where("id = ?", id).First(&contributor)
@@ -48,7 +50,7 @@ func (c Contributor) UpdateProfile(
 
 		if err := saveFile(photo, revel.BasePath+fullName); err != nil {
 			c.Flash.Error("GAGAL")
-			return c.Redirect(routes.Contributor.EditProfile(id))
+			return c.Redirect(routes.Contributor.EditProfile())
 		}
 
 		contributor.Photo = fullName
@@ -58,5 +60,5 @@ func (c Contributor) UpdateProfile(
 	c.Trx.Save(&contributor)
 
 	c.Flash.Success("Berhasil!")
-	return c.Redirect(routes.Contributor.EditProfile(id))
+	return c.Redirect(routes.Contributor.EditProfile())
 }
