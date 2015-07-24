@@ -24,3 +24,9 @@ profile.form.photo=Profile Picture
 profile.form.photo.current=Your Current Profile Picture
 
 profile.form.submit=Update Profile
+
+profile.form.password=Current Password
+profile.form.newpassw=New Password
+profile.form.retpassw=Retype Password
+profile.form.password.submit=Change Password
+profile.form.password.error=Field must not be empty

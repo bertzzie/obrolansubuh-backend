@@ -24,3 +24,9 @@ profile.form.photo=Foto Profil
 profile.form.photo.current=Foto Profil Sekarang
 
 profile.form.submit=Perbaharui Profil
+
+profile.form.password=Password Sekarang
+profile.form.newpassw=Password Baru
+profile.form.retpassw=Ketik Ulang Password Baru
+profile.form.password.submit=Ganti Password
+profile.form.password.error=Tidak boleh kosong
