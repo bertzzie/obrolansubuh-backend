@@ -61,10 +61,13 @@ func (c App) ProcessLogin(email, password string, remember bool) revel.Result {
 		c.Flash.Error(c.Message("errors.login.email"))
 	} else {
 		if contributor.CheckPassword(password) {
+			priv := contributor.Type.Type
+
 			c.Session["userid"] = strconv.FormatInt(contributor.ID, 10)
 			c.Session["user"] = contributor.Email
 			c.Session["username"] = contributor.Name
 			c.Session["userphoto"] = contributor.Photo
+			c.Session["usertype"] = priv
 
 			if remember {
 				c.Session.SetDefaultExpiration()
@@ -73,7 +76,7 @@ func (c App) ProcessLogin(email, password string, remember bool) revel.Result {
 			}
 
 			loginTime := time.Now().Local().Format(revel.Config.StringDefault("format.datetime", "02 Jan 2006 15:04"))
-			revel.INFO.Printf("[LGINFO] Contributor %s logged in at %s.", email, loginTime)
+			revel.INFO.Printf("[LGINFO] Contributor %s (Privilege: %s) logged in at %s.", email, priv, loginTime)
 			c.Flash.Success(fmt.Sprintf(c.Message("login.message.success"), contributor.Name))
 
 			return c.Redirect(routes.App.Index())

@@ -67,7 +67,7 @@ func InitDB() {
 func (gc *GormController) GetContributor(email string) (*models.Contributor, error) {
 	contributor := &models.Contributor{}
 
-	tx := gc.Trx.Where("email = ?", email).First(&contributor)
+	tx := gc.Trx.Preload("Type").Where("email = ?", email).First(&contributor)
 
 	return contributor, tx.Error
 }
