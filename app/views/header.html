@@ -36,7 +36,7 @@
     <link rel="stylesheet" href="/public/css/obrolansubuh.css">
 </head>
 
-<body class="fulbleed layout vertical">
+<body class="fulbleed layout vertical" unresolved>
     <paper-drawer-panel id="main-drawer-panel">
         <paper-header-panel drawer id="sidebar" mode="waterfall">
             {{ template "sidenav.html" . }}
@@ -62,6 +62,7 @@
                 {{ end }}
             </paper-toolbar>
 
-        <section id="flash-container">
-            {{ template "flash.html" . }}
-        </section>
+            <div id="content-container">
+                <section id="flash-container">
+                    {{ template "flash.html" . }}
+                </section>

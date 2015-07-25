@@ -10,7 +10,7 @@
 
     <link rel="import" href="/public/bower_components/gold-email-input/gold-email-input.html">
 
-    <form is="iron-form" action="{{ url "App.ProcessLogin" }}" method="POST" id="login-form">
+    <form action="{{ url "App.ProcessLogin" }}" method="POST" id="login-form">
         <h2>{{ msg . "login.title" }}</h2>
 
         <gold-email-input required 

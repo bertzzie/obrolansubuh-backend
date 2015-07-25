@@ -189,17 +189,18 @@
 			this.noPost = postCount === 0;
 		},
 		publishClicked: function (e) {
+			var that = this;
 			$.ajax({
 				url         : e.target.closest('a').getAttribute('href'),
 				type        : "GET",
-				success     : (data, textStatus, jqXHR) => {
+				success     : function (data, textStatus, jqXHR) {
 					var id = jqXHR.responseJSON["id"];
 
-					var toggle = this.$$("#" + this.getToggleButtonID({'ID':id}));
+					var toggle = that.$$("#" + that.getToggleButtonID({'ID':id}));
 					toggle.checked = !toggle.checked;
 
-					var publishText = this.$$("#" + this.getPublishTextID({'ID':id}));
-					publishText.textContent = this.getPublishText(toggle.checked);
+					var publishText = that.$$("#" + that.getPublishTextID({'ID':id}));
+					publishText.textContent = that.getPublishText(toggle.checked);
 				}
 			});
 

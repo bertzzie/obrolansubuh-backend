@@ -1,7 +1,6 @@
 {{if .flash.success}}
     <paper-toast duration="10000" 
-                 text="{{ .flash.success }}"
-                 visible="true">
+                 text="{{ .flash.success }}">
         <span id="label" class="style-scope paper-toast">
             {{ .flash.success }}
         </span>
@@ -11,8 +10,7 @@
 {{if or .errors .flash.error}}
     <paper-toast duration="10000" 
                  text="{{ .flash.error }}"
-                 visible="true"
-                 class="error">
+                 visible="true">
         <span id="label" class="style-scope paper-toast">
             {{ .flash.error }}
         </span>
@@ -21,7 +19,6 @@
     {{ range .errors }}
         <paper-toast duration="3000" 
                      text="{{ . }}"
-                     visible="true"
                      class="error">
             <span id="label" class="style-scope paper-toast">
                 {{ . }}
@@ -29,3 +26,14 @@
         </paper-toast>
     {{ end }}
 {{end}}
+
+{{ if or .errors .flash.error .flash.success }}
+    <script type="text/javascript">
+        window.addEventListener('WebComponentsReady', function(e) {
+            console.log("JQ WORS");
+            $("paper-toast").each(function () {
+                $(this).show();
+            })
+        });
+    </script>
+{{ end }}
