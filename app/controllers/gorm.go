@@ -30,20 +30,37 @@ func InitDB() {
 
 	ORM = &dbm
 
-	dbm.AutoMigrate(&models.Contributor{}, &models.Post{})
+	dbm.AutoMigrate(&models.Contributor{}, &models.Post{}, &models.ContributorType{})
 
 	// If there's no user, create default admin user
 	count := 0
 	if dbm.Model(&models.Contributor{}).Count(&count); count < 1 {
+		typeAdmin := models.ContributorType{Type: "ADMIN"}
+		typeWriter := models.ContributorType{Type: "WRITER"}
+
+		dbm.Create(&typeAdmin)
+		dbm.Create(&typeWriter)
+
 		admin := models.Contributor{
 			Name:  "Default Admin",
 			Email: "admin@obrolansubuh.com",
 			About: "Default Admin ObrolanSubuh.com",
 			Photo: "/public/img/default-user.png",
+			Type:  &typeAdmin,
 		}
 		admin.SetPassword("admin@obrolansubuh.com")
 
+		writer := models.Contributor{
+			Name:  "Default Writer",
+			Email: "writer@obrolansubuh.com",
+			About: "Default Writer ObrolanSubuh.com",
+			Photo: "/public/img/default-user.png",
+			Type:  &typeWriter,
+		}
+		writer.SetPassword("writer@obrolansubuh.com")
+
 		dbm.Create(&admin)
+		dbm.Create(&writer)
 	}
 }
 
