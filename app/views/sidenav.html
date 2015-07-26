@@ -21,6 +21,8 @@
 			    <span class="menu-text">Dashboard</span>
 		    </a>
 		</div>
+		
+		{{ if eq .session.usertype "ADMIN" }}
 		<div class="menu-item">
 			<a href="{{ url "Contributor.New" }}">
 			    <span class="menu-text">New Contributor</span>
@@ -31,6 +33,8 @@
 			    <span class="menu-text">Contributors</span>
 		    </a>
 		</div>
+		{{ end }}
+
 		<div class="menu-item">
 		    <a href="{{ url "Post.List" }}">
 			    <span class="menu-text">Post List</span>

@@ -4,6 +4,8 @@ login.message.alreadyli=Can't access login page. You have logged in previously.
 
 logout.message.success=Logout successful. See you later!
 
+access.message.notallowed=You are not allowed to access the page.
+
 post.list.empty=It looks like you have no post yet. Go create a new post!
 post.update.success=Post "%s" updated successfully!
 post.publishtoggle.success=Post status updated!

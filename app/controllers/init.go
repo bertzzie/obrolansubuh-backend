@@ -14,9 +14,19 @@ func checkUser(c *revel.Controller) revel.Result {
 	return c.Redirect(routes.App.Login())
 }
 
+func adminOnly(c *revel.Controller) revel.Result {
+	if c.Session["usertype"] == "ADMIN" {
+		return nil
+	}
+
+	c.Flash.Error(c.Message("access.message.notallowed"))
+	return c.Redirect(routes.App.Index())
+}
+
 func init() {
 	revel.OnAppStart(InitDB)
 	revel.InterceptFunc(checkUser, revel.BEFORE, &Post{})
+	revel.InterceptFunc(adminOnly, revel.BEFORE, &Contributor{})
 	revel.InterceptMethod((*GormController).Begin, revel.BEFORE)
 	revel.InterceptMethod((*GormController).Commit, revel.AFTER)
 	revel.InterceptMethod((*GormController).RollBack, revel.FINALLY)
