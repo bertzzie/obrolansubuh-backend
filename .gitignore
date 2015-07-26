@@ -3,6 +3,7 @@ tmp/
 routes/
 bower_components/
 node_modules/
+public
 public/upload/
 public/dist/
 .*
