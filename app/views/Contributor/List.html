@@ -1,0 +1,14 @@
+{{ msg . "contributor.list.title" | set . "title" }}
+{{ msg . "contributor.list.title" | set . "panelTitle" }}
+
+{{template "header.html" .}}
+
+{{ template "flash.html" . }}
+
+<link rel="import" href="/public/polymer/contributor-list.html">
+
+<contributor-list data-link="{{ url "Contributor.JsonList" }}"
+           empty-message="{{ msg . "contributor.list.empty" }}">
+</contributor-list>
+
+{{template "footer.html" .}}

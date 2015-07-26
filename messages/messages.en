@@ -14,3 +14,5 @@ profile.update.success=Succesfully updated profile data!
 profile.password.success=Successfully changed password!
 profile.password.retypefailed=New password and retype does not match!
 profile.password.wrong=Wrong password.
+
+contributor.list.empty=There is no contributor yet. Something is really, really wrong BECAUSE YOU CAN GET TO THIS PAGE.

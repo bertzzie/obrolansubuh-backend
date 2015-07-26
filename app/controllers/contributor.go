@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"github.com/revel/revel"
+	"net/http"
 	"obrolansubuh.com/backend/app/routes"
 	"obrolansubuh.com/models"
 	"strconv"
@@ -9,6 +10,44 @@ import (
 
 type Contributor struct {
 	GormController
+}
+
+type ContributorList struct {
+	ID       int64
+	Name     string
+	Email    string
+	Photo    string
+	EditLink string
+}
+
+func (c Contributor) JsonList() revel.Result {
+	var contributors []models.Contributor
+	if err := c.Trx.Find(&contributors).Error; err != nil {
+		revel.ERROR.Printf("[LGFATAL] Failed to get user list from database. Error: %s", err)
+
+		FR := FailRequest{Messages: []string{c.Message("errors.db.generic")}}
+
+		c.Response.Status = http.StatusInternalServerError
+		return c.RenderJson(FR)
+	}
+
+	contributorList := make([]ContributorList, 0, len(contributors))
+	for _, contributor := range contributors {
+		tmp := ContributorList{
+			ID:       contributor.ID,
+			Name:     contributor.Name,
+			Email:    contributor.Email,
+			Photo:    contributor.Photo,
+			EditLink: "",
+		}
+		contributorList = append(contributorList, tmp)
+	}
+
+	return c.RenderJson(contributorList)
+}
+
+func (c Contributor) List() revel.Result {
+	return c.Render()
 }
 
 func (c Contributor) New() revel.Result {
@@ -74,8 +113,4 @@ func (c Contributor) Save(email, name, password, privilege string) revel.Result 
 	}
 
 	return c.Redirect(routes.Contributor.List())
-}
-
-func (c Contributor) List() revel.Result {
-	return c.RenderText("Contributor List")
 }

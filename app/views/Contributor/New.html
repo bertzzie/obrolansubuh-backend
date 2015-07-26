@@ -1,5 +1,5 @@
-{{ set . "title" "Create New Contributor" }}
-{{ set . "panelTitle" "Create New Contributor" }}
+{{ msg . "contributor.new.title" | set . "title" }}
+{{ msg . "contributor.new.title" | set . "panelTitle" }}
 
 {{ append . "moreStyles" "css/contributor-form.css" }}
 

@@ -14,3 +14,5 @@ profile.update.success=Perubahan data profil berhasil!
 profile.password.success=Password berhasil diubah!
 profile.password.retypefailed=Password baru dan ketik ulang tidak sama.
 profile.password.wrong=Password salah.
+
+contributor.list.empty=Belum ada kontributor baru. Ada yang salah KARENA KAMU BISA AKSES HALAMAN INI!

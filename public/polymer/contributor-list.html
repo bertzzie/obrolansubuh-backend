@@ -1,0 +1,167 @@
+<link rel="import" href="/public/bower_components/polymer/polymer.html">
+
+<link rel="import" href="/public/bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="/public/bower_components/iron-list/iron-list.html">
+    <link rel="import" href="/public/bower_components/iron-image/iron-image.html">
+
+<link rel="import" href="/public/bower_components/paper-material/paper-material.html">
+
+<dom-module id="contributor-list">
+
+    <style>
+        paper-material {
+        	margin: 16px 16px 0 16px;
+        	padding: 20px;
+        }
+
+        .actions {
+        	font-size: 1.2em;
+        	list-style: none;
+        	margin: 0;
+        	padding: 0;
+        }
+
+        .actions .title {
+        	font-weight: bold;
+        	padding-left: 50px;
+        }
+
+        .actions li {
+        	margin: 5px 0;
+        	text-align: left;
+        	width: 160px;
+        }
+
+        .actions a {
+        	color: black;
+        	text-decoration: none;
+        }
+
+        .action-publish:hover {
+        	cursor: pointer;
+        }
+
+        .action-icon, .action-text {
+        	display: inline-block;
+        }
+
+        .action-icon {
+        	text-align: center;
+        	width: 48px;
+        	height: 20px;
+        }
+
+        .contributor-card {
+        	display: flex;
+        	display: -webkit-flex;
+        	justify-content: space-around;
+        	-webkit-justify-content: space-around;
+        	align-content: center;
+        	-webkit-align-content: center;
+        	align-items: flex-start;
+        	-webkit-align-items: flex-start;
+        	height: 64px;
+        }
+
+        .contributor-photo {
+        	height: 100%;
+        	text-align: center;
+        	width: 10%;
+        }
+
+        .contributor-photo iron-image {
+        	height: 64px;
+        	width: 64px;
+        }
+
+        .contributor-data {
+        	width: 85%;
+        	height: 100%;
+        	display: flex;
+        	display: -webkit-flex;
+        	flex-direction: row;
+        	-webkit-flex-direction: row;
+        }
+
+        .contributor-info {
+        	overflow: hidden;
+        	width: 55%;
+        }
+
+        .contributor-info h3 {
+        	font-size: 1.5em;
+        }
+
+        .contributor-info p {
+        	color: rgba(128, 128, 128, 0.85);
+        	line-height: 1.75em;
+        	margin: 0.5em 0;
+        }
+    </style>
+
+	<template>
+		<iron-ajax url="{{dataLink}}" last-response={{data}} auto on-response="handleAJAX"></iron-ajax>
+
+		<template is="dom-if" if="{{ noContributor }}">
+		    <p>{{emptyMessage}}</p>
+		</template>
+
+		<iron-list items="[[data]]" as="item">
+			<template>
+			    <div class="item">
+					<paper-material elevation="1" class="contributor-card">
+						<aside class="contributor-photo">
+							<iron-image id="{{ getPhotoID(item) }}" 
+							            class="round-imgs" 
+							            sizing="cover"
+							            fade
+							            src="[[item.Photo]]"></iron-image>
+						</aside>
+
+						<article class="contributor-data">
+							<section class="contributor-info">
+							    <h3>[[item.Name]]</h3>
+							    <p>[[item.Email]]</p>
+						    </section>
+
+							<ul class="actions">
+							    <li class="title">Actions</li>
+							    <li>
+							    	<a href="[[item.EditLink]]">
+							    		<span class="action-icon">
+									    	<iron-icon icon="editor:mode-edit"></iron-icon>
+								    	</span>
+
+								    	<span class="action-text">
+									    	Edit
+								    	</span>
+							    	</a>
+							    </li>
+						    </ul>
+						</article>
+
+
+					</paper-material>
+				</div>
+			</template>
+		</iron-list>
+	</template>
+
+	<script>
+	Polymer({
+		is: "contributor-list",
+		properties: {
+			dataLink: String,
+			emptyMessage: String
+		},
+		handleAJAX: function (request) {
+			var contributorCount = request.detail.parseResponse().length;
+
+			this.noContributor = contributorCount === 0;
+		},
+		getPhotoID: function (item) {
+			return "contributor-photo-" + item.ID;
+		}
+	});
+	</script>
+</dom-module>
