@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"github.com/revel/revel"
-	"net/http"
 	"obrolansubuh.com/backend/app/routes"
 	"obrolansubuh.com/models"
 	"strconv"
@@ -20,42 +19,57 @@ func (c Contributor) New() revel.Result {
 }
 
 func (c Contributor) Save(email, name, password, privilege string) revel.Result {
-	c.Validation.Required(name).Message("Nama")
-	c.Validation.Required(email).Message("Email kosong")
-	c.Validation.Email(email).Message("Email tak valid")
-	c.Validation.Required(password).Message("Password")
-	c.Validation.Required(privilege).Message("Privilege")
+	c.Validation.Required(name).Message(c.Message("contributor.validation.name"))
+	c.Validation.Required(email).Message("contributor.validation.email.required")
+	c.Validation.Email(email).Message("contributor.validation.email.invalid")
+	c.Validation.Required(password).Message("contributor.validation.password")
+	c.Validation.Required(privilege).Message("contributor.validation.privilege")
 
 	cType, err := strconv.ParseInt(privilege, 10, 64)
 
 	if err != nil {
-		return c.RenderText("ERROR")
+		revel.ERROR.Printf("[LGWRD] Privilege parse error. Value: %s, should be valid int64 value. Parser Error: %s",
+			privilege,
+			err,
+		)
+
+		c.Flash.Error(c.Message("contributor.privilege.parseerror"))
+		return c.Redirect(routes.Contributor.New())
 	}
 
 	if c.Validation.HasErrors() {
-		messages := make([]string, 0, len(c.Validation.Errors))
-		for _, v := range c.Validation.ErrorMap() {
-			messages = append(messages, v.String())
-		}
+		c.Validation.Keep()
+		c.FlashParams()
+		return c.Redirect(routes.Contributor.New())
+	}
 
-		FR := FailRequest{Messages: messages}
-
-		c.Response.Status = http.StatusBadRequest
-		return c.RenderJson(FR)
+	// existing contributor check
+	_, dupe := c.GetContributor(email)
+	if dupe == nil {
+		c.Flash.Error(c.Message("contributor.validation.email.duplicate"))
+		return c.Redirect(routes.Contributor.New())
 	}
 
 	contributor := models.Contributor{
-		Name:     name,
-		Email:    email,
-		Password: password,
-		TypeID:   cType,
+		Name:   name,
+		Email:  email,
+		TypeID: cType,
+		Photo:  "/public/img/default-user.png",
+		About:  "A contributor of ObrolanSubuh.com",
 	}
+	contributor.SetPassword(password)
 
-	c.Trx.Create(&contributor)
+	if err = c.Trx.Create(&contributor).Error; err != nil {
+		revel.ERROR.Printf("[LGFATAL] Error in creating new contributor %s. Error: %s",
+			email,
+			err,
+		)
 
-	if err := c.Trx.Error; err != nil {
-		revel.ERROR.Printf("%s", err)
-
+		// Gorm appears to have no concept of error code.
+		// We'll have to transfer the direct SQL Error so user
+		// can have more clue of what's happening in case of
+		// duplicate email error leaking here.
+		c.Flash.Error(err.Error())
 		return c.Redirect(routes.Contributor.New())
 	}
 

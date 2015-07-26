@@ -20,3 +20,12 @@ post.validation.content=Validasi gagal. Anda harus mengisikan konten tulisan.
 post.validation.title_length=Validasi gagal. Judul tidak boleh melebihi 1024 karakter.
 
 post.publishtoggle.fail=Pembaruan status publikasi gagal!
+
+# Contributor Messages
+
+contributor.validation.name=Validasi gagal. Nama tidak boleh kosong.
+contributor.validation.email.duplicate=Validasi gagal. Email telah digunakan oleh kontributor lain.
+contributor.validation.email.required=Validasi gagal. Email tidak boleh kosong.
+contributor.validation.email.invalid=Validasi gagal. Email tidak valid.
+contributor.validation.privilege=Validasi gagal. Jenis pengguna tidak dikenali sistem.
+contributor.validation.privilege.parseerror=Validasi gagal. Jenis pengguna tidak ada.

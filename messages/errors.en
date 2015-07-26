@@ -20,3 +20,12 @@ post.validation.content=Post validation failed. You must write some content.
 post.validation.title_length=Post validation failed. Post title must not exceed 1024 characters.
 
 post.publishtoggle.fail=Post status update failed!
+
+# Contributor Messages
+
+contributor.validation.name=Validation failed. Name must not be empty.
+contributor.validation.email.duplicate=Email already used by another user.
+contributor.validation.email.required=Validation failed. Email must not be empty.
+contributor.validation.email.invalid=Validation failed. Email invalid.
+contributor.validation.privilege=Validation failed. Invalid privilege.
+contributor.validation.privilege.parseerror=Validation failed. Invalid privilege value.
