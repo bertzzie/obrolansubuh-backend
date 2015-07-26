@@ -32,17 +32,6 @@
                       name="email"
                       label="{{ msg . "contributor.form.email" }}"></gold-email-input>
 
-    <paper-input-container auto-validate>
-        <label>{{ msg . "contributor.form.password" }}</label>
-        <input is="iron-input" 
-               type="password" 
-               auto-validate 
-               required 
-               name="password"
-               value="{{ .contributor.Password }}">
-        <paper-input-error>{{ msg . "contributor.form.password.error" }}</paper-input-error>
-    </paper-input-container>
-
     <div class="form-inputs">
         <label for="privilege">{{ msg . "contributor.form.privilege" }}</label>
         <select id="privilege" name="privilege">

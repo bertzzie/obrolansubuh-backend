@@ -133,11 +133,10 @@ func (c Contributor) Edit(id int64) revel.Result {
 	return c.Render(contributor, cTypes)
 }
 
-func (c Contributor) Update(id, name, email, password, privilege string) revel.Result {
+func (c Contributor) Update(id, name, email, privilege string) revel.Result {
 	c.Validation.Required(name).Message(c.Message("contributor.validation.name"))
 	c.Validation.Required(email).Message("contributor.validation.email.required")
 	c.Validation.Email(email).Message("contributor.validation.email.invalid")
-	c.Validation.Required(password).Message("contributor.validation.password")
 	c.Validation.Required(privilege).Message("contributor.validation.privilege")
 
 	cType, err := strconv.ParseInt(privilege, 10, 64)
@@ -172,7 +171,6 @@ func (c Contributor) Update(id, name, email, password, privilege string) revel.R
 
 	contributor.Name = name
 	contributor.Email = email
-	contributor.SetPassword(password)
 	contributor.TypeID = cType
 
 	if err := c.Trx.Save(&contributor).Error; err != nil {
