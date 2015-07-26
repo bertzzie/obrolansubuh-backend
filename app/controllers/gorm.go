@@ -37,9 +37,11 @@ func InitDB() {
 	if dbm.Model(&models.Contributor{}).Count(&count); count < 1 {
 		typeAdmin := models.ContributorType{Type: "ADMIN"}
 		typeWriter := models.ContributorType{Type: "WRITER"}
+		typeCont := models.ContributorType{Type: "CONTRIBUTOR"}
 
 		dbm.Create(&typeAdmin)
 		dbm.Create(&typeWriter)
+		dbm.Create(&typeCont)
 
 		admin := models.Contributor{
 			Name:  "Default Admin",
