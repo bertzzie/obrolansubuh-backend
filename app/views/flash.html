@@ -1,8 +1,8 @@
 {{if .flash.success}}
     <paper-toast duration="10000" 
-                 text="{{ .flash.success }}">
+                 text="{{ .flash.success }}"
+                 visible="true">
         <span id="label" class="style-scope paper-toast">
-            {{ .flash.success }}
         </span>
     </paper-toast>
 {{end}}
@@ -10,9 +10,9 @@
 {{if or .errors .flash.error}}
     <paper-toast duration="10000" 
                  text="{{ .flash.error }}"
-                 visible="true">
+                 visible="true"
+                 class="error">
         <span id="label" class="style-scope paper-toast">
-            {{ .flash.error }}
         </span>
     </paper-toast>
 
@@ -21,7 +21,6 @@
                      text="{{ . }}"
                      class="error">
             <span id="label" class="style-scope paper-toast">
-                {{ . }}
             </span>
         </paper-toast>
     {{ end }}
@@ -29,10 +28,13 @@
 
 {{ if or .errors .flash.error .flash.success }}
     <script type="text/javascript">
-        window.addEventListener('polymer-ready', function(e) {
-            $("paper-toast").each(function (event) {
-                $(this).show();
-            })
+        window.addEventListener('WebComponentsReady', function(e) {
+            var toasts = document.querySelectorAll("paper-toast");
+            var len    = toasts.length;
+
+            for (var i = 0; i < len; i++) {
+                toasts.item(i).show();
+            }
         });
     </script>
 {{ end }}

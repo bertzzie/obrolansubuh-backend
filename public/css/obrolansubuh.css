@@ -18,6 +18,7 @@ paper-toast {
 	color: #F1F1F1;
 	min-height: 48px;
 	min-width: 288px;
+	max-width: 60%;
 	padding: 16px 24px 12px;
 	box-sizing: border-box;
 	box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.26);
@@ -28,6 +29,10 @@ paper-toast {
 	position: fixed;
 	bottom: 15px;
 	left: 15px;
+}
+
+paper-toast.paper-toast-open {
+	transform: translateX(256px) translateY(-10px);
 }
 
 paper-toast.error {
