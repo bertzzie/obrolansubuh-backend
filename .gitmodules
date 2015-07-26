@@ -1,0 +1,3 @@
+[submodule "public"]
+	path = public
+	url = git@bitbucket.org:bertzzie/obrolansubuh-static.git
