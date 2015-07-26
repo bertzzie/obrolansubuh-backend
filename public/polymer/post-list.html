@@ -189,6 +189,8 @@
 			this.noPost = postCount === 0;
 		},
 		publishClicked: function (e) {
+			e.preventDefault();
+
 			var that = this;
 			$.ajax({
 				url         : e.target.closest('a').getAttribute('href'),
@@ -201,10 +203,14 @@
 
 					var publishText = that.$$("#" + that.getPublishTextID({'ID':id}));
 					publishText.textContent = that.getPublishText(toggle.checked);
+
+					var notif = that.createNotification("Post successfully updated!", 5000, false);
+
+					setTimeout(function () {
+						notif.show();
+					}, 500);
 				}
 			});
-
-			e.preventDefault();
 		},
 		toggleClicked: function (e) {
 			e.target.checked = !e.target.checked;
@@ -241,6 +247,28 @@
 			var epoch = Date.parse(date);
 
 			return new Date(epoch);
+		},
+		createNotification: function (text, duration, isError) {
+	    	var notif = document.createElement("paper-toast");
+	    	var label = document.createElement("span");
+	    	var parentElement = document.querySelector("#flash-container");
+
+	    	notif.setAttribute("duration", duration);
+
+	        if (isError) {
+	        	notif.classList.add("error");
+	        }
+
+	    	label.setAttribute("id", "label");
+	    	label.classList.add("style-scope");
+	    	label.classList.add("paper-toast");
+
+	    	label.textContent = text;
+
+	    	notif.appendChild(label);
+	    	parentElement.appendChild(notif);
+
+	    	return notif;
 		}
 	});
 	</script>
