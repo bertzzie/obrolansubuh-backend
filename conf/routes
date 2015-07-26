@@ -26,6 +26,11 @@ POST    /profile/edit                           Profile.Update
 GET     /profile/password                       Profile.ChangePassword
 POST    /profile/password                       Profile.UpdatePassword
 
+# Contributor CRUD
+GET     /contributor/list                       Contributor.List
+GET     /contributor/new                        Contributor.New
+POST    /contributor/new                        Contributor.Save
+
 # Ignore favicon requests
 GET     /favicon.ico                            404
 

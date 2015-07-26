@@ -30,3 +30,14 @@ profile.form.newpassw=Password Baru
 profile.form.retpassw=Ketik Ulang Password Baru
 profile.form.password.submit=Ganti Password
 profile.form.password.error=Tidak boleh kosong
+
+# Contributor Page
+contributor.form.name=Nama Kontributor Baru
+contributor.form.name.error=Nama tidak boleh kosong
+contributor.form.email=Email Kontributor Baru
+contributor.form.email.error=Masukkan alamat email yang valid
+contributor.form.password=Password Kontributor Baru
+contributor.form.password.error=Password tidak boleh kosong
+contributor.form.privilege=Jenis Pengguna
+
+contributor.form.submit=Tambah Kontributor

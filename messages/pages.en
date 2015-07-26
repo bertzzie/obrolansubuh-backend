@@ -30,3 +30,14 @@ profile.form.newpassw=New Password
 profile.form.retpassw=Retype Password
 profile.form.password.submit=Change Password
 profile.form.password.error=Field must not be empty
+
+# Contributor Page
+contributor.form.name=New Contributor's Name
+contributor.form.name.error=Name must not be empty
+contributor.form.email=Your New Contributor's Email
+contributor.form.email.error=Please enter a valid email address
+contributor.form.password=New Contributor's Password
+contributor.form.password.error=Field must not be empty
+contributor.form.privilege=Contributor Type
+
+contributor.form.submit=Create Contributor

@@ -34,6 +34,17 @@ paper-toast.error {
 	background: #F94847 none repeat scroll 0% 0%;
 }
 
+select {
+	background: transparent;
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	border-bottom: 1px solid #757575;
+	color: #757575;
+	font-size: 16px;
+	width: 100%;
+}
+
 form#login-form {
 	margin: 2em auto;
 	max-width: 480px;
