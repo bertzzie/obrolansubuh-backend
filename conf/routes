@@ -31,6 +31,8 @@ GET     /contributor/list                       Contributor.List
 GET     /contributor/list.json                  Contributor.JsonList
 GET     /contributor/new                        Contributor.New
 POST    /contributor/new                        Contributor.Save
+GET     /contributor/:id/edit                   Contributor.Edit
+POST    /contributor/update                     Contributor.Update
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

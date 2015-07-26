@@ -34,6 +34,7 @@ profile.form.password.error=Field must not be empty
 # Contributor Page
 contributor.list.title=All Contributors
 contributor.new.title=Create New Contributor
+contributor.edit.title=Edit Contributor Info
 
 contributor.form.name=New Contributor's Name
 contributor.form.name.error=Name must not be empty
@@ -44,3 +45,4 @@ contributor.form.password.error=Field must not be empty
 contributor.form.privilege=Contributor Type
 
 contributor.form.submit=Create Contributor
+contributor.form.update.submit=Update Contributor Info

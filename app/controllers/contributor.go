@@ -38,7 +38,7 @@ func (c Contributor) JsonList() revel.Result {
 			Name:     contributor.Name,
 			Email:    contributor.Email,
 			Photo:    contributor.Photo,
-			EditLink: "",
+			EditLink: routes.Contributor.Edit(contributor.ID),
 		}
 		contributorList = append(contributorList, tmp)
 	}
@@ -110,6 +110,83 @@ func (c Contributor) Save(email, name, password, privilege string) revel.Result 
 		// duplicate email error leaking here.
 		c.Flash.Error(err.Error())
 		return c.Redirect(routes.Contributor.New())
+	}
+
+	return c.Redirect(routes.Contributor.List())
+}
+
+func (c Contributor) Edit(id int64) revel.Result {
+	var contributor models.Contributor
+	var cTypes []models.ContributorType
+	c.Trx.Find(&cTypes)
+
+	if err := c.Trx.Preload("Type").Where("id = ?", id).First(&contributor).Error; err != nil {
+		revel.ERROR.Printf("[LGFATAL] Failed to get Contributor ID %d data. Error: %s",
+			id,
+			err,
+		)
+
+		c.Flash.Error(c.Message("errors.db.generic"))
+		return c.Redirect(routes.App.Index())
+	}
+
+	return c.Render(contributor, cTypes)
+}
+
+func (c Contributor) Update(id, name, email, password, privilege string) revel.Result {
+	c.Validation.Required(name).Message(c.Message("contributor.validation.name"))
+	c.Validation.Required(email).Message("contributor.validation.email.required")
+	c.Validation.Email(email).Message("contributor.validation.email.invalid")
+	c.Validation.Required(password).Message("contributor.validation.password")
+	c.Validation.Required(privilege).Message("contributor.validation.privilege")
+
+	cType, err := strconv.ParseInt(privilege, 10, 64)
+	realID, iderr := strconv.ParseInt(id, 10, 64)
+
+	if err != nil || iderr != nil {
+		revel.ERROR.Printf("[LGWRD] Privilege parse error. Value: %s, should be valid int64 value. Parser Error: %s",
+			privilege,
+			err,
+		)
+
+		c.Flash.Error(c.Message("contributor.privilege.parseerror"))
+		return c.Redirect(routes.Contributor.Edit(realID))
+	}
+
+	if c.Validation.HasErrors() {
+		c.Validation.Keep()
+		c.FlashParams()
+		return c.Redirect(routes.Contributor.Edit(realID))
+	}
+
+	var contributor models.Contributor
+	if err = c.Trx.Preload("Type").Where("id = ?", id).First(&contributor).Error; err != nil {
+		revel.ERROR.Printf("[LGFATAL] Failed to get Contributor ID %d data. Error: %s",
+			id,
+			err,
+		)
+
+		c.Flash.Error(c.Message("errors.db.generic"))
+		return c.Redirect(routes.Contributor.Edit(realID))
+	}
+
+	contributor.Name = name
+	contributor.Email = email
+	contributor.SetPassword(password)
+	contributor.TypeID = cType
+
+	if err := c.Trx.Save(&contributor).Error; err != nil {
+		revel.ERROR.Printf("[LGFATAL] Error in updating new contributor %s. Error: %s",
+			email,
+			err,
+		)
+
+		// Gorm appears to have no concept of error code.
+		// We'll have to transfer the direct SQL Error so user
+		// can have more clue of what's happening in case of
+		// duplicate email error leaking here.
+		c.Flash.Error(err.Error())
+		return c.Redirect(routes.Contributor.Edit(realID))
 	}
 
 	return c.Redirect(routes.Contributor.List())

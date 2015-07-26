@@ -34,6 +34,7 @@ profile.form.password.error=Tidak boleh kosong
 # Contributor Page
 contributor.list.title=Semua Kontributor
 contributor.new.title=Tambah Kontributor Baru
+contributor.edit.title=Edit Info Contributor 
 
 contributor.form.name=Nama Kontributor Baru
 contributor.form.name.error=Nama tidak boleh kosong
@@ -44,3 +45,4 @@ contributor.form.password.error=Password tidak boleh kosong
 contributor.form.privilege=Jenis Pengguna
 
 contributor.form.submit=Tambah Kontributor
+contributor.form.update.submit=Update Info Kontributor

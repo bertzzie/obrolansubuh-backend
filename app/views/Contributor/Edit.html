@@ -1,0 +1,74 @@
+{{ msg . "contributor.edit.title" | set . "title" }}
+{{ msg . "contributor.edit.title" | set . "panelTitle" }}
+
+{{ append . "moreStyles" "css/contributor-form.css" }}
+
+{{template "header.html" .}}
+
+{{ template "flash.html" . }}
+
+<link rel="import" href="/public/bower_components/iron-form/iron-form.html">
+<link rel="import" href="/public/bower_components/iron-input/iron-input.html">
+
+<link rel="import" href="/public/bower_components/paper-input/paper-input.html">
+<link rel="import" href="/public/bower_components/gold-email-input/gold-email-input.html">
+
+<form action="{{ url "Contributor.Update" }}" method="POST" id="contributor-form">
+    <paper-input-container auto-validate>
+        <label>{{ msg . "contributor.form.name" }}</label>
+        <input is="iron-input" 
+               type="text" 
+               auto-validate 
+               required 
+               name="name" 
+               value="{{ .contributor.Name }}">
+        <paper-input-error>{{ msg . "contributor.form.name.error" }}</paper-input-error>
+    </paper-input-container>
+
+    <gold-email-input required 
+                      auto-validate 
+                      error-message="{{ msg . "contributor.form.email.error" }}"
+                      value="{{ .contributor.Email }}"
+                      name="email"
+                      label="{{ msg . "contributor.form.email" }}"></gold-email-input>
+
+    <paper-input-container auto-validate>
+        <label>{{ msg . "contributor.form.password" }}</label>
+        <input is="iron-input" 
+               type="password" 
+               auto-validate 
+               required 
+               name="password"
+               value="{{ .contributor.Password }}">
+        <paper-input-error>{{ msg . "contributor.form.password.error" }}</paper-input-error>
+    </paper-input-container>
+
+    <div class="form-inputs">
+        <label for="privilege">{{ msg . "contributor.form.privilege" }}</label>
+        <select id="privilege" name="privilege">
+        {{ $curr := .contributor.TypeID }}
+        {{ range .cTypes }}
+            {{ if eq .ID $curr }}
+                <option value="{{ .ID }}" selected>{{ .Type }}</option>
+            {{ else }}
+                <option value="{{ .ID }}">{{ .Type }}</option>
+            {{ end }}
+        {{ end }}
+        </select>
+    </div>
+
+    <div class="form-actions">
+        <input type="hidden" name="id" value="{{ .contributor.ID }}">
+        <input type="submit" class="hidden"> <!-- So that user can press Enter and submit form -->
+        <paper-button raised class="process" onclick="clickHandler(event)">
+             {{ msg . "contributor.form.update.submit" }}
+        </paper-button>
+        <script type="text/javascript">
+            function clickHandler(event) {
+                document.getElementById("contributor-form").submit();
+            }
+        </script>
+    </div>
+</form>
+
+{{template "footer.html" .}}
