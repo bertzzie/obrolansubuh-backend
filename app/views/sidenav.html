@@ -24,11 +24,6 @@
 		
 		{{ if eq .session.usertype "ADMIN" }}
 		<div class="menu-item">
-			<a href="{{ url "Contributor.New" }}">
-			    <span class="menu-text">New Contributor</span>
-		    </a>
-		</div>
-		<div class="menu-item">
 			<a href="{{ url "Contributor.List" }}">
 			    <span class="menu-text">Contributors</span>
 		    </a>
@@ -37,22 +32,12 @@
 
 		<div class="menu-item">
 		    <a href="{{ url "Post.List" }}">
-			    <span class="menu-text">Post List</span>
-		    </a>
-		</div>
-		<div class="menu-item">
-		    <a href="{{ url "Post.New" }}">
-			    <span class="menu-text">New Post</span>
+			    <span class="menu-text">Posts</span>
 		    </a>
 		</div>
 		<div class="menu-item">
 		    <a href="{{ url "Profile.Edit" }}">
 			    <span class="menu-text">Edit Profile</span>
-		    </a>
-		</div>
-		<div class="menu-item">
-		    <a href="{{ url "Profile.ChangePassword" }}">
-			    <span class="menu-text">Change Password</span>
 		    </a>
 		</div>
 		<div class="menu-item">

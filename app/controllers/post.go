@@ -117,7 +117,11 @@ func (c Post) JsonList() revel.Result {
 }
 
 func (c Post) List() revel.Result {
-	return c.Render()
+	ToolbarItems := []ToolbarItem{
+		ToolbarItem{Id: "new-post", Text: "New Post", Icon: "note-add", Url: "Post.New"},
+	}
+
+	return c.Render(ToolbarItems)
 }
 
 func (c Post) TogglePublished(id int64) revel.Result {

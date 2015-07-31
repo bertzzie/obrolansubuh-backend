@@ -65,6 +65,13 @@
         <paper-button raised class="process" onclick="clickHandler(event)">
              {{ msg . "profile.form.submit" }}
         </paper-button>
+        or
+        <a href="{{ url "Profile.ChangePassword" }}" class="button-link">
+	        <paper-button raised>
+					        Change Password
+	        </paper-button>
+        </a>
+
         <script type="text/javascript">
             function clickHandler(event) {
                 document.getElementById("profile-form").submit();
