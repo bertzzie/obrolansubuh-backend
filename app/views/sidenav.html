@@ -18,31 +18,31 @@
 	<nav role="navigation" id="left-menu">
 		<div class="menu-item">
 			<a href="{{ url "App.Index" }}">
-			    <span class="menu-text">Dashboard</span>
+			    <span class="menu-text">{{ msg . "menu.dashboard" }}</span>
 		    </a>
 		</div>
 		
 		{{ if eq .session.usertype "ADMIN" }}
 		<div class="menu-item">
 			<a href="{{ url "Contributor.List" }}">
-			    <span class="menu-text">Contributors</span>
+			    <span class="menu-text">{{ msg . "menu.contributor.list" }}</span>
 		    </a>
 		</div>
 		{{ end }}
 
 		<div class="menu-item">
 		    <a href="{{ url "Post.List" }}">
-			    <span class="menu-text">Posts</span>
+			    <span class="menu-text">{{ msg . "menu.post.list" }}</span>
 		    </a>
 		</div>
 		<div class="menu-item">
 		    <a href="{{ url "Profile.Edit" }}">
-			    <span class="menu-text">Edit Profile</span>
+			    <span class="menu-text">{{ msg . "menu.profile.edit" }}</span>
 		    </a>
 		</div>
 		<div class="menu-item">
 			<a href="{{ url "App.Logout" }}">
-			    <span class="menu-text">Logout</span>
+			    <span class="menu-text">{{ msg . "menu.auth.logout" }}</span>
 		    </a>
 		</div>
 	</nav>

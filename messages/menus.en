@@ -1,0 +1,14 @@
+menu.dashboard=Dashboard
+
+menu.contributor.list=Contributors
+menu.contributor.new=New User
+
+menu.post.list=Posts
+menu.post.new=New Post
+menu.post.publish=Publish
+menu.post.savedraft=Save Draft
+menu.post.update=Update
+
+menu.profile.edit=Edit Profile
+
+menu.auth.logout=Logout

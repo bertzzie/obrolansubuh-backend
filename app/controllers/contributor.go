@@ -48,7 +48,7 @@ func (c Contributor) JsonList() revel.Result {
 
 func (c Contributor) List() revel.Result {
 	ToolbarItems := []ToolbarItem{
-		ToolbarItem{Id: "new-contributor", Text: "New User", Icon: "social:person-add", Url: "Contributor.New"},
+		ToolbarItem{Id: "new-contributor", Text: c.Message("menu.contributor.new"), Icon: "social:person-add", Url: "Contributor.New"},
 	}
 
 	return c.Render(ToolbarItems)

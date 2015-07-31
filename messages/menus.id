@@ -1,0 +1,14 @@
+menu.dashboard=Dashboard
+
+menu.contributor.list=Kontributor
+menu.contributor.new=Tambah
+
+menu.post.list=Tulisan
+menu.post.new=Tambah
+menu.post.publish=Publikasikan
+menu.post.savedraft=Simpan Draf
+menu.post.update=Perbaharui
+
+menu.profile.edit=Edit Profil
+
+menu.auth.logout=Logout

@@ -118,7 +118,7 @@ func (c Post) JsonList() revel.Result {
 
 func (c Post) List() revel.Result {
 	ToolbarItems := []ToolbarItem{
-		ToolbarItem{Id: "new-post", Text: "New Post", Icon: "note-add", Url: "Post.New"},
+		ToolbarItem{Id: "new-post", Text: c.Message("menu.post.new"), Icon: "note-add", Url: "Post.New"},
 	}
 
 	return c.Render(ToolbarItems)
@@ -147,8 +147,8 @@ func (c Post) TogglePublished(id int64) revel.Result {
 
 func (c Post) New() revel.Result {
 	ToolbarItems := []ToolbarItem{
-		ToolbarItem{Id: "publish-post", Text: "Publish", Icon: "editor:publish", Url: "Post.New"},
-		ToolbarItem{Id: "save-draft", Text: "Save Draft", Icon: "save", Url: "Post.New"},
+		ToolbarItem{Id: "publish-post", Text: c.Message("menu.post.publish"), Icon: "editor:publish", Url: "Post.New"},
+		ToolbarItem{Id: "save-draft", Text: c.Message("menu.post.savedraft"), Icon: "save", Url: "Post.New"},
 	}
 
 	return c.Render(ToolbarItems)
@@ -214,7 +214,13 @@ func (c Post) Save(title string, content string, publish bool) revel.Result {
 
 func (c Post) Edit(id int64) revel.Result {
 	ToolbarItems := []ToolbarItem{
-		ToolbarItem{Id: "update-post", Text: "Update", Icon: "editor:publish", Url: "Post.Update", UrlParam: strconv.FormatInt(id, 10)},
+		ToolbarItem{
+			Id:       "update-post",
+			Text:     c.Message("menu.post.update"),
+			Icon:     "editor:publish",
+			Url:      "Post.Update",
+			UrlParam: strconv.FormatInt(id, 10),
+		},
 	}
 
 	post := models.Post{}
