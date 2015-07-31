@@ -84,6 +84,10 @@ func getUsersPost(uid string, db *gorm.DB) (posts []models.Post, err error) {
 	return posts, nil
 }
 
+func (c Post) isAdmin() bool {
+	return c.Session["usertype"] == "ADMIN"
+}
+
 func (c Post) JsonList() revel.Result {
 	// enforce using cookies here
 	// so people can't just API call this easily
@@ -125,6 +129,16 @@ func (c Post) List() revel.Result {
 }
 
 func (c Post) TogglePublished(id int64) revel.Result {
+	// Non admins are not allowed to publish
+	if !c.isAdmin() {
+		FR := FailRequest{
+			Messages: []string{c.Message("errors.privilege.generic")},
+		}
+
+		c.Response.Status = http.StatusForbidden
+		return c.RenderJson(FR)
+	}
+
 	// Gorm can't set boolean field to false via methods.
 	//
 	// see:
@@ -147,14 +161,40 @@ func (c Post) TogglePublished(id int64) revel.Result {
 
 func (c Post) New() revel.Result {
 	ToolbarItems := []ToolbarItem{
-		ToolbarItem{Id: "publish-post", Text: c.Message("menu.post.publish"), Icon: "editor:publish", Url: "Post.New"},
-		ToolbarItem{Id: "save-draft", Text: c.Message("menu.post.savedraft"), Icon: "save", Url: "Post.New"},
+		ToolbarItem{
+			Id:   "save-draft",
+			Text: c.Message("menu.post.savedraft"),
+			Icon: "save",
+			Url:  "Post.New",
+		},
+	}
+
+	if c.Session["usertype"] == "ADMIN" {
+		publishMenu := ToolbarItem{
+			Id:   "publish-post",
+			Text: c.Message("menu.post.publish"),
+			Icon: "editor:publish",
+			Url:  "Post.New",
+		}
+
+		ToolbarItems = append(ToolbarItems, publishMenu)
+
 	}
 
 	return c.Render(ToolbarItems)
 }
 
 func (c Post) Save(title string, content string, publish bool) revel.Result {
+	// Non admins are not allowed to publish
+	if !c.isAdmin() && publish {
+		FR := FailRequest{
+			Messages: []string{c.Message("errors.privilege.generic")},
+		}
+
+		c.Response.Status = http.StatusForbidden
+		return c.RenderJson(FR)
+	}
+
 	c.Validation.Required(title).Message(c.Message("post.validation.title"))
 	c.Validation.Required(content).Message(c.Message("post.validation.content"))
 	c.Validation.MaxSize(title, 1024).Message(c.Message("post.validation.title_length"))
@@ -264,7 +304,20 @@ func (c Post) Update(id int64) revel.Result {
 		c.RenderJson(FR)
 	}
 
-	c.Trx.Table("posts").Where("id = ?", p.ID).Updates(p)
+	var oldPost models.Post
+	c.Trx.Model(&oldPost).Where("id = ?", p.ID)
+
+	// only admins are allowed to change publish status
+	if oldPost.Published != p.Published && !c.isAdmin() {
+		FR := FailRequest{
+			Messages: []string{c.Message("errors.privilege.generic")},
+		}
+
+		c.Response.Status = http.StatusForbidden
+		return c.RenderJson(FR)
+	}
+
+	c.Trx.Model(&oldPost).Updates(p)
 	if err := c.Trx.Error; err != nil {
 		revel.ERROR.Printf("[LGFATAL] Failed to save post in database.")
 

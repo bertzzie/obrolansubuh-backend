@@ -8,6 +8,7 @@ errors.db.generic=[DTFE] Database Error. Please contact web administrator.
 
 # Other Generic Errors
 errors.upload.image=Image Upload Failed. Please contact web administrator.
+errors.privilege.generic=You do not have the privilege to do that.
 
 # Post Messages
 errors.post.database=Query Failed. Database error. Please contact web administrator.
