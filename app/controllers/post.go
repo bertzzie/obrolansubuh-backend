@@ -69,14 +69,20 @@ type PostList struct {
 	ID         int64
 	Title      string
 	Content    string
+	Author     string
 	CreatedAt  time.Time
 	Published  bool
 	EditLink   string
 	ToggleLink string
 }
 
-func getUsersPost(uid string, db *gorm.DB) (posts []models.Post, err error) {
-	db.Where("author_id = ?", uid).Find(&posts)
+func getUsersPost(uid string, allUsers bool, db *gorm.DB) (posts []models.Post, err error) {
+	if allUsers {
+		db.Preload("Author").Order("created_at desc").Find(&posts)
+	} else {
+		db.Preload("Author").Where("author_id = ?", uid).Order("created_at desc").Find(&posts)
+	}
+
 	if err = db.Error; err != nil {
 		return nil, err
 	}
@@ -92,7 +98,7 @@ func (c Post) JsonList() revel.Result {
 	// enforce using cookies here
 	// so people can't just API call this easily
 	uid := c.Session["userid"]
-	posts, err := getUsersPost(uid, c.Trx)
+	posts, err := getUsersPost(uid, c.isAdmin(), c.Trx)
 
 	if err != nil {
 		revel.ERROR.Printf("[LGFATAL] Failed to get post list from database.")
@@ -108,6 +114,7 @@ func (c Post) JsonList() revel.Result {
 		tmp := PostList{
 			ID:         post.ID,
 			Title:      post.Title,
+			Author:     post.Author.Name,
 			Content:    post.Content,
 			CreatedAt:  post.CreatedAt,
 			Published:  post.Published,
