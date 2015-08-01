@@ -30,3 +30,8 @@ contributor.validation.email.required=Validation failed. Email must not be empty
 contributor.validation.email.invalid=Validation failed. Email invalid.
 contributor.validation.privilege=Validation failed. Invalid privilege.
 contributor.validation.privilege.parseerror=Validation failed. Invalid privilege value.
+
+# Site Info Messages
+siteinfo.validation.aboutus.title=Validation failed. You must insert title.
+siteinfo.validation.aboutus.title_length=Validation failed. Title must not exceed 1024 characters.
+siteinfo.validation.aboutus.content=Validation failed. You must write some content.

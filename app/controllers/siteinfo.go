@@ -26,9 +26,9 @@ func (c SiteInfo) EditAboutUs() revel.Result {
 }
 
 func (c SiteInfo) UpdateAboutUs(title, content string) revel.Result {
-	c.Validation.Required(title).Message("JUNG JUNG PELET")
-	c.Validation.Required(content).Message("TELEP GNUJ GNUJ")
-	c.Validation.MaxSize(title, 1024).Message("MAMAKMU")
+	c.Validation.Required(title).Message(c.Message("siteinfo.validation.aboutus.title"))
+	c.Validation.Required(content).Message(c.Message("siteinfo.validation.aboutus.content"))
+	c.Validation.MaxSize(title, 1024).Message(c.Message("siteinfo.validation.aboutus.title_length"))
 
 	if c.Validation.HasErrors() {
 		messages := make([]string, 0, len(c.Validation.Errors))
@@ -51,13 +51,13 @@ func (c SiteInfo) UpdateAboutUs(title, content string) revel.Result {
 	if err := c.Trx.Error; err != nil {
 		revel.ERROR.Printf("[LGFATAL] Failed to save about us in database.")
 
-		FR := FailRequest{Messages: []string{"AAA"}}
+		FR := FailRequest{Messages: []string{c.Message("errors.db.generic")}}
 
 		c.Response.Status = http.StatusInternalServerError
 		return c.RenderJson(FR)
 	}
 
-	message := "WOOOO"
+	message := c.Message("siteinfo.aboutus.update.success")
 	AUU := AboutUsUpdated{
 		Message: message,
 	}
