@@ -4,6 +4,7 @@ import (
 	"github.com/revel/revel"
 	"net/http"
 	"obrolansubuh.com/models"
+	"strings"
 )
 
 type SiteInfo struct {
@@ -44,8 +45,8 @@ func (c SiteInfo) UpdateAboutUs(title, content string) revel.Result {
 
 	var si models.SiteInfo
 	c.Trx.First(&si)
-	si.AboutUsTitle = title
-	si.AboutUsContent = content
+	si.AboutUsTitle = strings.Trim(title, " \n")
+	si.AboutUsContent = strings.Trim(content, " \n")
 	c.Trx.Save(&si)
 
 	if err := c.Trx.Error; err != nil {

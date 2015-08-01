@@ -13,6 +13,7 @@ import (
 	"obrolansubuh.com/models"
 	"path/filepath"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -229,6 +230,10 @@ func (c Post) Save(title string, content string, publish bool) revel.Result {
 		return c.RenderJson(FR)
 	}
 
+	// cleanups
+	title = strings.Trim(title, " \n")
+	content = strings.Trim(content, " \n")
+
 	newPost := models.Post{
 		Title:     title,
 		Content:   content,
@@ -317,6 +322,9 @@ func (c Post) Update(id int64) revel.Result {
 		c.Response.Status = http.StatusBadRequest
 		return c.RenderJson(FR)
 	}
+
+	p.Title = strings.Trim(p.Title, " \n")
+	p.Content = strings.Trim(p.Content, " \n")
 
 	var oldPost models.Post
 	c.Trx.Preload("Author").Where("id = ?", p.ID).First(&oldPost)
