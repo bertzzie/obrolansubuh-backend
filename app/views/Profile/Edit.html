@@ -38,10 +38,10 @@
 	                          label="{{ msg . "profile.form.email" }}"></gold-email-input>
 
 	        <paper-textarea label="{{ msg . "profile.form.about" }}" 
-	                         name="about"
-	                         char-counter 
-	                         maxlength="500"
-	                         value="{{ .contributor.About }}">
+	        				id="textarea-about"
+	                        char-counter 
+	                        maxlength="500"
+	                        value="{{ .contributor.About }}">
 	        </paper-textarea>
 	    </section>
 	    <aside id="profile-picture">
@@ -55,13 +55,13 @@
 	        <paper-input-container>
 	            <label>{{ msg . "profile.form.photo" }}</label>
 	            <input is="iron-input" type="file" name="photo">
-	            <paper-input-error>DAYUM</paper-input-error>
 	        </paper-input-container>
 	    </aside>
     </section>
 
     <div class="form-actions">
         <input type="submit" class="hidden"> <!-- So that user can press Enter and submit form -->
+        <input type="hidden" name="about" class="hidden" id="input-about">
         <paper-button raised class="process" onclick="clickHandler(event)">
              {{ msg . "profile.form.submit" }}
         </paper-button>
@@ -73,7 +73,12 @@
         </a>
 
         <script type="text/javascript">
+        	document.getElementById("textarea-about").addEventListener("keyup", function (evt) {
+        		document.getElementById("input-about").value = this.value;
+        	});
+
             function clickHandler(event) {
+        		document.getElementById("input-about").value = document.getElementById("textarea-about").value;
                 document.getElementById("profile-form").submit();
             }
         </script>
