@@ -296,7 +296,7 @@ func (c Post) Update(id int64) revel.Result {
 		FR := FailRequest{Messages: []string{c.Message("errors.post.request")}}
 
 		c.Response.Status = http.StatusInternalServerError
-		c.RenderJson(FR)
+		return c.RenderJson(FR)
 	}
 
 	jserr := json.Unmarshal(data, &p)
@@ -308,7 +308,7 @@ func (c Post) Update(id int64) revel.Result {
 		FR := FailRequest{Messages: []string{c.Message("errors.post.json")}}
 
 		c.Response.Status = http.StatusBadRequest
-		c.RenderJson(FR)
+		return c.RenderJson(FR)
 	}
 
 	var oldPost models.Post
