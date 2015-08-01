@@ -24,6 +24,11 @@
 		
 		{{ if eq .session.usertype "ADMIN" }}
 		<div class="menu-item">
+		    <a href="{{ url "SiteInfo.EditAboutUs" }}">
+			    <span class="menu-text">Site Info</span>
+		    </a>
+		</div>
+		<div class="menu-item">
 			<a href="{{ url "Contributor.List" }}">
 			    <span class="menu-text">{{ msg . "menu.contributor.list" }}</span>
 		    </a>
@@ -38,11 +43,6 @@
 		<div class="menu-item">
 		    <a href="{{ url "Profile.Edit" }}">
 			    <span class="menu-text">{{ msg . "menu.profile.edit" }}</span>
-		    </a>
-		</div>
-		<div class="menu-item">
-		    <a href="{{ url "SiteInfo.EditAboutUs" }}">
-			    <span class="menu-text">Site Info</span>
 		    </a>
 		</div>
 		<div class="menu-item">
