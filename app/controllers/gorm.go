@@ -30,7 +30,16 @@ func InitDB() {
 
 	ORM = &dbm
 
-	dbm.AutoMigrate(&models.Contributor{}, &models.Post{}, &models.ContributorType{})
+	dbm.AutoMigrate(&models.Contributor{}, &models.Post{}, &models.ContributorType{}, &models.SiteInfo{})
+
+	siteInfo := models.SiteInfo{}
+
+	dbm.FirstOrCreate(&siteInfo, models.SiteInfo{
+		AboutUsTitle:   "About Us",
+		AboutUsContent: "This is ObrolanSubuh.com",
+		TwitterURL:     "obrolansubuh",
+		FacebookURL:    "obrolansubuh",
+	})
 
 	// If there's no user, create default admin user
 	count := 0
