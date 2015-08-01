@@ -34,6 +34,9 @@ POST    /contributor/new                        Contributor.Save
 GET     /contributor/:id/edit                   Contributor.Edit
 POST    /contributor/update                     Contributor.Update
 
+# SiteInfo CRUD
+GET     /site-info/edit/about-us                SiteInfo.EditAboutUs
+
 # Ignore favicon requests
 GET     /favicon.ico                            404
 

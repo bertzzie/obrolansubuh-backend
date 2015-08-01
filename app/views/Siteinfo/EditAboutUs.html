@@ -1,0 +1,25 @@
+{{ set . "title" "Editing About Us" }}
+{{ set . "panelTitle" "Editing About Us" }}
+
+{{ append . "moreStyles" "css/post-editor.css" }}
+{{ append . "moreScripts" "dist/js/post-editor.js" }}
+
+{{template "header.html" .}}
+
+{{ template "flash.html" . }}
+
+    <link rel="import" href="/public/bower_components/medium-editor-polymer/medium-editor-polymer.html">
+
+    <section id="aboutus-creator">
+        <input type="text" id="aboutus-title" class="title" name="aboutus-title" placeholder="Title" value="{{ .siteInfo.AboutUsTitle }}">
+        <input type="hidden" id="aboutus-id" name="post-id" value="{{ .siteInfo.ID }}">
+
+        <medium-editor-polymer id="aboutus-editor"
+            upload-url="{{ url "Post.ImageUpload" }}" 
+            upload-method="PUT" 
+            upload-field-name="image">
+            {{ raw .siteInfo.AboutUsContent }}
+        </medium-editor-polymer>
+    </section>
+
+{{template "footer.html" .}}
