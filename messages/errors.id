@@ -14,6 +14,7 @@ errors.privilege.generic=Maaf, anda tidak memiliki hak akses untuk melakuka hal 
 errors.post.database=Kesalahan basis data dalam pemrosesan. Mohon hubungi admin web.
 errors.post.request=Sistem gagal membaca data. Mohon lakukan refresh browser dan coba lagi.
 errors.post.json=Sistem gagal membaca data. Mohon lakukan refresh browser dan coba lagi.
+errors.post.privilege=Anda hanya dapat mengubah tulisan anda sendiri.
 
 post.validation.id=Validasi gagal. Mohon lakukan refresh browser dan coba lagi.
 post.validation.title=Validasi gagal. Judul tulisan harus diisikan.

@@ -271,7 +271,14 @@ func (c Post) Edit(id int64) revel.Result {
 	}
 
 	post := models.Post{}
-	c.Trx.Where("id = ?", id).First(&post)
+	c.Trx.Preload("Author").Where("id = ?", id).First(&post)
+
+	// you can only edit your own post (except admin)
+	userid, _ := strconv.ParseInt(c.Session["userid"], 64, 10)
+	if post.Author.ID != userid && !c.isAdmin() {
+		c.Flash.Error(c.Message("errors.post.privilege"))
+		return c.Redirect(routes.Post.List())
+	}
 
 	return c.Render(post, ToolbarItems)
 }
@@ -313,6 +320,17 @@ func (c Post) Update(id int64) revel.Result {
 
 	var oldPost models.Post
 	c.Trx.Preload("Author").Where("id = ?", p.ID).First(&oldPost)
+
+	// you can only edit your own post (except admin)
+	userid, _ := strconv.ParseInt(c.Session["userid"], 64, 10)
+	if oldPost.Author.ID != userid && !c.isAdmin() {
+		FR := FailRequest{
+			Messages: []string{c.Message("errors.post.privilege")},
+		}
+
+		c.Response.Status = http.StatusForbidden
+		return c.RenderJson(FR)
+	}
 
 	// only admins are allowed to change publish status
 	if oldPost.Published != p.Published && !c.isAdmin() {
