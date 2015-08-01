@@ -312,7 +312,7 @@ func (c Post) Update(id int64) revel.Result {
 	}
 
 	var oldPost models.Post
-	c.Trx.Model(&oldPost).Where("id = ?", p.ID)
+	c.Trx.Preload("Author").Where("id = ?", p.ID).First(&oldPost)
 
 	// only admins are allowed to change publish status
 	if oldPost.Published != p.Published && !c.isAdmin() {
