@@ -30,7 +30,13 @@ func InitDB() {
 
 	ORM = &dbm
 
-	dbm.AutoMigrate(&models.Contributor{}, &models.Post{}, &models.ContributorType{}, &models.SiteInfo{})
+	dbm.AutoMigrate(
+		&models.Contributor{},
+		&models.ContributorType{},
+		&models.Post{},
+		&models.Category{},
+		&models.SiteInfo{},
+	)
 
 	siteInfo := models.SiteInfo{}
 
