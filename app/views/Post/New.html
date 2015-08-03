@@ -14,7 +14,7 @@
         <input type="text" id="post-title" name="post-title" placeholder="Title">
 
         <medium-editor-polymer id="post-editor"
-            upload-url="/post/image/upload" 
+            upload-url="{{ url "Asset.ImageUpload" }}" 
             upload-method="PUT" 
             upload-field-name="image">
         </medium-editor-polymer>

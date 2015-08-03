@@ -18,8 +18,6 @@ GET     /post/:id/edit                          Post.Edit
 PUT     /post/:id/edit                          Post.Update
 GET     /post/:id/toggle-published              Post.TogglePublished
 
-PUT     /post/image/upload                      Post.ImageUpload
-
 # Profile CRUD
 GET     /profile/edit                           Profile.Edit
 POST    /profile/edit                           Profile.Update
@@ -40,6 +38,9 @@ POST    /site-info/edit/about-us                SiteInfo.UpdateAboutUs
 
 # Category CRUD
 GET     /category/new                           Category.New
+
+# Assets CRUD
+PUT     /assets/image/upload                    Asset.ImageUpload
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

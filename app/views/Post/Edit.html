@@ -16,7 +16,7 @@
         <input type="hidden" id="post-publish" name="post-publish" value="{{ .post.Published }}">
 
         <medium-editor-polymer id="post-editor"
-            upload-url="/post/image/upload" 
+            upload-url="{{ url "Asset.ImageUpload" }}" 
             upload-method="PUT" 
             upload-field-name="image">
             {{ raw .post.Content }}

@@ -15,7 +15,7 @@
         <input type="hidden" id="aboutus-id" name="post-id" value="{{ .siteInfo.ID }}">
 
         <medium-editor-polymer id="aboutus-editor"
-            upload-url="{{ url "Post.ImageUpload" }}" 
+            upload-url="{{ url "Asset.ImageUpload" }}" 
             upload-method="PUT" 
             upload-field-name="image">
             {{ raw .siteInfo.AboutUsContent }}
