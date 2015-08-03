@@ -1,0 +1,20 @@
+{{ set . "title" "Untitled" }}
+{{ set . "panelTitle" "Untitled" }}
+
+{{ append . "moreStyles" "css/post-editor.css" }}
+
+{{template "header.html" .}}
+
+{{ template "flash.html" . }}
+
+<link rel="import" href="/public/bower_components/iron-icons/image-icons.html">
+
+<label for="category-image">
+	<paper-icon-button icon="image:camera-alt"></paper-icon-button>
+</label>
+<input type="text" name="heading" class="transparent">
+<input type="text" name="description" class="transparent">
+
+<input type="file" id="category-image" style="display: none;">
+
+{{template "footer.html" .}}

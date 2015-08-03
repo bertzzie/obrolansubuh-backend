@@ -38,6 +38,9 @@ POST    /contributor/update                     Contributor.Update
 GET     /site-info/edit/about-us                SiteInfo.EditAboutUs
 POST    /site-info/edit/about-us                SiteInfo.UpdateAboutUs
 
+# Category CRUD
+GET     /category/new                           Category.New
+
 # Ignore favicon requests
 GET     /favicon.ico                            404
 
