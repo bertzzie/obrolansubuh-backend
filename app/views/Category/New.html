@@ -1,7 +1,7 @@
 {{ set . "title" "Untitled" }}
 {{ set . "panelTitle" "Untitled" }}
 
-{{ append . "moreStyles" "css/post-editor.css" }}
+{{ append . "moreStyles" "css/new-category.css" }}
 
 {{template "header.html" .}}
 
@@ -9,12 +9,18 @@
 
 <link rel="import" href="/public/bower_components/iron-icons/image-icons.html">
 
-<label for="category-image">
-	<paper-icon-button icon="image:camera-alt"></paper-icon-button>
-</label>
-<input type="text" name="heading" class="transparent">
-<input type="text" name="description" class="transparent">
+<section id="new-category">
+	<label for="category-image" id="camera-icon-container">
+		<paper-icon-button id="camera-icon" icon="image:camera-alt"></paper-icon-button>
+	</label>
+	<input type="text" name="heading" class="transparent" placeholder="Heading">
+	<input type="text" name="description" class="transparent" placeholder="Optional Description">
 
-<input type="file" id="category-image" style="display: none;">
+	<input type="file" id="category-image" style="display: none;">
+</section>
+
+<script type="text/javascript">
+
+</script>
 
 {{template "footer.html" .}}
