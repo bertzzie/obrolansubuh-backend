@@ -18,28 +18,6 @@ type Post struct {
 	GormController
 }
 
-type UploadedFile struct {
-	Url         string `json:"url"`
-	ContentType string `json:"type"`
-	ContentSize int    `json:"size"`
-	DeleteURL   string `json:"deleteUrl"`
-	DeleteType  string `json:"deleteType"`
-}
-
-type FileUploadResponse struct {
-	Files []UploadedFile `json:"files"`
-}
-
-type FailedUpload struct {
-	Name  string `json:"name"`
-	Size  int    `json:"size"`
-	Error string `json:"error"`
-}
-
-type FileUploadError struct {
-	Files []FailedUpload `json:"files"`
-}
-
 type Link struct {
 	Rel string `json:"rel"`
 	Uri string `json:"uri"`

@@ -14,6 +14,28 @@ type Asset struct {
 	GormController
 }
 
+type UploadedFile struct {
+	Url         string `json:"url"`
+	ContentType string `json:"type"`
+	ContentSize int    `json:"size"`
+	DeleteURL   string `json:"deleteUrl"`
+	DeleteType  string `json:"deleteType"`
+}
+
+type FileUploadResponse struct {
+	Files []UploadedFile `json:"files"`
+}
+
+type FailedUpload struct {
+	Name  string `json:"name"`
+	Size  int    `json:"size"`
+	Error string `json:"error"`
+}
+
+type FileUploadError struct {
+	Files []FailedUpload `json:"files"`
+}
+
 func (c Asset) ImageUpload(image []byte) revel.Result {
 	fileType := c.Params.Files["image"][0].Header["Content-Type"]
 	fileName := c.Params.Files["image"][0].Filename
