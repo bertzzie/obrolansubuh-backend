@@ -38,6 +38,7 @@ POST    /site-info/edit/about-us                SiteInfo.UpdateAboutUs
 
 # Category CRUD
 GET     /category/new                           Category.New
+POST    /category/save                          Category.Save
 
 # Assets CRUD
 PUT     /assets/image/upload                    Asset.ImageUpload

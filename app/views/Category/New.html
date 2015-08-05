@@ -2,6 +2,7 @@
 {{ set . "panelTitle" "Untitled" }}
 
 {{ append . "moreStyles" "css/new-category.css" }}
+{{ append . "moreScripts" "dist/js/new-category.js" }}
 
 {{template "header.html" .}}
 
@@ -13,14 +14,10 @@
 	<label for="category-image" id="camera-icon-container">
 		<paper-icon-button id="camera-icon" icon="image:camera-alt"></paper-icon-button>
 	</label>
-	<input type="text" name="heading" class="transparent" placeholder="Heading">
-	<input type="text" name="description" class="transparent" placeholder="Optional Description">
+	<input type="text" name="heading" id="category-heading" class="transparent" placeholder="Heading">
+	<input type="text" name="description" id="category-description" class="transparent" placeholder="Optional Description">
 
 	<input type="file" id="category-image" style="display: none;">
 </section>
-
-<script type="text/javascript">
-
-</script>
 
 {{template "footer.html" .}}
