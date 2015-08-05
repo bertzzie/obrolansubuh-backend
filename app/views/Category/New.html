@@ -1,5 +1,5 @@
-{{ set . "title" "Untitled" }}
-{{ set . "panelTitle" "Untitled" }}
+{{ msg . "category.new.title" | set . "title" }}
+{{ msg . "category.new.title" | set . "panelTitle" }}
 
 {{ append . "moreStyles" "css/new-category.css" }}
 {{ append . "moreScripts" "dist/js/new-category.js" }}
@@ -14,8 +14,8 @@
 	<label for="category-image" id="camera-icon-container">
 		<paper-icon-button id="camera-icon" icon="image:camera-alt"></paper-icon-button>
 	</label>
-	<input type="text" name="heading" id="category-heading" class="transparent" placeholder="Heading">
-	<input type="text" name="description" id="category-description" class="transparent" placeholder="Optional Description">
+	<input type="text" name="heading" id="category-heading" class="transparent" placeholder="{{ msg . "category.heading.placeholder" }}">
+	<input type="text" name="description" id="category-description" class="transparent" placeholder="{{ msg . "category.description.placeholder" }}">
 
 	<input type="file" id="category-image" style="display: none;">
 </section>

@@ -36,3 +36,6 @@ contributor.validation.privilege.parseerror=Validation failed. Invalid privilege
 siteinfo.validation.aboutus.title=Validation failed. You must insert title.
 siteinfo.validation.aboutus.title_length=Validation failed. Title must not exceed 1024 characters.
 siteinfo.validation.aboutus.content=Validation failed. You must write some content.
+
+# Category Messages
+category.validation.heading=Validation failed. You must insert heading.

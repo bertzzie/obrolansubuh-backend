@@ -46,3 +46,10 @@ contributor.form.privilege=Jenis Pengguna
 
 contributor.form.submit=Tambah Kontributor
 contributor.form.update.submit=Update Info Kontributor
+
+# Category Page
+category.new.title=Kategori Baru
+category.heading.placeholder=Judul Kategori
+category.description.placeholder=Deskripsi (opsional)
+
+category.button.save=Tambah
