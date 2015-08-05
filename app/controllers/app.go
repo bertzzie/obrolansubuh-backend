@@ -26,7 +26,7 @@ type Action struct {
 }
 
 type JsonResponse struct {
-	Actions []string
+	Actions []Action
 }
 
 // JSON request type for 400
