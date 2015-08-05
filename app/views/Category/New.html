@@ -10,10 +10,13 @@
 
 <link rel="import" href="/public/bower_components/iron-icons/image-icons.html">
 
-<section id="new-category">
+<section id="category-image-container">
 	<label for="category-image" id="camera-icon-container">
 		<paper-icon-button id="camera-icon" icon="image:camera-alt"></paper-icon-button>
 	</label>
+</section>
+
+<section id="category-details">
 	<input type="text" name="heading" id="category-heading" class="transparent" placeholder="{{ msg . "category.heading.placeholder" }}">
 	<input type="text" name="description" id="category-description" class="transparent" placeholder="{{ msg . "category.description.placeholder" }}">
 
