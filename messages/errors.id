@@ -37,4 +37,7 @@ siteinfo.validation.aboutus.title_length=Validasi gagal. Judul tidak boleh meleb
 siteinfo.validation.aboutus.content=Validasi gagal. Konten harus diisikan.
 
 # Category Messages
+errors.category.parseid=ID salah. Mohon refresh halaman.
+
+category.validation.id=Validasi gagal. Mohon refresh halaman.
 category.validation.heading=Validasi gagal. Judul harus diisi.

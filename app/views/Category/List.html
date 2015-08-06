@@ -1,0 +1,14 @@
+{{ msg . "category.list.title" | set . "title" }}
+{{ msg . "category.list.title" | set . "panelTitle" }}
+
+{{template "header.html" .}}
+
+{{ template "flash.html" . }}
+
+<link rel="import" href="/public/polymer/category-list.html">
+
+<category-list data-link="{{ url "Category.JsonList" }}"
+           empty-message="{{ msg . "category.list.empty" }}">
+</category-list>
+
+{{template "footer.html" .}}

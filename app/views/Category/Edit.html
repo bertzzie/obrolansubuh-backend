@@ -1,0 +1,28 @@
+{{ msg . "category.edit.title" | set . "title" }}
+{{ msg . "category.edit.title" | set . "panelTitle" }}
+
+{{ append . "moreStyles" "css/category.css" }}
+{{ append . "moreScripts" "dist/js/category.js" }}
+
+{{template "header.html" .}}
+
+{{ template "flash.html" . }}
+
+<link rel="import" href="/public/bower_components/iron-icons/image-icons.html">
+
+<section id="category-image-container" style="background-image: url({{ .Category.Image }});">
+	<label for="category-image" id="camera-icon-container">
+		<paper-icon-button id="camera-icon" icon="image:camera-alt"></paper-icon-button>
+	</label>
+</section>
+
+<section id="category-details">
+	<input type="text" name="heading" id="category-heading" class="transparent" placeholder="{{ msg . "category.heading.placeholder" }}" value="{{ .Category.Heading }}">
+	<input type="text" name="description" id="category-description" class="transparent" placeholder="{{ msg . "category.description.placeholder" }}" value="{{ .Category.Description }}">
+
+	<input type="file" id="category-image" style="display: none;">
+	<input type="hidden" id="category-id" value="{{ .Category.ID }}">
+	<input type="hidden" id="category-initial-image" value="{{ .Category.Image }}">
+</section>
+
+{{template "footer.html" .}}

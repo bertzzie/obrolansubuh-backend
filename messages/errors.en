@@ -38,4 +38,7 @@ siteinfo.validation.aboutus.title_length=Validation failed. Title must not excee
 siteinfo.validation.aboutus.content=Validation failed. You must write some content.
 
 # Category Messages
+errors.category.parseid=Wrong ID. Please refresh the page.
+
+category.validation.id=Validation failed. Please refresh the page.
 category.validation.heading=Validation failed. You must insert heading.

@@ -48,7 +48,9 @@ contributor.form.submit=Tambah Kontributor
 contributor.form.update.submit=Update Info Kontributor
 
 # Category Page
+category.list.title=Semua Kategori
 category.new.title=Kategori Baru
+category.edit.title=Edit Kategori
 category.heading.placeholder=Judul Kategori
 category.description.placeholder=Deskripsi (opsional)
 

@@ -12,3 +12,7 @@ menu.post.update=Update
 menu.profile.edit=Edit Profile
 
 menu.auth.logout=Logout
+
+menu.category.list=Categories
+menu.category.new=New
+menu.category.update=Update

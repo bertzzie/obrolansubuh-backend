@@ -12,3 +12,7 @@ menu.post.update=Perbaharui
 menu.profile.edit=Edit Profil
 
 menu.auth.logout=Logout
+
+menu.category.list=Daftar Kategori
+menu.category.new=Tambah
+menu.category.update=Perbaharui

@@ -37,8 +37,12 @@ GET     /site-info/edit/about-us                SiteInfo.EditAboutUs
 POST    /site-info/edit/about-us                SiteInfo.UpdateAboutUs
 
 # Category CRUD
+GET     /category/list                          Category.List
+GET     /category/list.json                     Category.JsonList
 GET     /category/new                           Category.New
-POST    /category/save                          Category.Save
+POST    /category/new                           Category.Save
+GET     /category/:id/edit                      Category.Edit
+POST    /category/update                        Category.Update
 
 # Assets CRUD
 PUT     /assets/image/upload                    Asset.ImageUpload

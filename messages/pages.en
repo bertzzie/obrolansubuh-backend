@@ -48,7 +48,9 @@ contributor.form.submit=Create Contributor
 contributor.form.update.submit=Update Contributor Info
 
 # Category Page
+category.list.title=All Categories
 category.new.title=New Category
+category.edit.title=Edit Category
 category.heading.placeholder=Heading
 category.description.placeholder=Optional Description
 
