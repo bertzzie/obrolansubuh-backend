@@ -31,12 +31,30 @@ func InitDB() {
 	ORM = &dbm
 
 	dbm.AutoMigrate(
-		&models.Contributor{},
 		&models.ContributorType{},
+		&models.Contributor{},
 		&models.Post{},
 		&models.Category{},
 		&models.SiteInfo{},
 	)
+
+	/*
+		    // Foreign key don't work now.
+		    // See: https://github.com/jinzhu/gorm/issues/593?_pjax=%23js-repo-pjax-container
+		    // This will be uncommented once the issue is closed.
+		    //
+		    // The resulting query of this is ALTER TABLE so it shouldn't be a problem even
+		    // if we already have datas.
+			dbm.Debug().Model(&models.Contributor{}).
+				AddForeignKey("type_id", "contributor_types(id)", "RESTRICT", "CASCADE")
+
+			dbm.Debug().Model(&models.Post{}).
+				AddForeignKey("author_id", "contributors(id)", "RESTRICT", "CASCADE")
+
+			dbm.Debug().Table("post_categories").
+				AddForeignKey("post_id", "posts(id)", "RESTRICT", "CASCADE").
+				AddForeignKey("category_id", "categories(id)", "RESTRICT", "CASCADE")
+	*/
 
 	siteInfo := models.SiteInfo{}
 
