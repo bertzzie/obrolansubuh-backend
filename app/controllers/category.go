@@ -19,6 +19,14 @@ type CategoryList struct {
 	EditLink    string
 }
 
+// TODO:
+// Moved the access control back to controllers/init.go
+// once a solution for specific actions are implemented in revel.
+//
+// See:
+// https://github.com/revel/revel/issues/258
+// https://github.com/revel/revel/issues/420
+
 func (c Category) JsonList() revel.Result {
 	var categories []models.Category
 	if err := c.Trx.Find(&categories).Error; err != nil {
@@ -46,6 +54,11 @@ func (c Category) JsonList() revel.Result {
 }
 
 func (c Category) List() revel.Result {
+	if c.Session["usertype"] != "ADMIN" {
+		c.Flash.Error(c.Message("access.message.notallowed"))
+		return c.Redirect(routes.App.Index())
+	}
+
 	ToolbarItems := []ToolbarItem{
 		ToolbarItem{
 			Id:   "new-category",
@@ -59,6 +72,11 @@ func (c Category) List() revel.Result {
 }
 
 func (c Category) New() revel.Result {
+	if c.Session["usertype"] != "ADMIN" {
+		c.Flash.Error(c.Message("access.message.notallowed"))
+		return c.Redirect(routes.App.Index())
+	}
+
 	ToolbarItems := []ToolbarItem{
 		ToolbarItem{
 			Id:   "save-category",
@@ -72,6 +90,11 @@ func (c Category) New() revel.Result {
 }
 
 func (c Category) Save(heading, description, image string) revel.Result {
+	if c.Session["usertype"] != "ADMIN" {
+		c.Flash.Error(c.Message("access.message.notallowed"))
+		return c.Redirect(routes.App.Index())
+	}
+
 	c.Validation.Required(heading).Message(c.Message("category.validation.heading"))
 
 	if c.Validation.HasErrors() {
@@ -118,6 +141,11 @@ func (c Category) Save(heading, description, image string) revel.Result {
 }
 
 func (c Category) Edit(id int64) revel.Result {
+	if c.Session["usertype"] != "ADMIN" {
+		c.Flash.Error(c.Message("access.message.notallowed"))
+		return c.Redirect(routes.App.Index())
+	}
+
 	ToolbarItems := []ToolbarItem{
 		ToolbarItem{
 			Id:   "update-category",

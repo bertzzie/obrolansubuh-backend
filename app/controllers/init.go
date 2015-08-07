@@ -26,9 +26,12 @@ func adminOnly(c *revel.Controller) revel.Result {
 func init() {
 	revel.OnAppStart(InitDB)
 	revel.InterceptFunc(checkUser, revel.BEFORE, &Post{})
+	revel.InterceptFunc(checkUser, revel.BEFORE, &Profile{})
+	revel.InterceptFunc(checkUser, revel.BEFORE, &Asset{})
+
 	revel.InterceptFunc(adminOnly, revel.BEFORE, &Contributor{})
 	revel.InterceptFunc(adminOnly, revel.BEFORE, &SiteInfo{})
-	revel.InterceptFunc(adminOnly, revel.BEFORE, &Category{})
+	//revel.InterceptFunc(adminOnly, revel.BEFORE, &Category{})
 	revel.InterceptMethod((*GormController).Begin, revel.BEFORE)
 	revel.InterceptMethod((*GormController).Commit, revel.AFTER)
 	revel.InterceptMethod((*GormController).RollBack, revel.FINALLY)
