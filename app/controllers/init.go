@@ -28,6 +28,7 @@ func init() {
 	revel.InterceptFunc(checkUser, revel.BEFORE, &Post{})
 	revel.InterceptFunc(adminOnly, revel.BEFORE, &Contributor{})
 	revel.InterceptFunc(adminOnly, revel.BEFORE, &SiteInfo{})
+	revel.InterceptFunc(adminOnly, revel.BEFORE, &Category{})
 	revel.InterceptMethod((*GormController).Begin, revel.BEFORE)
 	revel.InterceptMethod((*GormController).Commit, revel.AFTER)
 	revel.InterceptMethod((*GormController).RollBack, revel.FINALLY)
