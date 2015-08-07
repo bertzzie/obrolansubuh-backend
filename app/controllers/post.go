@@ -167,7 +167,7 @@ func (c Post) New() revel.Result {
 	return c.Render(ToolbarItems)
 }
 
-func (c Post) Save(title string, content string, publish bool) revel.Result {
+func (c Post) Save(title string, content string, category int64, publish bool) revel.Result {
 	// Non admins are not allowed to publish
 	if !c.isAdmin() && publish {
 		FR := FailRequest{
@@ -180,6 +180,7 @@ func (c Post) Save(title string, content string, publish bool) revel.Result {
 
 	c.Validation.Required(title).Message(c.Message("post.validation.title"))
 	c.Validation.Required(content).Message(c.Message("post.validation.content"))
+	c.Validation.Required(category).Message(c.Message("post.validation.category"))
 	c.Validation.MaxSize(title, 1024).Message(c.Message("post.validation.title_length"))
 
 	if c.Validation.HasErrors() {
@@ -225,6 +226,11 @@ func (c Post) Save(title string, content string, publish bool) revel.Result {
 		c.Response.Status = http.StatusInternalServerError
 		return c.RenderJson(FR)
 	}
+
+	var cat models.Category
+	c.Trx.Where("id = ?", category).First(&cat)
+
+	c.Trx.Model(&newPost).Association("Categories").Append(&cat)
 
 	revel.INFO.Printf("[LGINFO] Contributor %s created a post with id %d at %s.",
 		c.Session["username"],

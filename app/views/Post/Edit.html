@@ -11,6 +11,8 @@
     <link rel="import" href="/public/bower_components/medium-editor-polymer/medium-editor-polymer.html">
 
     <section id="post-creator">
+        <select id="post-category" name="post-category"></select>
+
         <input type="text" id="post-title" name="post-title" placeholder="Title" value="{{ .post.Title }}">
         <input type="hidden" id="post-id" name="post-id" value="{{ .post.ID }}">
         <input type="hidden" id="post-publish" name="post-publish" value="{{ .post.Published }}">
