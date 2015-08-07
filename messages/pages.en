@@ -13,6 +13,7 @@ login.action.submit=Login
 
 # Posts page
 post.list.title=Your Posts
+post.form.category=Post Category
 
 # Profile page
 profile.form.name=Your Name

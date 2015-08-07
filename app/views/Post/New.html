@@ -11,7 +11,10 @@
     <link rel="import" href="/public/bower_components/medium-editor-polymer/medium-editor-polymer.html">
 
     <section id="post-creator">
-        <select id="post-category" name="post-category"></select>
+	    <div id="category-wrapper">
+	    	<label for="post-category">{{ msg . "post.form.category" }}</label>
+	        <select id="post-category" name="post-category"></select>
+	    </div>
 
         <input type="text" id="post-title" name="post-title" placeholder="Title">
 
