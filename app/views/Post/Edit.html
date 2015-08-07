@@ -16,6 +16,7 @@
         <input type="text" id="post-title" name="post-title" placeholder="Title" value="{{ .post.Title }}">
         <input type="hidden" id="post-id" name="post-id" value="{{ .post.ID }}">
         <input type="hidden" id="post-publish" name="post-publish" value="{{ .post.Published }}">
+        <input type="hidden" id="post-category-old" name="post-category-old" value="{{ .cat.ID }}">
 
         <medium-editor-polymer id="post-editor"
             upload-url="{{ url "Asset.ImageUpload" }}" 

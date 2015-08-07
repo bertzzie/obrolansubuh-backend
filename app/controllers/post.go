@@ -259,14 +259,17 @@ func (c Post) Edit(id int64) revel.Result {
 	post := models.Post{}
 	c.Trx.Preload("Author").Where("id = ?", id).First(&post)
 
+	var cat models.Category
+	c.Trx.Model(&post).Association("Categories").Find(&cat)
+
 	// you can only edit your own post (except admin)
-	userid, _ := strconv.ParseInt(c.Session["userid"], 64, 10)
+	userid, _ := strconv.ParseInt(c.Session["userid"], 10, 64)
 	if post.Author.ID != userid && !c.isAdmin() {
 		c.Flash.Error(c.Message("errors.post.privilege"))
 		return c.Redirect(routes.Post.List())
 	}
 
-	return c.Render(post, ToolbarItems)
+	return c.Render(post, cat, ToolbarItems)
 }
 
 func (c Post) Update(id int64) revel.Result {
@@ -292,7 +295,8 @@ func (c Post) Update(id int64) revel.Result {
 		return c.RenderJson(FR)
 	}
 
-	jserr := json.Unmarshal(data, &p)
+	var tmpDat map[string]interface{}
+	jserr := json.Unmarshal(data, &tmpDat)
 	if jserr != nil {
 		revel.ERROR.Printf("[LGFATAL] Failed to decode JSON from client on %s. Error: %s.",
 			"Post.Update",
@@ -304,14 +308,14 @@ func (c Post) Update(id int64) revel.Result {
 		return c.RenderJson(FR)
 	}
 
-	p.Title = strings.Trim(p.Title, " \n")
-	p.Content = strings.Trim(p.Content, " \n")
+	p.Title = strings.Trim(tmpDat["title"].(string), " \n")
+	p.Content = strings.Trim(tmpDat["content"].(string), " \n")
 
 	var oldPost models.Post
-	c.Trx.Preload("Author").Where("id = ?", p.ID).First(&oldPost)
+	c.Trx.Preload("Author").Where("id = ?", id).First(&oldPost)
 
 	// you can only edit your own post (except admin)
-	userid, _ := strconv.ParseInt(c.Session["userid"], 64, 10)
+	userid, _ := strconv.ParseInt(c.Session["userid"], 10, 64)
 	if oldPost.Author.ID != userid && !c.isAdmin() {
 		FR := FailRequest{
 			Messages: []string{c.Message("errors.post.privilege")},
@@ -331,7 +335,15 @@ func (c Post) Update(id int64) revel.Result {
 		return c.RenderJson(FR)
 	}
 
+	var oldCat, newCat models.Category
+	newCatID, _ := strconv.ParseInt(tmpDat["category"].(string), 10, 64)
+
+	c.Trx.Model(&oldPost).Association("Categories").Find(&oldCat)
+	c.Trx.Where("id = ?", newCatID).First(&newCat)
+
 	c.Trx.Model(&oldPost).Updates(p)
+	c.Trx.Model(&oldPost).Association("Categories").Delete(oldCat)
+	c.Trx.Model(&oldPost).Association("Categories").Replace(newCat)
 	if err := c.Trx.Error; err != nil {
 		revel.ERROR.Printf("[LGFATAL] Failed to save post in database.")
 
