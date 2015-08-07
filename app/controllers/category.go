@@ -16,6 +16,7 @@ type CategoryList struct {
 	ID          int64
 	Heading     string
 	Description string
+	EditLink    string
 }
 
 func (c Category) JsonList() revel.Result {
@@ -36,6 +37,7 @@ func (c Category) JsonList() revel.Result {
 			ID:          category.ID,
 			Heading:     category.Heading,
 			Description: category.Description,
+			EditLink:    routes.Category.Edit(category.ID),
 		}
 		catList = append(catList, tmp)
 	}
