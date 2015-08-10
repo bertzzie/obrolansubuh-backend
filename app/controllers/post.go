@@ -216,7 +216,11 @@ func (c Post) Save(title string, content string, category int64, publish bool) r
 		Published: publish,
 	}
 
+	var cat models.Category
 	c.Trx.Create(&newPost)
+	c.Trx.Where("id = ?", category).First(&cat)
+	c.Trx.Model(&newPost).Association("Categories").Append(&cat)
+
 	if err := c.Trx.Error; err != nil {
 		revel.ERROR.Printf("[LGFATAL] Failed to save post in database.")
 
@@ -225,11 +229,6 @@ func (c Post) Save(title string, content string, category int64, publish bool) r
 		c.Response.Status = http.StatusInternalServerError
 		return c.RenderJson(FR)
 	}
-
-	var cat models.Category
-	c.Trx.Where("id = ?", category).First(&cat)
-
-	c.Trx.Model(&newPost).Association("Categories").Append(&cat)
 
 	revel.INFO.Printf("[LGINFO] Contributor %s created a post with id %d at %s.",
 		c.Session["username"],
