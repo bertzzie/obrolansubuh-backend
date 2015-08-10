@@ -52,10 +52,18 @@ type PostList struct {
 	ToggleLink string
 }
 
-func getUsersPost(uid string, allUsers bool, db *gorm.DB) (posts []models.Post, err error) {
-	db = db.Preload("Author").Order("created_at desc")
+func getUsersPost(uid string, allUsers bool, category int64, published bool, db *gorm.DB) (posts []models.Post, err error) {
+	db = db.Preload("Author").Order("created_at desc").Where("published = ?", published)
 	if !allUsers {
 		db = db.Where("author_id = ?", uid)
+	}
+
+	if category != 0 {
+		db = db.Joins(
+			"join post_categories as pc on posts.id = pc.post_id " +
+				"join categories as c on c.id = pc.category_id")
+
+		db = db.Where("c.id = ?", category)
 	}
 
 	if err = db.Find(&posts).Error; err != nil {
@@ -69,11 +77,11 @@ func (c Post) isAdmin() bool {
 	return c.Session["usertype"] == "ADMIN"
 }
 
-func (c Post) JsonList() revel.Result {
+func (c Post) JsonList(category int64, published bool) revel.Result {
 	// enforce using cookies here
 	// so people can't just API call this easily
 	uid := c.Session["userid"]
-	posts, err := getUsersPost(uid, c.isAdmin(), c.Trx)
+	posts, err := getUsersPost(uid, c.isAdmin(), category, published, c.Trx)
 
 	if err != nil {
 		revel.ERROR.Printf("[LGFATAL] Failed to get post list from database.")
