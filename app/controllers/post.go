@@ -53,13 +53,12 @@ type PostList struct {
 }
 
 func getUsersPost(uid string, allUsers bool, db *gorm.DB) (posts []models.Post, err error) {
-	if allUsers {
-		db.Preload("Author").Order("created_at desc").Find(&posts)
-	} else {
-		db.Preload("Author").Where("author_id = ?", uid).Order("created_at desc").Find(&posts)
+	db = db.Preload("Author").Order("created_at desc")
+	if !allUsers {
+		db = db.Where("author_id = ?", uid)
 	}
 
-	if err = db.Error; err != nil {
+	if err = db.Find(&posts).Error; err != nil {
 		return nil, err
 	}
 
