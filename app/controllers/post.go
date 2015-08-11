@@ -52,8 +52,8 @@ type PostList struct {
 	ToggleLink string
 }
 
-func getUsersPost(uid string, allUsers bool, category int64, published bool, db *gorm.DB) (posts []models.Post, err error) {
-	db = db.Preload("Author").Order("created_at desc").Where("published = ?", published)
+func getUsersPost(uid string, allUsers bool, category int64, published string, db *gorm.DB) (posts []models.Post, err error) {
+	db = db.Preload("Author").Order("created_at desc")
 	if !allUsers {
 		db = db.Where("author_id = ?", uid)
 	}
@@ -64,6 +64,13 @@ func getUsersPost(uid string, allUsers bool, category int64, published bool, db 
 				"join categories as c on c.id = pc.category_id")
 
 		db = db.Where("c.id = ?", category)
+	}
+
+	published = strings.ToLower(published)
+	if published != "all" && (published == "true" || published == "false") {
+		pub := published == "true"
+
+		db = db.Where("published = ?", pub)
 	}
 
 	if err = db.Find(&posts).Error; err != nil {
@@ -77,7 +84,7 @@ func (c Post) isAdmin() bool {
 	return c.Session["usertype"] == "ADMIN"
 }
 
-func (c Post) JsonList(category int64, published bool) revel.Result {
+func (c Post) JsonList(category int64, published string) revel.Result {
 	// enforce using cookies here
 	// so people can't just API call this easily
 	uid := c.Session["userid"]
