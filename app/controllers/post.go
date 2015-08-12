@@ -46,6 +46,7 @@ type PostList struct {
 	Title      string
 	Content    string
 	Author     string
+	Category   string
 	CreatedAt  time.Time
 	Published  bool
 	EditLink   string
@@ -73,6 +74,9 @@ func getUsersPost(uid string, allUsers bool, category int64, published string, d
 		db = db.Where("published = ?", pub)
 	}
 
+	// the Select call is needed because of a bug.
+	// TODO: remove this call when the bug is fixed
+	db = db.Select("posts.id, posts.title, posts.content, posts.published, posts.created_at, posts.updated_at, posts.author_id")
 	if err = db.Find(&posts).Error; err != nil {
 		return nil, err
 	}
@@ -101,10 +105,14 @@ func (c Post) JsonList(category int64, published string) revel.Result {
 
 	postList := make([]PostList, 0, len(posts))
 	for _, post := range posts {
+		var cat models.Category
+		c.Trx.Model(&post).Association("Categories").Find(&cat)
+
 		tmp := PostList{
 			ID:         post.ID,
 			Title:      post.Title,
 			Author:     post.Author.Name,
+			Category:   cat.Heading,
 			Content:    post.Content,
 			CreatedAt:  post.CreatedAt,
 			Published:  post.Published,
