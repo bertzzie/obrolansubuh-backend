@@ -13,11 +13,6 @@
     <script type="text/javascript" src="/public/bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
     <script src="https://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
 
-
-    {{range .moreStyles}}
-    <link rel="stylesheet" type="text/css" href="/public/{{.}}">
-    {{end}}
-
     <link rel="import" href="/public/bower_components/font-roboto/roboto.html">
 
     <link rel="import" href="/public/bower_components/paper-material/paper-material.html">
@@ -35,6 +30,10 @@
     <link rel="import" href="/public/bower_components/paper-icon-button/paper-icon-button.html">
 
     <link rel="stylesheet" href="/public/css/obrolansubuh.css">
+
+    {{range .moreStyles}}
+    <link rel="stylesheet" type="text/css" href="/public/{{.}}">
+    {{end}}
 </head>
 
 <body class="fulbleed layout vertical" unresolved>

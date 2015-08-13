@@ -189,7 +189,7 @@ func (c Post) New() revel.Result {
 	return c.Render(ToolbarItems)
 }
 
-func (c Post) Save(title string, content string, category int64, publish bool) revel.Result {
+func (c Post) Save(cover string, title string, content string, category int64, publish bool) revel.Result {
 	// Non admins are not allowed to publish
 	if !c.isAdmin() && publish {
 		FR := FailRequest{
@@ -200,6 +200,7 @@ func (c Post) Save(title string, content string, category int64, publish bool) r
 		return c.RenderJson(FR)
 	}
 
+	c.Validation.Required(cover).Message(c.Message("post.validation.cover"))
 	c.Validation.Required(title).Message(c.Message("post.validation.title"))
 	c.Validation.Required(content).Message(c.Message("post.validation.content"))
 	c.Validation.Required(category).Message(c.Message("post.validation.category"))
@@ -233,10 +234,11 @@ func (c Post) Save(title string, content string, category int64, publish bool) r
 	content = strings.Trim(content, " \n")
 
 	newPost := models.Post{
-		Title:     title,
-		Content:   content,
-		Author:    contributor,
-		Published: publish,
+		Title:      title,
+		Content:    content,
+		Author:     contributor,
+		Published:  publish,
+		CoverImage: cover,
 	}
 
 	var cat models.Category
@@ -331,6 +333,7 @@ func (c Post) Update(id int64) revel.Result {
 
 	p.Title = strings.Trim(tmpDat["title"].(string), " \n")
 	p.Content = strings.Trim(tmpDat["content"].(string), " \n")
+	p.CoverImage = tmpDat["cover"].(string)
 
 	var oldPost models.Post
 	c.Trx.Preload("Author").Where("id = ?", id).First(&oldPost)
@@ -386,6 +389,7 @@ func (c Post) Update(id int64) revel.Result {
 		ID:      p.ID,
 		Title:   p.Title,
 		Message: message}
+
 	c.Response.Status = http.StatusOK // should we use Created for update too?
 	return c.RenderJson(PU)
 }

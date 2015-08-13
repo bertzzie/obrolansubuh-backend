@@ -17,6 +17,7 @@ errors.post.json=Sistem gagal membaca data. Mohon lakukan refresh browser dan co
 errors.post.privilege=Anda hanya dapat mengubah tulisan anda sendiri.
 
 post.validation.id=Validasi gagal. Mohon lakukan refresh browser dan coba lagi.
+post.validation.cover=Validasi gagal. Mohon upload cover image terlebih dahulu.
 post.validation.category=Validasi gagal. Mohon lakukan refresh browser dan coba lagi.
 post.validation.title=Validasi gagal. Judul tulisan harus diisikan.
 post.validation.content=Validasi gagal. Anda harus mengisikan konten tulisan.

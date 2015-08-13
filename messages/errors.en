@@ -17,6 +17,7 @@ errors.post.json=Post Data Read Failed. Please refresh your browser and try agai
 errors.post.privilege=You can only edit your own post.
 
 post.validation.id=Post validation failed. Please refresh your browser and try again.
+post.validation.cover=Post validation failed. Cover image must be uploaded first.
 post.validation.category=Post validation failed. Please refresh your browser and try again.
 post.validation.title=Post validation failed. You must insert post title.
 post.validation.content=Post validation failed. You must write some content.

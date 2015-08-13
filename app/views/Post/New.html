@@ -9,20 +9,31 @@
 {{ template "flash.html" . }}
 
     <link rel="import" href="/public/bower_components/medium-editor-polymer/medium-editor-polymer.html">
+    <link rel="import" href="/public/bower_components/iron-icons/image-icons.html">
 
     <section id="post-creator">
-	    <div id="category-wrapper">
-	    	<label for="post-category">{{ msg . "post.form.category" }}</label>
-	        <select id="post-category" name="post-category"></select>
-	    </div>
+        <section id="post-heading">
+            <label for="cover-image" id="cover-image-container">
+                <paper-icon-button id="camera-icon" icon="image:camera-alt"></paper-icon-button>
+                Cover Image
+            </label>
 
-        <input type="text" id="post-title" name="post-title" placeholder="Title">
+            <input type="text" id="post-title" class="title" name="post-title" placeholder="Title">
+        </section>
 
         <medium-editor-polymer id="post-editor"
             upload-url="{{ url "Asset.ImageUpload" }}" 
             upload-method="PUT" 
             upload-field-name="image">
         </medium-editor-polymer>
+
+        <div id="category-wrapper">
+            <label for="post-category">{{ msg . "post.form.category" }}</label>
+            <select id="post-category" name="post-category"></select>
+        </div>
+
+        <input type="file" id="cover-image" style="display: none;">
+        <input type="hidden" id="cover-image-url">
     </section>
 
 {{template "footer.html" .}}
