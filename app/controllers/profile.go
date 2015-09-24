@@ -4,6 +4,7 @@ import (
 	"github.com/revel/revel"
 	"obrolansubuh.com/backend/app/routes"
 	"obrolansubuh.com/models"
+	"regexp"
 )
 
 type Profile struct {
@@ -26,16 +27,48 @@ func (c Profile) Edit() revel.Result {
 
 func (c Profile) Update(
 	name string,
+	handle string,
 	email string,
 	about string,
 	photo []byte) revel.Result {
 
+	c.Validation.Required(name).Message(c.Message("contributor.validation.name"))
+	c.Validation.Required(handle).Message(c.Message("contributor.validation.handle.required"))
+	c.Validation.Match(handle, regexp.MustCompile(`^\w*$`)).Message(c.Message("contributor.validation.handle.invalid"))
+	c.Validation.Required(email).Message("contributor.validation.email.required")
+	c.Validation.Email(email).Message("contributor.validation.email.invalid")
+
 	id := c.Session["userid"]
+
+	/*
+		// existing contributor check
+		_, dupe := c.GetContributor(email)
+		if dupe == nil {
+			c.Flash.Error(c.Message("contributor.validation.email.duplicate"))
+			return c.Redirect(routes.Profile.Edit())
+		}
+
+		_, handleDupe := c.GetContributorByHandle(handle)
+		if handleDupe == nil {
+			c.Flash.Error(c.Message("contributor.validation.handle.duplicate"))
+			return c.Redirect(routes.Profile.Edit())
+		}
+	*/
+	if c.IsEmailDupe(id, email) {
+		c.Flash.Error(c.Message("contributor.validation.email.duplicate"))
+		return c.Redirect(routes.Profile.Edit())
+	}
+
+	if c.IsHandleDupe(id, handle) {
+		c.Flash.Error(c.Message("contributor.validation.handle.duplicate"))
+		return c.Redirect(routes.Profile.Edit())
+	}
 
 	contributor := &models.Contributor{}
 	c.Trx.Where("id = ?", id).First(&contributor)
 
 	contributor.Name = name
+	contributor.Handle = handle
 	contributor.Email = email
 	contributor.About = about
 
@@ -104,4 +137,18 @@ func (c Profile) UpdatePassword(currentPassword, newPassword, retypePassword str
 
 	c.Flash.Error(c.Message("profile.password.wrong"))
 	return c.Redirect(routes.Profile.ChangePassword())
+}
+
+func (c Profile) IsEmailDupe(id, email string) bool {
+	con := &models.Contributor{}
+	tx := c.Trx.Debug().Where("id != ? AND email = ?", id, email).First(&con)
+
+	return tx.Error == nil
+}
+
+func (c Profile) IsHandleDupe(id, handle string) bool {
+	con := &models.Contributor{}
+	tx := c.Trx.Debug().Where("id != ? AND handle = ?", id, handle).First(&con)
+
+	return tx.Error == nil
 }

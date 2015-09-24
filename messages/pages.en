@@ -18,6 +18,8 @@ post.form.category=Post Category
 # Profile page
 profile.form.name=Your Name
 profile.form.name.error=Name must not be empty
+profile.form.handle=Your Handle
+profile.form.handle.error=Handle must not be empty
 profile.form.email=Your Email Address
 profile.form.email.error=Please enter a valid email address
 profile.form.about=About You (in 500 characters)
