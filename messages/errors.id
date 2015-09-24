@@ -27,6 +27,9 @@ post.publishtoggle.fail=Pembaruan status publikasi gagal!
 
 # Contributor Messages
 contributor.validation.name=Validasi gagal. Nama tidak boleh kosong.
+contributor.validation.handle.duplicate=Handle telah digunakan oleh kontributor lain.
+contributor.validation.handle.required=Validasi gagal. Handle tidak boleh kosong.
+contributor.validation.handle.invalid=Validasi gagal. Handle tidak valid. Jangan gunakan spasi atau karakter khusus!
 contributor.validation.email.duplicate=Validasi gagal. Email telah digunakan oleh kontributor lain.
 contributor.validation.email.required=Validasi gagal. Email tidak boleh kosong.
 contributor.validation.email.invalid=Validasi gagal. Email tidak valid.

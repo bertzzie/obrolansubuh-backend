@@ -28,6 +28,9 @@ post.publishtoggle.fail=Post status update failed!
 # Contributor Messages
 
 contributor.validation.name=Validation failed. Name must not be empty.
+contributor.validation.handle.duplicate=Handle already used by another user.
+contributor.validation.handle.required=Validation failed. Handle must not be empty.
+contributor.validation.handle.invalid=Validation failed. Handle invalid. (Don't use space and special chars!)
 contributor.validation.email.duplicate=Email already used by another user.
 contributor.validation.email.required=Validation failed. Email must not be empty.
 contributor.validation.email.invalid=Validation failed. Email invalid.

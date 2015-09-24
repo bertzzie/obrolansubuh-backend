@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"obrolansubuh.com/backend/app/routes"
 	"obrolansubuh.com/models"
+	"regexp"
 	"strconv"
 )
 
@@ -61,8 +62,10 @@ func (c Contributor) New() revel.Result {
 	return c.Render(cTypes)
 }
 
-func (c Contributor) Save(email, name, password, privilege string) revel.Result {
+func (c Contributor) Save(email, name, handle, password, privilege string) revel.Result {
 	c.Validation.Required(name).Message(c.Message("contributor.validation.name"))
+	c.Validation.Required(handle).Message(c.Message("contributor.validation.handle.required"))
+	c.Validation.Match(handle, regexp.MustCompile(`^\w*$`)).Message(c.Message("contributor.validation.handle.invalid"))
 	c.Validation.Required(email).Message("contributor.validation.email.required")
 	c.Validation.Email(email).Message("contributor.validation.email.invalid")
 	c.Validation.Required(password).Message("contributor.validation.password")
@@ -93,8 +96,15 @@ func (c Contributor) Save(email, name, password, privilege string) revel.Result 
 		return c.Redirect(routes.Contributor.New())
 	}
 
+	_, handleDupe := c.GetContributorByHandle(handle)
+	if handleDupe == nil {
+		c.Flash.Error(c.Message("contributor.validation.handle.duplicate"))
+		return c.Redirect(routes.Contributor.New())
+	}
+
 	contributor := models.Contributor{
 		Name:   name,
+		Handle: handle,
 		Email:  email,
 		TypeID: cType,
 		Photo:  "/public/img/default-user.png",
@@ -137,8 +147,10 @@ func (c Contributor) Edit(id int64) revel.Result {
 	return c.Render(contributor, cTypes)
 }
 
-func (c Contributor) Update(id, name, email, privilege string) revel.Result {
+func (c Contributor) Update(id, name, handle, email, privilege string) revel.Result {
 	c.Validation.Required(name).Message(c.Message("contributor.validation.name"))
+	c.Validation.Required(handle).Message(c.Message("contributor.validation.handle.required"))
+	c.Validation.Match(handle, regexp.MustCompile(`^\w*$`)).Message(c.Message("contributor.validation.handle.invalid"))
 	c.Validation.Required(email).Message("contributor.validation.email.required")
 	c.Validation.Email(email).Message("contributor.validation.email.invalid")
 	c.Validation.Required(privilege).Message("contributor.validation.privilege")
@@ -174,6 +186,7 @@ func (c Contributor) Update(id, name, email, privilege string) revel.Result {
 	}
 
 	contributor.Name = name
+	contributor.Handle = handle
 	contributor.Email = email
 	contributor.TypeID = cType
 

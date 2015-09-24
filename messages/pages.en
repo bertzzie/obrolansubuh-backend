@@ -38,7 +38,9 @@ contributor.new.title=Create New Contributor
 contributor.edit.title=Edit Contributor Info
 
 contributor.form.name=New Contributor's Name
+contributor.form.handle=New Contributor's Handle (Nick)
 contributor.form.name.error=Name must not be empty
+contributor.form.handle.error=Handle must not be empty
 contributor.form.email=Your New Contributor's Email
 contributor.form.email.error=Please enter a valid email address
 contributor.form.password=New Contributor's Password

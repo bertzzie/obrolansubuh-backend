@@ -25,6 +25,17 @@
         <paper-input-error>{{ msg . "contributor.form.name.error" }}</paper-input-error>
     </paper-input-container>
 
+    <paper-input-container auto-validate>
+        <label>{{ msg . "contributor.form.handle" }}</label>
+        <input is="iron-input" 
+               type="text" 
+               auto-validate 
+               required 
+               name="handle" 
+               value="{{ .contributor.Handle }}">
+        <paper-input-error>{{ msg . "contributor.form.handle.error" }}</paper-input-error>
+    </paper-input-container>
+
     <gold-email-input required 
                       auto-validate 
                       error-message="{{ msg . "contributor.form.email.error" }}"
