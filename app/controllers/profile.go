@@ -141,14 +141,14 @@ func (c Profile) UpdatePassword(currentPassword, newPassword, retypePassword str
 
 func (c Profile) IsEmailDupe(id, email string) bool {
 	con := &models.Contributor{}
-	tx := c.Trx.Debug().Where("id != ? AND email = ?", id, email).First(&con)
+	tx := c.Trx.Where("id != ? AND email = ?", id, email).First(&con)
 
 	return tx.Error == nil
 }
 
 func (c Profile) IsHandleDupe(id, handle string) bool {
 	con := &models.Contributor{}
-	tx := c.Trx.Debug().Where("id != ? AND handle = ?", id, handle).First(&con)
+	tx := c.Trx.Where("id != ? AND handle = ?", id, handle).First(&con)
 
 	return tx.Error == nil
 }

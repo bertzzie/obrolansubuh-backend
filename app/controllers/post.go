@@ -379,8 +379,8 @@ func (c Post) Update(id int64) revel.Result {
 
 	revel.INFO.Printf("[LGINFO] Contributor %s updated a post with id %d at %s.",
 		c.Session["username"],
-		p.ID,
-		p.CreatedAt,
+		oldPost.ID,
+		oldPost.UpdatedAt,
 	)
 
 	message := fmt.Sprintf(c.Message("post.update.success"), p.Title)
